@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 
 import { cn } from "#/lib/utils";
-import { NAV_LINKS } from "../nav-links";
+import { NAV_LINKS } from "../../../lib/constants";
 import { useMobileNavTimeline } from "./use-mobile-nav-timeline";
 
 type MobileNavDrawerProps = {

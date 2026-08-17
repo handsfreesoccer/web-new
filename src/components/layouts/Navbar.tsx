@@ -5,7 +5,7 @@ import { cn } from "#/lib/utils";
 import { Button } from "../ui/button";
 import { MenuIcon, type MenuIconHandle } from "../ui/menu";
 import { MobileNavDrawer } from "./mobile-nav/MobileNavDrawer";
-import { NAV_LINKS } from "./nav-links";
+import { NAV_LINKS } from "../../lib/constants";
 
 export function Navbar() {
 	const { pathname } = useLocation();
@@ -47,7 +47,7 @@ export function Navbar() {
 
 	return (
 		<>
-			<nav className="relative z-50 flex w-full max-w-360 items-center justify-between px-4 py-2 sm:px-16">
+			<nav className="relative z-50 flex w-full max-w-360 mx-auto items-center justify-between px-4 py-2 sm:px-8 md:px-16">
 				<div className="flex items-center gap-2">
 					<Link to="/">
 						<div className="h-18 w-25 bg-black/10" />
@@ -71,14 +71,14 @@ export function Navbar() {
 				<Button
 					nativeButton={false}
 					render={<Link to={"/contact" as never} />}
-					className="hidden px-6 py-6 font-normal sm:block"
+					className="hidden px-6 py-6 font-normal sm:flex"
 				>
 					Contact Us
 				</Button>
 				<Button
 					type="button"
 					variant="ghost"
-					className="sm:hidden p-0 hover:bg-transparent cursor-pointer !bg-transparent"
+					className="sm:hidden p-0 hover:bg-transparent cursor-pointer bg-transparent!"
 					aria-expanded={menuOpen}
 					aria-controls="mobile-nav"
 					aria-label={menuOpen ? "Close menu" : "Open menu"}
