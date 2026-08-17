@@ -1,38 +1,35 @@
-import { Button } from "#/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
-import React from "react";
+import type React from "react";
+import { Button } from "#/components/ui/button";
 
 export const HeroSection: React.FC = () => {
 	return (
-		<section className="max-w-360 mx-auto px-4 py-8 sm:py-16 sm:px-8 md:px-16 flex flex-col gap-16">
-			<h1 className="@container w-full text-center font-bold leading-tight text-[min(4.5rem,calc(90cqi/11))]">
+		<section className="mx-auto flex max-w-360 flex-col gap-16 px-4 py-8 sm:px-8 sm:py-16 md:px-16">
+			<h1 className="@container w-full text-center font-bold text-[min(4.5rem,calc(90cqi/11))] leading-tight">
 				<span className="block">ACE YOUR GAME WITH</span>
 				<span className="block whitespace-nowrap">HANDSFREESOCCER</span>
 			</h1>
-			<div className="rounded-3xl flex-1 sm:min-h-120 py-0 sm:py-0 w-full overflow-clip relative flex flex-col bg-black">
+			<div className="relative flex w-full flex-1 flex-col overflow-clip rounded-3xl bg-black py-0 sm:min-h-120 sm:py-0">
 				<img
 					src="https://placehold.co/600x480/black/black"
 					alt="Hero Section"
-					className="w-full h-full object-cover absolute "
+					className="absolute h-full w-full object-cover"
 				/>
-				<div className="flex flex-col h-full relative flex-1 p-8 justify-evenly gap-8 sm:gap-0 sm:justify-start ">
-					<div className="sm:flex-1 grid place-content-center">
-						<h2 className="text-[min(4.5rem,calc(90cqi/11))] font-bold text-white flex-1 text-center leading-tight">
+				<div className="relative flex h-full flex-1 flex-col justify-evenly gap-8 p-8 sm:justify-start sm:gap-0">
+					<div className="grid place-content-center sm:flex-1">
+						<h2 className="flex-1 text-center font-bold text-[min(4.5rem,calc(90cqi/11))] text-white leading-tight">
 							GAME STARTS HERE
 						</h2>
 					</div>
-					<div className="justify-between flex items-center gap-10 flex-col sm:flex-row">
-						<p className="sm:w-1/2 w-full text-base sm:text-sm text-white text-center sm:text-left sm:text-balance">
+					<div className="flex flex-col items-center justify-between gap-10 sm:flex-row">
+						<p className="w-full text-center text-base text-white sm:w-1/2 sm:text-balance sm:text-left sm:text-sm">
 							Train with experts coaches, access to standard training
 							facilities, latest equipment and build skills step by step whether
 							you are just starting or training for a competition
 						</p>
-						<div className="bg-white rounded-full flex items-center gap-2 p-1 pl-4">
+						<div className="flex items-center gap-2 rounded-full bg-white p-1 pl-4">
 							<p>Join Now</p>
-							<Button
-								type="submit"
-								className="rounded-full p-0 size-11"
-							>
+							<Button type="submit" className="size-11 rounded-full p-0">
 								<ArrowRightIcon />
 							</Button>
 						</div>

@@ -1,6 +1,6 @@
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { Footer } from "#/components/layouts/Footer";
 import { Navbar } from "#/components/layouts/Navbar";
-import { Outlet, createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_layout")({
 	component: RouteComponent,
@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_layout")({
 
 function RouteComponent() {
 	return (
-		<main className="min-h-screen flex flex-col items-stretch">
+		<main className="flex min-h-screen flex-col items-stretch">
 			<Navbar />
 			<Outlet />
 			<Footer />

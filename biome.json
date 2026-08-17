@@ -27,7 +27,8 @@
 			"recommended": true,
 			"nursery": {
 				"useSortedClasses": {
-					"level": "error",
+					"level": "warn",
+					"fix": "safe",
 					"options": {
 						"functions": ["clsx", "cn", "cva", "twMerge"]
 					}
@@ -41,4 +42,3 @@
 		}
 	}
 }
-
