@@ -16,7 +16,7 @@ export const Footer: React.FC = () => {
 						<h2 className="text-white text-2xl font-semibold sm:text-left text-center">
 							Stay Updated with <br /> special offers from us!
 						</h2>
-						<p className="font-light tracking-wider text-muted sm:text-left text-center">
+						<p className="font-light tracking-wider text-secondary-foreground sm:text-left text-center">
 							Coaching every player, at every level, in every stage of the game
 						</p>
 					</div>
@@ -75,7 +75,7 @@ export const Footer: React.FC = () => {
 									<li key={link.to}>
 										<Link
 											to={link.to as "/"}
-											className="text-white font-light hover:font-semibold duration-300 ease-in-out"
+											className="text-secondary-foreground font-light hover:font-semibold duration-300 ease-in-out"
 										>
 											{link.label}
 										</Link>
@@ -91,7 +91,7 @@ export const Footer: React.FC = () => {
 										href="https://www.google.com/maps/search/?api=1&query=Chandigarh%2C%20India"
 										target="_blank"
 										rel="noopener noreferrer"
-										className="flex items-center gap-2 text-white font-light tracking-wider hover:font-semibold duration-300 ease-in-out"
+										className="flex items-center gap-2 text-secondary-foreground font-light tracking-wider hover:font-semibold duration-300 ease-in-out"
 									>
 										<MapPinIcon className="size-4 shrink-0" />
 										Chandigarh, India
@@ -100,7 +100,7 @@ export const Footer: React.FC = () => {
 								<li>
 									<a
 										href="tel:+919876543210"
-										className="flex items-center gap-2 text-white font-light tracking-wider hover:font-semibold duration-300 ease-in-out"
+										className="flex items-center gap-2 text-secondary-foreground font-light tracking-wider hover:font-semibold duration-300 ease-in-out"
 									>
 										<PhoneIcon className="size-4 shrink-0" />
 										+91 9876543210
@@ -108,7 +108,7 @@ export const Footer: React.FC = () => {
 								</li>
 								<li className="flex items-center gap-2">
 									<MailIcon className="text-white size-4 shrink-0" />
-									<p className="text-white font-light tracking-wider">
+									<p className="text-secondary-foreground font-light tracking-wider">
 										info@handsfreesoccer.com
 									</p>
 								</li>
