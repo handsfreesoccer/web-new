@@ -28,7 +28,7 @@ export const Footer: React.FC = () => {
 						/>
 						<Button
 							type="submit"
-							className="rounded-full p-0 size-12"
+							className="rounded-full p-0 size-11"
 						>
 							<ArrowRightIcon />
 						</Button>
