@@ -14,8 +14,19 @@ const config = defineConfig({
     tailwindcss(),
     tanstackStart(),
     viteReact(),
-    babel({ presets: [reactCompilerPreset()] }),
+    babel({ presets: [reactCompilerPreset()] })
   ],
+  server: {
+    host: true,
+    port: Number(process.env.PORT) || 5173,
+    strictPort: true,
+  },
+  ssr: {
+    external: ['bun'],
+  },
+  optimizeDeps: {
+    exclude: ['bun'],
+  },
 })
 
 export default config
