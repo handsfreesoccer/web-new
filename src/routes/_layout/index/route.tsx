@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { HeroSection } from "./-components/hero-section";
 import { WhyWithUs } from "./-components/why-with-us";
 import { IntroVideo } from "./-components/intro-video";
+import { OurStory } from "./-components/our-story";
 
 export const Route = createFileRoute("/_layout/")({ component: Home });
 
@@ -11,6 +12,7 @@ function Home() {
 			<HeroSection />
 			<WhyWithUs />
 			<IntroVideo />
+			<OurStory />
 		</div>
 	);
 }
