@@ -48,7 +48,7 @@ export function MobileNavDrawer({
 			id="mobile-nav"
 			aria-hidden={!open}
 			className={cn(
-				"fixed inset-0 z-40 w-full bg-background will-change-transform sm:hidden",
+				"fixed inset-0 z-40 w-full transform-[translate3d(100%,0,0)] bg-background will-change-transform sm:hidden",
 				open ? "pointer-events-auto" : "pointer-events-none",
 			)}
 		>
@@ -61,8 +61,9 @@ export function MobileNavDrawer({
 								data-mobile-nav-link
 								onClick={onClose}
 								className={cn(
-									"font-heading text-2xl text-muted-foreground text-pretty",
-									link.to === pathname && "font-medium text-primary",
+									"font-heading text-pretty text-2xl text-muted-foreground opacity-0 duration-300 ease-in-out hover:font-semibold hover:text-primary",
+									link.to === pathname &&
+										"font-medium text-primary hover:font-semibold",
 								)}
 							>
 								{link.label}

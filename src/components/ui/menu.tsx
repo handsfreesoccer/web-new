@@ -2,7 +2,7 @@
 
 import type { Variants } from "motion/react";
 import { motion, useAnimation } from "motion/react";
-import type { HTMLAttributes } from "react";
+import type { CSSProperties, HTMLAttributes } from "react";
 import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
 
 import { cn } from "#/lib/utils.ts";
@@ -77,12 +77,14 @@ const MenuIcon = forwardRef<MenuIconHandle, MenuIconProps>(
         {...props}
       >
         <svg
+          className="size-[var(--menu-icon-size)]"
           fill="none"
           height={size}
           stroke="currentColor"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="2"
+          style={{ "--menu-icon-size": `${size}px` } as CSSProperties}
           viewBox="0 0 24 24"
           width={size}
           xmlns="http://www.w3.org/2000/svg"

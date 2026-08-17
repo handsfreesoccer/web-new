@@ -78,8 +78,7 @@ export function Navbar() {
 				<Button
 					type="button"
 					variant="ghost"
-					size="icon-lg"
-					className="sm:hidden p-0"
+					className="sm:hidden p-0 hover:bg-transparent cursor-pointer !bg-transparent"
 					aria-expanded={menuOpen}
 					aria-controls="mobile-nav"
 					aria-label={menuOpen ? "Close menu" : "Open menu"}

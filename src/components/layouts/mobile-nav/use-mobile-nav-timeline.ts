@@ -28,7 +28,6 @@ export function useMobileNavTimeline(
 		const linkStagger = reduced ? 0 : 100;
 		const linkOffset = reduced ? 0 : 140;
 
-		utils.set(panel, { translateX: "100%" });
 		utils.set(links, {
 			opacity: 0,
 			translateY: 12,
