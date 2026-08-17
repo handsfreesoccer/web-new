@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { ArrowRightIcon } from "lucide-react";
 import type React from "react";
 import { Button } from "#/components/ui/button";
@@ -27,12 +28,16 @@ export const HeroSection: React.FC = () => {
 							facilities, latest equipment and build skills step by step whether
 							you are just starting or training for a competition
 						</p>
-						<div className="flex items-center gap-2 rounded-full bg-white p-1 pl-4">
+						<Button
+							nativeButton={false}
+							render={<Link to={"/join" as never} />}
+							className="h-auto w-fit gap-2 rounded-full bg-white p-1 pl-4 text-foreground hover:bg-white"
+						>
 							<p>Join Now</p>
-							<Button type="submit" className="size-11 rounded-full p-0">
-								<ArrowRightIcon />
-							</Button>
-						</div>
+							<span className="grid size-11 place-content-center rounded-full bg-primary">
+								<ArrowRightIcon className="size-4 text-primary-foreground" />
+							</span>
+						</Button>
 					</div>
 				</div>
 			</div>
