@@ -1,54 +1,101 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import React from "react";
-import { Button } from "../ui/button";
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import { cn } from "#/lib/utils";
+import { Button } from "../ui/button";
+import { MenuIcon, type MenuIconHandle } from "../ui/menu";
+import { MobileNavDrawer } from "./mobile-nav/MobileNavDrawer";
+import { NAV_LINKS } from "./nav-links";
 
-export const Navbar: React.FC = () => {
+export function Navbar() {
 	const { pathname } = useLocation();
-	return (
-		<nav className="flex items-center justify-between max-w-360 mx-auto w-full px-16 py-2">
-			<div className="flex items-center gap-2">
-				<Link to="/">
-					<div className="w-25 h-18 bg-black/10"></div>
-				</Link>
-			</div>
-			<ul className="flex items-center gap-10">
-				{NAV_LINKS.map((link) => (
-					<li key={link.to}>
-						<Link
-							to={link.to}
-							className={cn(
-								"hover:text-primary duration-300 ease-in-out hover:font-semibold text-muted-foreground",
-								link.to === pathname && "text-primary font-medium",
-							)}
-						>
-							{link.label}
-						</Link>
-					</li>
-				))}
-			</ul>
-			<Button
-				nativeButton={false}
-				render={<Link to="/contact" />}
-				className="font-normal py-6 px-6"
-			>
-				Contact Us
-			</Button>
-		</nav>
-	);
-};
+	const [menuOpen, setMenuOpen] = useState(false);
+	const menuIconRef = useRef<MenuIconHandle>(null);
 
-const NAV_LINKS = [
-	{
-		label: "Home",
-		to: "/",
-	},
-	{
-		label: "About Us",
-		to: "/about",
-	},
-	{
-		label: "Contact",
-		to: "/contact-us",
-	},
-];
+	const closeMenu = useCallback(() => {
+		setMenuOpen(false);
+		menuIconRef.current?.stopAnimation();
+	}, []);
+
+	const toggleMenu = useCallback(() => {
+		setMenuOpen((isOpen) => {
+			const nextOpen = !isOpen;
+			if (nextOpen) {
+				menuIconRef.current?.startAnimation();
+			} else {
+				menuIconRef.current?.stopAnimation();
+			}
+			return nextOpen;
+		});
+	}, []);
+
+	useEffect(() => {
+		closeMenu();
+	}, [pathname, closeMenu]);
+
+	useEffect(() => {
+		const media = window.matchMedia("(min-width: 640px)");
+		const onChange = () => {
+			if (media.matches) {
+				closeMenu();
+			}
+		};
+
+		media.addEventListener("change", onChange);
+		return () => media.removeEventListener("change", onChange);
+	}, [closeMenu]);
+
+	return (
+		<>
+			<nav className="relative z-50 flex w-full max-w-360 items-center justify-between px-4 py-2 sm:px-16">
+				<div className="flex items-center gap-2">
+					<Link to="/">
+						<div className="h-18 w-25 bg-black/10" />
+					</Link>
+				</div>
+				<ul className="hidden items-center gap-10 sm:flex">
+					{NAV_LINKS.map((link) => (
+						<li key={link.to}>
+							<Link
+								to={link.to as "/"}
+								className={cn(
+									"text-muted-foreground duration-300 ease-in-out hover:font-semibold hover:text-primary",
+									link.to === pathname && "font-medium text-primary",
+								)}
+							>
+								{link.label}
+							</Link>
+						</li>
+					))}
+				</ul>
+				<Button
+					nativeButton={false}
+					render={<Link to={"/contact" as never} />}
+					className="hidden px-6 py-6 font-normal sm:block"
+				>
+					Contact Us
+				</Button>
+				<Button
+					type="button"
+					variant="ghost"
+					size="icon-lg"
+					className="sm:hidden p-0"
+					aria-expanded={menuOpen}
+					aria-controls="mobile-nav"
+					aria-label={menuOpen ? "Close menu" : "Open menu"}
+					onClick={toggleMenu}
+				>
+					<MenuIcon
+						ref={menuIconRef}
+						size={32}
+					/>
+				</Button>
+			</nav>
+			<MobileNavDrawer
+				open={menuOpen}
+				pathname={pathname}
+				onClose={closeMenu}
+			/>
+		</>
+	);
+}
