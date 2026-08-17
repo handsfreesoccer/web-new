@@ -4,7 +4,7 @@ import React from "react";
 
 export const HeroSection: React.FC = () => {
 	return (
-		<section className=" max-w-360 mx-auto px-4 py-16 sm:px-8 md:px-16 flex flex-col gap-16">
+		<section className="max-w-360 mx-auto px-4 py-8 sm:py-16 sm:px-8 md:px-16 flex flex-col gap-16">
 			<h1 className="@container w-full text-center font-bold leading-tight text-[min(4.5rem,calc(90cqi/11))]">
 				<span className="block">ACE YOUR GAME WITH</span>
 				<span className="block whitespace-nowrap">HANDSFREESOCCER</span>
