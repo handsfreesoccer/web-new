@@ -45,7 +45,7 @@ export const Story: React.FC = () => {
 							are built through consistent training, supportive coaching, and a
 							positive environment.
 						</p>
-						<div className="flex flex-wrap items-center justify-between gap-8 text-sm sm:text-base">
+						<div className="flex flex-wrap items-center justify-between gap-4 text-sm sm:flex-nowrap sm:gap-8 sm:text-base">
 							<p>
 								From young beginners to competitive athletes, our programs focus
 								on long-term growth, discipline, and love for the game, on and
