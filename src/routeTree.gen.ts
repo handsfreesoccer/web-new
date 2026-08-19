@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LayoutRouteRouteImport } from './routes/_layout/route'
 import { Route as LayoutIndexRouteRouteImport } from './routes/_layout/index/route'
 import { Route as LayoutAboutRouteRouteImport } from './routes/_layout/about/route'
+import { Route as LayoutContactUsRouteRouteImport } from './routes/_layout/contact-us/route'
 
 const LayoutRouteRoute = LayoutRouteRouteImport.update({
   id: '/_layout',
@@ -27,27 +28,40 @@ const LayoutAboutRouteRoute = LayoutAboutRouteRouteImport.update({
   path: '/about',
   getParentRoute: () => LayoutRouteRoute,
 } as any)
+const LayoutContactUsRouteRoute = LayoutContactUsRouteRouteImport.update({
+  id: '/contact-us',
+  path: '/contact-us',
+  getParentRoute: () => LayoutRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRouteRoute
   '/about': typeof LayoutAboutRouteRoute
+  '/contact-us': typeof LayoutContactUsRouteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof LayoutIndexRouteRoute
   '/about': typeof LayoutAboutRouteRoute
+  '/contact-us': typeof LayoutContactUsRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteRouteWithChildren
   '/_layout/': typeof LayoutIndexRouteRoute
   '/_layout/about': typeof LayoutAboutRouteRoute
+  '/_layout/contact-us': typeof LayoutContactUsRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths: '/' | '/about' | '/contact-us'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/_layout' | '/_layout/' | '/_layout/about'
+  to: '/' | '/about' | '/contact-us'
+  id:
+    | '__root__'
+    | '/_layout'
+    | '/_layout/'
+    | '/_layout/about'
+    | '/_layout/contact-us'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,17 +91,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAboutRouteRouteImport
       parentRoute: typeof LayoutRouteRoute
     }
+    '/_layout/contact-us': {
+      id: '/_layout/contact-us'
+      path: '/contact-us'
+      fullPath: '/contact-us'
+      preLoaderRoute: typeof LayoutContactUsRouteRouteImport
+      parentRoute: typeof LayoutRouteRoute
+    }
   }
 }
 
 interface LayoutRouteRouteChildren {
   LayoutIndexRouteRoute: typeof LayoutIndexRouteRoute
   LayoutAboutRouteRoute: typeof LayoutAboutRouteRoute
+  LayoutContactUsRouteRoute: typeof LayoutContactUsRouteRoute
 }
 
 const LayoutRouteRouteChildren: LayoutRouteRouteChildren = {
   LayoutIndexRouteRoute: LayoutIndexRouteRoute,
   LayoutAboutRouteRoute: LayoutAboutRouteRoute,
+  LayoutContactUsRouteRoute: LayoutContactUsRouteRoute,
 }
 
 const LayoutRouteRouteWithChildren = LayoutRouteRoute._addFileChildren(

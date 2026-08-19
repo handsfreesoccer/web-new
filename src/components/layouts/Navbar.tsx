@@ -70,7 +70,7 @@ export function Navbar() {
 				</ul>
 				<Button
 					nativeButton={false}
-					render={<Link to={"/contact" as never} />}
+					render={<Link to={"/contact-us" as never} />}
 					className="hidden px-6 py-6 font-normal sm:flex"
 				>
 					Contact Us
