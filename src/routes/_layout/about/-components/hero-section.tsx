@@ -18,7 +18,7 @@ export const HeroSection: React.FC = () => {
 						</p>
 					</div>
 				</div>
-				<div className="relative flex h-80 flex-col justify-evenly gap-8 overflow-hidden rounded-3xl">
+				<div className="relative flex h-90 flex-col justify-evenly gap-8 overflow-hidden rounded-3xl">
 					<img
 						src="https://placehold.co/600x480/black/black"
 						alt="Hero Section"

@@ -89,7 +89,7 @@ export function Navbar() {
 						render={<Link to={"/contact-us" as never} />}
 						className="hidden px-6 py-6 font-normal sm:flex"
 					>
-						Contact Us
+						Join Us
 					</Button>
 					<Button
 						type="button"
