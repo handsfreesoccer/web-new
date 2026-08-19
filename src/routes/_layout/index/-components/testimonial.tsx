@@ -20,7 +20,7 @@ export const Testimonial: React.FC = () => {
 						</span>
 						<p className="font-medium text-base">Value</p>
 					</div>
-					<div className="flex w-full flex-1 justify-between gap-6">
+					<div className="flex w-full flex-1 flex-wrap justify-between gap-2 sm:gap-6">
 						<h2 className="text-balance font-bold text-5xl leading-tight">
 							WHAT PLAYERS SAY
 						</h2>
@@ -227,7 +227,7 @@ const TestimonialCard: React.FC<{
 }> = ({ testimonial }) => {
 	return (
 		<li className="flex w-[min(22.5rem,100cqw)] shrink-0 flex-col gap-10 rounded-xl bg-primary/30 px-6 py-8">
-			<div className="flex items-start justify-between gap-16">
+			<div className="flex items-start justify-between">
 				<QuoteIcon
 					className="*:fill-muted-foreground *:stroke-muted-foreground"
 					size={56}
