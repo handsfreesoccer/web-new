@@ -204,4 +204,9 @@ input[type="number"] {
     background-color: var(--primary); 
     color: white;        
   }
+
+	footer ::selection {
+		background-color: white;
+		color: var(--primary);
+	}
 }

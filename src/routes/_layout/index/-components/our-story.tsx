@@ -33,7 +33,7 @@ export const OurStory: React.FC = () => {
 					</div>
 					<div className="relative col-span-1 h-full overflow-hidden rounded-2xl md:col-span-4">
 						<img
-							src="https://placehold.co/320/green/green"
+							src="https://placehold.co/320/black/black"
 							alt="Player walking on the pitch"
 							className="absolute inset-0 size-full object-cover outline-1 outline-black/10"
 						/>

@@ -69,7 +69,7 @@ export const WhyWithUs: React.FC = () => {
 							</div>
 							<div className="relative row-span-3 min-h-40 overflow-hidden rounded-3xl sm:min-h-0">
 								<img
-									src="https://placehold.co/600x480/green/green"
+									src="https://placehold.co/600x480/black/black"
 									alt="Soccer ball on the pitch line"
 									className="absolute inset-0 size-full object-cover outline-1 outline-black/10"
 								/>
