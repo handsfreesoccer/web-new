@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { CoreValues } from "./-components/core-values";
 import { HeroSection } from "./-components/hero-section";
 import { Story } from "./-components/story";
 
@@ -11,6 +12,7 @@ function RouteComponent() {
 		<div className="flex-1">
 			<HeroSection />
 			<Story />
+			<CoreValues />
 		</div>
 	);
 }
