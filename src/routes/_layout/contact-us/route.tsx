@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Faq } from "./-components/faq";
 import { FindOurCourts } from "./-components/find-our-courts";
 import { HeroSection } from "./-components/hero-section";
 import { MessageForm } from "./-components/message-form";
@@ -13,6 +14,7 @@ function RouteComponent() {
 			<HeroSection />
 			<MessageForm />
 			<FindOurCourts />
+			<Faq />
 		</div>
 	);
 }
