@@ -17,7 +17,7 @@ export const TakeFirstStep: React.FC = () => {
 						<h2 className="max-w-[12ch] flex-1 text-pretty text-center font-bold text-[min(4.5rem,calc(90cqi/11))] text-white leading-tight">
 							TAKE THE FIRST STEP TODAY
 						</h2>
-						<p className="w-full text-center text-base text-white sm:w-[65ch] sm:text-sm">
+						<p className="w-full text-center text-sm text-white sm:w-[65ch] sm:text-base">
 							Train with expert coaches, access world-class courts, and build
 							skills step by step, whether you're a beginner or aiming for
 							competition.
