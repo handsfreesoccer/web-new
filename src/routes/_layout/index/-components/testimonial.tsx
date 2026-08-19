@@ -10,7 +10,7 @@ import { cn } from "#/lib/utils";
 
 export const Testimonial: React.FC = () => {
 	return (
-		<section className="mx-auto flex flex-col gap-16 overflow-hidden px-4 py-8 sm:px-8 sm:py-16 md:px-16">
+		<section className="mx-auto flex flex-col items-center gap-16 overflow-hidden px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 			<div className="flex w-full max-w-360 flex-col justify-between gap-10">
 				<div className="flex flex-1 flex-col items-start gap-6">
 					<div className="flex items-center gap-2">
@@ -44,10 +44,10 @@ const TestimonialCarousel: React.FC<{
 
 	return (
 		<div className="flex w-full flex-col gap-6">
-			<div ref={viewportRef} className="w-full">
+			<div ref={viewportRef} className="@container w-full">
 				<ul
 					ref={listRef}
-					className="flex items-stretch gap-4 will-change-transform"
+					className="flex transform-gpu flex-nowrap items-stretch gap-4 will-change-transform"
 				>
 					{testimonials.map((testimonial) => (
 						<TestimonialCard key={testimonial.id} testimonial={testimonial} />
@@ -90,6 +90,7 @@ function useTestimonialCarousel() {
 	const viewportRef = useRef<HTMLDivElement>(null);
 	const listRef = useRef<HTMLUListElement>(null);
 	const offsetRef = useRef(0);
+	const animationRef = useRef<ReturnType<typeof animate> | null>(null);
 	const [canGoPrev, setCanGoPrev] = useState(false);
 	const [canGoNext, setCanGoNext] = useState(false);
 
@@ -103,17 +104,17 @@ function useTestimonialCarousel() {
 			return null;
 		}
 
-		const itemWidth = firstItem.getBoundingClientRect().width;
-		const gap = Number.parseFloat(getComputedStyle(list).columnGap) || 0;
-		const contentWidth =
-			items.reduce((sum, item) => sum + item.getBoundingClientRect().width, 0) +
-			gap * Math.max(0, items.length - 1);
-		const maxOffset = Math.max(
-			0,
-			contentWidth - viewport.getBoundingClientRect().width,
+		const itemWidth = firstItem.offsetWidth;
+		const gap = Math.round(
+			Number.parseFloat(getComputedStyle(list).columnGap) || 0,
 		);
+		const step = itemWidth + gap;
+		const contentWidth =
+			items.reduce((sum, item) => sum + item.offsetWidth, 0) +
+			gap * Math.max(0, items.length - 1);
+		const maxOffset = Math.max(0, contentWidth - viewport.clientWidth);
 
-		return { itemWidth, maxOffset };
+		return { maxOffset, step };
 	}, []);
 
 	const syncButtons = useCallback((offset: number, maxOffset: number) => {
@@ -127,11 +128,14 @@ function useTestimonialCarousel() {
 			return;
 		}
 
-		offsetRef.current = nextOffset;
-		animate(list, {
-			translateX: -nextOffset,
+		const roundedOffset = Math.round(nextOffset);
+		offsetRef.current = roundedOffset;
+		animationRef.current?.pause();
+		animationRef.current = animate(list, {
+			translateX: -roundedOffset,
 			duration: prefersReducedMotion() ? 0 : CAROUSEL_DURATION,
 			ease: CAROUSEL_EASE,
+			composition: "replace",
 		});
 	}, []);
 
@@ -141,7 +145,7 @@ function useTestimonialCarousel() {
 			return;
 		}
 
-		const nextOffset = Math.max(0, offsetRef.current - metrics.itemWidth);
+		const nextOffset = Math.max(0, offsetRef.current - metrics.step);
 		if (Math.abs(nextOffset - offsetRef.current) < OFFSET_EPSILON) {
 			syncButtons(offsetRef.current, metrics.maxOffset);
 			return;
@@ -159,7 +163,7 @@ function useTestimonialCarousel() {
 
 		const nextOffset = Math.min(
 			metrics.maxOffset,
-			offsetRef.current + metrics.itemWidth,
+			offsetRef.current + metrics.step,
 		);
 		if (Math.abs(nextOffset - offsetRef.current) < OFFSET_EPSILON) {
 			syncButtons(offsetRef.current, metrics.maxOffset);
@@ -172,8 +176,7 @@ function useTestimonialCarousel() {
 
 	useLayoutEffect(() => {
 		const viewport = viewportRef.current;
-		const list = listRef.current;
-		if (!viewport || !list) {
+		if (!viewport) {
 			return;
 		}
 
@@ -186,21 +189,26 @@ function useTestimonialCarousel() {
 			const nextOffset = Math.min(offsetRef.current, metrics.maxOffset);
 			if (Math.abs(nextOffset - offsetRef.current) > OFFSET_EPSILON) {
 				animateTo(nextOffset);
+			} else {
+				offsetRef.current = nextOffset;
 			}
 			syncButtons(nextOffset, metrics.maxOffset);
 		};
 
 		clampToBounds();
 
-		const observer = new ResizeObserver(clampToBounds);
+		let frame = 0;
+		const observer = new ResizeObserver(() => {
+			cancelAnimationFrame(frame);
+			frame = requestAnimationFrame(clampToBounds);
+		});
 		observer.observe(viewport);
-		const firstItem = list.firstElementChild;
-		if (firstItem) {
-			observer.observe(firstItem);
-		}
 
 		return () => {
+			cancelAnimationFrame(frame);
 			observer.disconnect();
+			animationRef.current?.pause();
+			animationRef.current = null;
 		};
 	}, [animateTo, getMetrics, syncButtons]);
 
@@ -218,7 +226,7 @@ const TestimonialCard: React.FC<{
 	testimonial: (typeof TESTIMONIALS)[number];
 }> = ({ testimonial }) => {
 	return (
-		<li className="flex w-[min(100%,22.5rem)] shrink-0 flex-col gap-10 rounded-xl bg-primary/30 px-6 py-8">
+		<li className="flex w-[min(22.5rem,100cqw)] shrink-0 flex-col gap-10 rounded-xl bg-primary/30 px-6 py-8">
 			<div className="flex items-start justify-between gap-16">
 				<QuoteIcon
 					className="*:fill-muted-foreground *:stroke-muted-foreground"
