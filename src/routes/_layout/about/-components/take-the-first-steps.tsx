@@ -16,7 +16,7 @@ export const TakeTheFirstSteps: React.FC = () => {
 					<h1 className="max-w-[15ch] text-balance text-center font-bold text-4xl text-white leading-tight sm:text-left sm:text-7xl">
 						TAKE THE FIRST STEPS TODAY
 					</h1>
-					<div className="flex flex-col items-center justify-between gap-4 rounded-2xl bg-white p-6 sm:flex-row sm:items-start sm:gap-8 sm:p-8">
+					<div className="flex flex-col items-center justify-between gap-4 rounded-2xl bg-white p-6 sm:w-full sm:flex-row sm:items-start sm:gap-8 sm:p-8">
 						<p className="max-w-[32ch] text-muted-foreground">
 							Train with expert coaches, access world-class courts, and build
 							skills step by step.
