@@ -75,7 +75,7 @@ const VALUES = [
 	{
 		number: "02",
 		title: "PASSION",
-		body: "We teach with energy and genuine love for tennis.",
+		body: "We teach with energy and genuine love for soccer.",
 	},
 	{
 		number: "03",
@@ -85,6 +85,6 @@ const VALUES = [
 	{
 		number: "04",
 		title: "COMMUNITY",
-		body: "We build connections that last beyond the court.",
+		body: "We build connections that last beyond the pitch.",
 	},
 ];

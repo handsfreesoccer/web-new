@@ -61,7 +61,7 @@ const FAQS = [
 	},
 	{
 		id: "gear",
-		question: "Do I need to bring my own racket and tennis gear to join?",
+		question: "Do I need to bring my own boots and soccer gear to join?",
 		answer:
 			"Basic equipment is available for beginners, and you're welcome to bring your own anytime.",
 	},

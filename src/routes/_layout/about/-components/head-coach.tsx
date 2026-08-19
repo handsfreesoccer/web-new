@@ -32,7 +32,7 @@ export const HeadCoach: React.FC = () => {
 						<p className="text-pretty text-muted-foreground">
 							Omeiza Akerele leads HandsFreeSoccer Academy with a simple belief:
 							great athletes are developed, not rushed. He brings years of
-							on-court experience, a clear training philosophy, and a focus on
+							on-pitch experience, a clear training philosophy, and a focus on
 							fundamentals that last. From first-time players to competitive
 							athletes, he shapes sessions that are demanding, supportive, and
 							built around each player&apos;s next step.

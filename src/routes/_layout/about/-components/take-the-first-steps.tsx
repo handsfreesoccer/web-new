@@ -18,7 +18,7 @@ export const TakeTheFirstSteps: React.FC = () => {
 					</h1>
 					<div className="flex flex-col items-center justify-between gap-4 rounded-2xl bg-white p-6 sm:w-full sm:flex-row sm:items-start sm:gap-8 sm:p-8">
 						<p className="max-w-[32ch] text-muted-foreground">
-							Train with expert coaches, access world-class courts, and build
+							Train with expert coaches, access world-class pitches, and build
 							skills step by step.
 						</p>
 						<Button

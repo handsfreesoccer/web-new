@@ -40,7 +40,7 @@ export const Story: React.FC = () => {
 					</div>
 					<div className="flex flex-col gap-10">
 						<p className="font-light text-2xl sm:text-3xl">
-							Bouncy Tennis Academy was created to make tennis welcoming,
+							HandsFreeSoccer Academy was created to make soccer welcoming,
 							structured, and enjoyable for everyone. We believe great players
 							are built through consistent training, supportive coaching, and a
 							positive environment.
@@ -49,7 +49,7 @@ export const Story: React.FC = () => {
 							<p>
 								From young beginners to competitive athletes, our programs focus
 								on long-term growth, discipline, and love for the game, on and
-								off the court.
+								off the pitch.
 							</p>
 							<Button
 								nativeButton={false}

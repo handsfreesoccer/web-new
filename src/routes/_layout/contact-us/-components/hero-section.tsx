@@ -10,7 +10,7 @@ export const HeroSection: React.FC = () => {
 					</h1>
 					<div className="flex w-full flex-col flex-wrap justify-between gap-4 sm:flex-row sm:gap-8">
 						<h2 className="font-light text-4xl text-muted-foreground sm:text-5xl">
-							ABOUT TENNIS
+							ABOUT SOCCER
 						</h2>
 						<p className="text-muted-foreground sm:max-w-[30ch] sm:self-end">
 							Have a question about classes, schedules, or enrollment? We're
@@ -21,7 +21,7 @@ export const HeroSection: React.FC = () => {
 				<div className="relative flex h-80 flex-col justify-evenly gap-8 overflow-hidden rounded-3xl">
 					<img
 						src="https://placehold.co/600x480/black/black"
-						alt="Tennis rackets and a ball on the court"
+						alt="Soccer ball on the pitch"
 						className="absolute h-full w-full object-cover"
 					/>
 				</div>

@@ -18,7 +18,7 @@ export const TakeFirstStep: React.FC = () => {
 							TAKE THE FIRST STEP TODAY
 						</h2>
 						<p className="w-full text-center text-sm text-white sm:w-[65ch] sm:text-base">
-							Train with expert coaches, access world-class courts, and build
+							Train with expert coaches, access world-class pitches, and build
 							skills step by step, whether you're a beginner or aiming for
 							competition.
 						</p>

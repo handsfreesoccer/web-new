@@ -68,39 +68,39 @@ const GalleryItem: React.FC<{ image: GalleryImage }> = ({ image }) => {
 
 const GALLERY_IMAGES: GalleryImage[] = [
 	{
-		id: "training-swing",
+		id: "training-dribble",
 		src: "https://placehold.co/800x600/1a1a1a/white?text=Training",
-		alt: "Player swinging a racket during a training session",
+		alt: "Player dribbling during a training session",
 		aspect: "landscape",
 	},
 	{
-		id: "tennis-ball",
+		id: "soccer-ball",
 		src: "https://placehold.co/600x900/1a1a1a/white?text=Ball",
-		alt: "Tennis ball on a court line",
+		alt: "Soccer ball on a pitch line",
 		aspect: "portrait",
 	},
 	{
-		id: "serve",
-		src: "https://placehold.co/800x560/1a1a1a/white?text=Serve",
-		alt: "Player mid-serve on a blue court",
+		id: "shot",
+		src: "https://placehold.co/800x560/1a1a1a/white?text=Shot",
+		alt: "Player striking the ball on the pitch",
 		aspect: "wide",
 	},
 	{
-		id: "net",
-		src: "https://placehold.co/800x700/1a1a1a/white?text=Net",
-		alt: "Close-up of a tennis net on a green court",
+		id: "goal",
+		src: "https://placehold.co/800x700/1a1a1a/white?text=Goal",
+		alt: "Close-up of a soccer goal on a green pitch",
 		aspect: "square",
 	},
 	{
 		id: "practice",
 		src: "https://placehold.co/800x600/1a1a1a/white?text=Practice",
-		alt: "Athlete resting on court after practice",
+		alt: "Athlete resting on the pitch after practice",
 		aspect: "landscape",
 	},
 	{
 		id: "ready-position",
 		src: "https://placehold.co/600x900/1a1a1a/white?text=Match",
-		alt: "Player in a ready position on court",
+		alt: "Player in a ready position on the pitch",
 		aspect: "portrait",
 	},
 ];

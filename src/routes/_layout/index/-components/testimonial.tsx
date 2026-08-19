@@ -26,7 +26,7 @@ export const Testimonial: React.FC = () => {
 						</h2>
 
 						<p className="max-w-[35ch] text-pretty text-muted-foreground">
-							See how bouncy helps players build skills and confidence.
+							See how HandsFreeSoccer helps players build skills and confidence.
 						</p>
 					</div>
 					<TestimonialCarousel testimonials={TESTIMONIALS} />
@@ -270,7 +270,7 @@ const TESTIMONIALS = [
 		profileUrl: "/images/home/testimonials/james-grant.png",
 		name: "James Grant",
 		class: "College Student",
-		body: "Bouncy made me fall in love with tennis! The coaches are patient and motivating, and the classes are always fun.",
+		body: "HandsFreeSoccer made me fall in love with the game! The coaches are patient and motivating, and the classes are always fun.",
 	},
 	{
 		id: "kale-maison-1",
@@ -278,7 +278,7 @@ const TESTIMONIALS = [
 		profileUrl: "/images/home/testimonials/kale-maison.png",
 		name: "Kale Maison",
 		class: "Marketing Professional",
-		body: "The perfect place to start and grow. I improved my technique and also made great friends on the court.",
+		body: "The perfect place to start and grow. I improved my technique and also made great friends on the pitch.",
 	},
 	{
 		id: "vera-winsley-1",
@@ -286,7 +286,7 @@ const TESTIMONIALS = [
 		profileUrl: "/images/home/testimonials/vera-winsley.png",
 		name: "Vera Winsley",
 		class: "Software Engineer",
-		body: "Their private coaching program boosted my confidence. I even joined my first tournament last year thanks to Bouncy.",
+		body: "Their private coaching program boosted my confidence. I even joined my first tournament last year thanks to HandsFreeSoccer.",
 	},
 	{
 		id: "james-grant-2",
@@ -294,7 +294,7 @@ const TESTIMONIALS = [
 		profileUrl: "/images/home/testimonials/james-grant.png",
 		name: "James Grant",
 		class: "College Student",
-		body: "Bouncy made me fall in love with tennis! The coaches are patient and motivating, and the classes are always fun.",
+		body: "HandsFreeSoccer made me fall in love with the game! The coaches are patient and motivating, and the classes are always fun.",
 	},
 	{
 		id: "kale-maison-2",
@@ -302,7 +302,7 @@ const TESTIMONIALS = [
 		profileUrl: "/images/home/testimonials/kale-maison.png",
 		name: "Kale Maison",
 		class: "Marketing Professional",
-		body: "The perfect place to start and grow. I improved my technique and also made great friends on the court.",
+		body: "The perfect place to start and grow. I improved my technique and also made great friends on the pitch.",
 	},
 	{
 		id: "vera-winsley-2",
@@ -310,7 +310,7 @@ const TESTIMONIALS = [
 		profileUrl: "/images/home/testimonials/vera-winsley.png",
 		name: "Vera Winsley",
 		class: "Software Engineer",
-		body: "Their private coaching program boosted my confidence. I even joined my first tournament last year thanks to Bouncy.",
+		body: "Their private coaching program boosted my confidence. I even joined my first tournament last year thanks to HandsFreeSoccer.",
 	},
 	{
 		id: "james-grant-3",
@@ -318,7 +318,7 @@ const TESTIMONIALS = [
 		profileUrl: "/images/home/testimonials/james-grant.png",
 		name: "James Grant",
 		class: "College Student",
-		body: "Bouncy made me fall in love with tennis! The coaches are patient and motivating, and the classes are always fun.",
+		body: "HandsFreeSoccer made me fall in love with the game! The coaches are patient and motivating, and the classes are always fun.",
 	},
 	{
 		id: "kale-maison-3",
@@ -326,7 +326,7 @@ const TESTIMONIALS = [
 		profileUrl: "/images/home/testimonials/kale-maison.png",
 		name: "Kale Maison",
 		class: "Marketing Professional",
-		body: "The perfect place to start and grow. I improved my technique and also made great friends on the court.",
+		body: "The perfect place to start and grow. I improved my technique and also made great friends on the pitch.",
 	},
 	{
 		id: "vera-winsley-3",
@@ -334,6 +334,6 @@ const TESTIMONIALS = [
 		profileUrl: "/images/home/testimonials/vera-winsley.png",
 		name: "Vera Winsley",
 		class: "Software Engineer",
-		body: "Their private coaching program boosted my confidence. I even joined my first tournament last year thanks to Bouncy.",
+		body: "Their private coaching program boosted my confidence. I even joined my first tournament last year thanks to HandsFreeSoccer.",
 	},
 ];

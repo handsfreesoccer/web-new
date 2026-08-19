@@ -32,7 +32,7 @@ export const Classes: React.FC = () => {
 				<div className="grid w-full gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
 					<img
 						src="https://placehold.co/800x600/black/white?text=Class"
-						alt="Player serving during competitive training"
+						alt="Player shooting during competitive training"
 						className="h-full min-h-64 w-full rounded-2xl object-cover outline outline-black/10 dark:outline-white/10"
 					/>
 					<div className="flex flex-col gap-6">

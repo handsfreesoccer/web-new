@@ -11,14 +11,14 @@ export const FindOurCourts: React.FC = () => {
 						<span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-75" />
 						<span className="relative size-2 rounded-full bg-primary" />
 					</span>
-					<p className="font-medium text-base">Courts</p>
+					<p className="font-medium text-base">Pitches</p>
 				</div>
 				<div className="flex w-full flex-wrap justify-between gap-2 sm:gap-6">
 					<h2 className="text-balance font-bold text-5xl leading-tight">
-						FIND OUR COURTS
+						FIND OUR PITCHES
 					</h2>
 					<p className="max-w-[28ch] text-pretty text-muted-foreground">
-						Play on world-class courts designed for every player's needs.
+						Play on world-class pitches designed for every player's needs.
 					</p>
 				</div>
 			</div>
@@ -108,11 +108,11 @@ const CourtRow: React.FC<{
 const COURTS = [
 	{
 		id: "greenwood-park",
-		name: "Greenwood Park Court",
+		name: "Greenwood Park Pitch",
 		address: "456 Forest Road, Greenwood Park Area, Los Angeles, CA 90028",
 		phone: "(123) 777-8888",
 		phoneHref: "+11237778888",
-		email: "greenwood@bouncy.com",
+		email: "greenwood@handsfreesoccer.com",
 		mapUrl:
 			"https://www.google.com/maps/search/?api=1&query=456%20Forest%20Road%2C%20Greenwood%20Park%20Area%2C%20Los%20Angeles%2C%20CA%2090028",
 		embedUrl:
@@ -120,11 +120,11 @@ const COURTS = [
 	},
 	{
 		id: "west-side",
-		name: "West Side Court",
+		name: "West Side Pitch",
 		address: "88 Sunset Avenue, West District, Los Angeles, CA 90026",
 		phone: "(123) 222-3333",
 		phoneHref: "+11232223333",
-		email: "west@bouncy.com",
+		email: "west@handsfreesoccer.com",
 		mapUrl:
 			"https://www.google.com/maps/search/?api=1&query=88%20Sunset%20Avenue%2C%20West%20District%2C%20Los%20Angeles%2C%20CA%2090026",
 		embedUrl:

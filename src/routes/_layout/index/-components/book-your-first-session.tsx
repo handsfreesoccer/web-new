@@ -37,7 +37,7 @@ export const BookYourFirstSession: React.FC = () => {
 							BOOK YOUR FIRST SESSION
 						</h1>
 						<p className="text-center text-muted-foreground text-sm sm:text-base">
-							Reserve your spot today and start swinging with confidence.
+							Reserve your spot today and start playing with confidence.
 						</p>
 					</div>
 					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

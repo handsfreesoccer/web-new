@@ -13,7 +13,7 @@ export const HeroSection: React.FC = () => {
 							HANDSFREESOCCER ACADEMY
 						</h2>
 						<p className="text-muted-foreground sm:max-w-[30ch] sm:self-end">
-							A place where passion for tennis grows into skill, confidence, and
+							A place where passion for soccer grows into skill, confidence, and
 							community.
 						</p>
 					</div>
