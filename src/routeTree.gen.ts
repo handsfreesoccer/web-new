@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LayoutRouteRouteImport } from './routes/_layout/route'
 import { Route as LayoutIndexRouteRouteImport } from './routes/_layout/index/route'
+import { Route as LayoutAboutRouteRouteImport } from './routes/_layout/about/route'
 
 const LayoutRouteRoute = LayoutRouteRouteImport.update({
   id: '/_layout',
@@ -21,24 +22,32 @@ const LayoutIndexRouteRoute = LayoutIndexRouteRouteImport.update({
   path: '',
   getParentRoute: () => LayoutRouteRoute,
 } as any)
+const LayoutAboutRouteRoute = LayoutAboutRouteRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => LayoutRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRouteRoute
+  '/about': typeof LayoutAboutRouteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof LayoutIndexRouteRoute
+  '/about': typeof LayoutAboutRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteRouteWithChildren
   '/_layout/': typeof LayoutIndexRouteRoute
+  '/_layout/about': typeof LayoutAboutRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/about'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/_layout' | '/_layout/'
+  to: '/' | '/about'
+  id: '__root__' | '/_layout' | '/_layout/' | '/_layout/about'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -61,15 +70,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexRouteRouteImport
       parentRoute: typeof LayoutRouteRoute
     }
+    '/_layout/about': {
+      id: '/_layout/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof LayoutAboutRouteRouteImport
+      parentRoute: typeof LayoutRouteRoute
+    }
   }
 }
 
 interface LayoutRouteRouteChildren {
   LayoutIndexRouteRoute: typeof LayoutIndexRouteRoute
+  LayoutAboutRouteRoute: typeof LayoutAboutRouteRoute
 }
 
 const LayoutRouteRouteChildren: LayoutRouteRouteChildren = {
   LayoutIndexRouteRoute: LayoutIndexRouteRoute,
+  LayoutAboutRouteRoute: LayoutAboutRouteRoute,
 }
 
 const LayoutRouteRouteWithChildren = LayoutRouteRoute._addFileChildren(
