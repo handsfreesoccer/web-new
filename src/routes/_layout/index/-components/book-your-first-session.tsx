@@ -27,7 +27,7 @@ export const BookYourFirstSession: React.FC = () => {
 		<section className="relative mx-auto flex max-w-360 flex-col gap-12 px-4 py-8 sm:gap-16 sm:px-8 sm:py-16 md:px-16">
 			<div className="relative grid w-full place-content-center overflow-hidden rounded-3xl p-4 sm:p-16">
 				<img
-					src="https://placehold.co/600x480/pink/pink"
+					src="https://placehold.co/600x480/black/black"
 					alt="Book Your First Session"
 					className="absolute inset-0 size-full object-cover"
 				/>
