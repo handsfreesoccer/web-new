@@ -34,26 +34,26 @@ const CoreValueCarousel: React.FC = () => {
 	return (
 		<div className="flex w-full flex-col gap-6">
 			<div className="@container w-full">
-				<ul className="flex flex-wrap items-stretch gap-6 will-change-transform">
+				<ul className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 xl:flex xl:flex-nowrap">
 					{VALUES.map((value) => (
 						<li
-							className="group relative flex h-90 flex-[0.6] flex-col gap-4 overflow-hidden rounded-xl bg-muted p-6 duration-300 ease-in-out hover:flex-1"
+							className="group relative flex h-90 min-w-0 flex-col gap-4 overflow-hidden rounded-xl bg-muted p-6 xl:grow-[0.6] xl:basis-0 xl:transition-[flex-grow] xl:duration-300 xl:ease-out xl:hover:grow"
 							key={value.number}
 						>
 							<img
 								src="https://placehold.co/600x400/black/white"
 								alt=""
-								className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 group-hover:block group-hover:opacity-100"
+								className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 							/>
 							<div className="relative flex flex-1 flex-col justify-between gap-4">
-								<h3 className="w-full text-balance text-left font-bold text-6xl text-muted-foreground leading-tight duration-300 ease-in-out group-hover:text-4xl">
+								<h3 className="w-full text-balance text-left font-bold text-6xl text-muted-foreground leading-tight transition-[font-size] duration-300 ease-out group-hover:text-4xl">
 									{value.number}
 								</h3>
 								<div className="flex flex-col gap-2 text-left">
-									<p className="text-pretty font-semibold text-4xl text-primary duration-300 ease-in-out group-hover:text-white">
+									<p className="text-pretty font-semibold text-4xl text-primary transition-colors duration-300 ease-out group-hover:text-white">
 										{value.title}
 									</p>
-									<p className="text-pretty text-muted-foreground duration-300 ease-in-out group-hover:text-white">
+									<p className="text-pretty text-muted-foreground transition-colors duration-300 ease-out group-hover:text-white">
 										{value.body}
 									</p>
 								</div>
