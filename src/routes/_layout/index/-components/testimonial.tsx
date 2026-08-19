@@ -226,12 +226,9 @@ const TestimonialCard: React.FC<{
 	testimonial: (typeof TESTIMONIALS)[number];
 }> = ({ testimonial }) => {
 	return (
-		<li className="flex w-[min(22.5rem,100cqw)] shrink-0 flex-col gap-10 rounded-xl bg-primary/30 px-6 py-8">
+		<li className="flex w-[min(22.5rem,100cqw)] shrink-0 flex-col justify-between gap-10 rounded-xl bg-accent px-6 py-8">
 			<div className="flex items-start justify-between">
-				<QuoteIcon
-					className="*:fill-muted-foreground *:stroke-muted-foreground"
-					size={56}
-				/>
+				<QuoteIcon className="*:fill-primary *:stroke-primary" size={56} />
 				<ul className="flex items-center gap-1">
 					{[1, 2, 3, 4, 5].map((item) => (
 						<li key={`${testimonial.name}-${item}`}>
