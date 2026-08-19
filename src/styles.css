@@ -181,15 +181,27 @@ input[type="number"] {
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 caret-primary!;
 	}
+
   body {
     @apply bg-background text-foreground;
 	}
+
   html {
-    @apply font-sans;
+    @apply font-sans ;
 	}
+
+	h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+	}
+
   #mobile-nav {
     transform: translate3d(100%, 0, 0);
+  }
+
+	::selection {
+    background-color: var(--primary); 
+    color: white;        
   }
 }

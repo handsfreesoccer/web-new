@@ -1,3 +1,4 @@
+import NumberFlow from "@number-flow/react";
 import type React from "react";
 
 const WHY_WITH_US_VALUES = [
@@ -60,7 +61,7 @@ export const WhyWithUs: React.FC = () => {
 							</div>
 							<div className="row-span-2 flex flex-col items-start justify-center rounded-3xl bg-primary px-8 py-10">
 								<p className="font-semibold text-5xl text-white md:text-6xl">
-									95%
+									<NumberFlow value={95} suffix="%" />
 								</p>
 								<p className="font-medium text-base text-white">
 									Students Satisfaction
