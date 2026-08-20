@@ -1,12 +1,10 @@
-import { useLocation } from "@tanstack/react-router";
-import { useLenis } from "lenis/react";
 import { ArrowRightIcon } from "lucide-react";
 import type React from "react";
-import { useEffect } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
 import { BOOKING_SECTION_ID } from "#/lib/constants";
+import { useHashScroll } from "#/lib/use-hash-scroll";
 import {
 	Select,
 	SelectContent,
@@ -26,28 +24,7 @@ const CLASSES = [
 const fieldClassName = "h-10";
 
 export const BookYourFirstSession: React.FC = () => {
-	const hash = useLocation({ select: (location) => location.hash });
-	const lenis = useLenis();
-
-	useEffect(() => {
-		const target = hash.replace(/^#/, "");
-		if (target !== BOOKING_SECTION_ID) {
-			return;
-		}
-
-		const frame = requestAnimationFrame(() => {
-			const selector = `#${BOOKING_SECTION_ID}`;
-			if (lenis) {
-				lenis.scrollTo(selector);
-				return;
-			}
-			document
-				.getElementById(BOOKING_SECTION_ID)
-				?.scrollIntoView({ behavior: "smooth" });
-		});
-
-		return () => cancelAnimationFrame(frame);
-	}, [hash, lenis]);
+	useHashScroll(BOOKING_SECTION_ID);
 
 	return (
 		<section

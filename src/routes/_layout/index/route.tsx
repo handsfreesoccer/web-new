@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { LifeAtHFS } from "../about/-components/life-at-hfs";
 import { BookYourFirstSession } from "./-components/book-your-first-session";
 import { HeroSection } from "./-components/hero-section";
 import { IntroVideo } from "./-components/intro-video";
@@ -15,6 +16,7 @@ function Home() {
 			<WhyWithUs />
 			<IntroVideo />
 			<OurStory />
+			<LifeAtHFS />
 			<BookYourFirstSession />
 			<TakeFirstStep />
 		</div>

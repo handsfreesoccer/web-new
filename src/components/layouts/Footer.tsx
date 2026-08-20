@@ -96,7 +96,7 @@ export const Footer: React.FC = () => {
 										href="https://www.google.com/maps/search/?api=1&query=Allen%2C%20McKinney%2C%20Melissa%2C%20Princeton%2C%20TX"
 										target="_blank"
 										rel="noopener noreferrer"
-										className="flex items-center gap-2 font-light text-secondary-foreground tracking-wider duration-300 ease-in-out hover:font-semibold"
+										className="flex items-center gap-2 font-light text-secondary-foreground tracking-wider duration-300 ease-in-out"
 									>
 										<MapPinIcon className="size-4 shrink-0" />
 										{CONTACT.serviceArea}
@@ -105,20 +105,17 @@ export const Footer: React.FC = () => {
 								<li>
 									<a
 										href={`tel:${CONTACT.phoneHref}`}
-										className="flex items-center gap-2 font-light text-secondary-foreground tracking-wider duration-300 ease-in-out hover:font-semibold"
+										className="flex items-center gap-2 font-light text-secondary-foreground tracking-wider duration-300 ease-in-out"
 									>
 										<PhoneIcon className="size-4 shrink-0" />
 										{CONTACT.phone}
 									</a>
 								</li>
 								<li>
-									<a
-										href={`mailto:${CONTACT.email}`}
-										className="flex items-center gap-2 font-light text-secondary-foreground tracking-wider duration-300 ease-in-out hover:font-semibold"
-									>
+									<p className="flex items-center gap-2 font-light text-secondary-foreground tracking-wider duration-300 ease-in-out">
 										<MailIcon className="size-4 shrink-0 text-white" />
 										{CONTACT.email}
-									</a>
+									</p>
 								</li>
 							</ul>
 						</div>

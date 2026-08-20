@@ -12,3 +12,4 @@ export const CONTACT = {
 } as const;
 
 export const BOOKING_SECTION_ID = "book-your-first-session";
+export const GALLERY_MORE_SECTION_ID = "more-from-the-gallery";
