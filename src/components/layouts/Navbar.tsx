@@ -60,7 +60,7 @@ export function Navbar() {
 			<nav
 				className={cn(
 					"sticky top-0 z-50 mx-auto flex w-full justify-center bg-white/80 duration-200 ease-in-out",
-					isScrolled && "bg-white/80 drop-shadow-sm backdrop-blur-md",
+					isScrolled && "bg-white/80 drop-shadow-sm backdrop-blur-xs",
 				)}
 			>
 				<div className="flex w-full max-w-360 items-center justify-between px-4 py-2 sm:px-8 md:px-16">
