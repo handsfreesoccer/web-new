@@ -5,6 +5,7 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "#/components/ui/accordion";
+import { CONTACT } from "#/lib/constants";
 
 export const Faq: React.FC = () => {
 	return (
@@ -57,7 +58,7 @@ const FAQS = [
 		id: "book-session",
 		question: "How do I book my first session?",
 		answer:
-			"Fill out the inquiry form on this page or book a session from the home page. We'll confirm your spot by email and share everything you need for day one.",
+			"Use the booking form on our homepage to pick a class and time — you'll get a confirmation by email once it's reserved.",
 	},
 	{
 		id: "gear",
@@ -69,13 +70,12 @@ const FAQS = [
 		id: "switch-class",
 		question:
 			"If my schedule changes, can I switch to a different class later?",
-		answer:
-			"Yes. If space is available, we can move you to another class. Reach out and we'll help you find a time that fits.",
+		answer: `Yes — reach out to us at ${CONTACT.email} or ${CONTACT.phone} and we'll help you switch to a class that fits your new schedule.`,
 	},
 	{
-		id: "kids-adults",
-		question: "Are there classes for kids and adults?",
+		id: "ages",
+		question: "What ages do you train?",
 		answer:
-			"Yes. We run programs for kids, teens, and adults, from first-time players through competitive training.",
+			"HandsFree Soccer Academy currently trains kids ages 6–12 in 1:1 and small group sessions across Allen, McKinney, Melissa, and Princeton.",
 	},
 ] as const;

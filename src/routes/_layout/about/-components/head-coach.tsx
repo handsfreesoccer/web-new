@@ -30,12 +30,13 @@ export const HeadCoach: React.FC = () => {
 							A Welcome Message From The Head Coach
 						</p>
 						<p className="text-pretty text-muted-foreground">
-							Omeiza Akerele leads HandsFreeSoccer Academy with a simple belief:
-							great athletes are developed, not rushed. He brings years of
-							on-pitch experience, a clear training philosophy, and a focus on
-							fundamentals that last. From first-time players to competitive
-							athletes, he shapes sessions that are demanding, supportive, and
-							built around each player&apos;s next step.
+							Omeiza Akerele leads HandsFree Soccer Academy with a simple
+							belief: great athletes are developed, not rushed. His soccer
+							journey began on the streets of Nigeria, and he's built that same
+							fundamentals-first philosophy into a program now training 50+
+							players across Allen, McKinney, Melissa, and Princeton. From
+							first-time players to competitive athletes, every session is
+							demanding, supportive, and built around each player's next step.
 						</p>
 					</div>
 				</div>

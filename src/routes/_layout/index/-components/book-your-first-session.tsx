@@ -1,8 +1,12 @@
+import { useLocation } from "@tanstack/react-router";
+import { useLenis } from "lenis/react";
 import { ArrowRightIcon } from "lucide-react";
 import type React from "react";
+import { useEffect } from "react";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
+import { BOOKING_SECTION_ID } from "#/lib/constants";
 import {
 	Select,
 	SelectContent,
@@ -15,23 +19,53 @@ import { DateTimePicker } from "#/components/ui-extended/date-time-picker";
 const CLASSES = [
 	{ value: "beginner", label: "Beginner" },
 	{ value: "intermediate", label: "Intermediate" },
-	{ value: "advanced", label: "Advanced" },
-	{ value: "private", label: "Private Coaching" },
-	{ value: "group", label: "Group Training" },
+	{ value: "one-on-one", label: "1:1 Coaching" },
+	{ value: "biweekly-saturday", label: "Biweekly Saturday Intensive" },
 ] as const;
 
 const fieldClassName = "h-10";
 
 export const BookYourFirstSession: React.FC = () => {
+	const hash = useLocation({ select: (location) => location.hash });
+	const lenis = useLenis();
+
+	useEffect(() => {
+		const target = hash.replace(/^#/, "");
+		if (target !== BOOKING_SECTION_ID) {
+			return;
+		}
+
+		const frame = requestAnimationFrame(() => {
+			const selector = `#${BOOKING_SECTION_ID}`;
+			if (lenis) {
+				lenis.scrollTo(selector);
+				return;
+			}
+			document
+				.getElementById(BOOKING_SECTION_ID)
+				?.scrollIntoView({ behavior: "smooth" });
+		});
+
+		return () => cancelAnimationFrame(frame);
+	}, [hash, lenis]);
+
 	return (
-		<section className="relative mx-auto flex max-w-360 flex-col gap-12 px-4 py-8 sm:gap-16 sm:px-8 sm:py-16 md:px-16">
+		<section
+			id={BOOKING_SECTION_ID}
+			className="relative mx-auto flex max-w-360 scroll-mt-28 flex-col gap-12 px-4 py-8 sm:gap-16 sm:px-8 sm:py-16 md:px-16"
+		>
 			<div className="relative grid w-full place-content-center overflow-hidden rounded-3xl p-4 sm:p-16">
 				<img
 					src="https://placehold.co/600x480/black/black"
 					alt="Book Your First Session"
 					className="absolute inset-0 size-full object-cover"
 				/>
-				<form className="relative flex w-full flex-col gap-8 rounded-2xl bg-white px-4 py-8 sm:max-w-fit sm:gap-12 sm:px-12 sm:py-12">
+				<form
+					action="mailto:handsfreesoccer@gmail.com"
+					method="post"
+					encType="text/plain"
+					className="relative flex w-full flex-col gap-8 rounded-2xl bg-white px-4 py-8 sm:max-w-fit sm:gap-12 sm:px-12 sm:py-12"
+				>
 					<div className="flex flex-col gap-4 sm:gap-6">
 						<h1 className="text-center font-bold text-3xl text-secondary sm:text-5xl">
 							BOOK YOUR FIRST SESSION

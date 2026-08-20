@@ -1,5 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import type React from "react";
 import { Button } from "#/components/ui/button";
+import { BOOKING_SECTION_ID } from "#/lib/constants";
 
 export const OurStory: React.FC = () => {
 	return (
@@ -17,8 +19,10 @@ export const OurStory: React.FC = () => {
 						HOW WE BEGAN
 					</h2>
 					<p className="max-w-full self-end font-light text-muted-foreground text-xl leading-tight sm:max-w-[60%] sm:text-2xl md:text-3xl">
-						With a strong belief in community-driven sports, we built a program
-						that welcomes beginners and nurtures aspiring champions.
+						HandsFree Soccer Academy was founded by Coach Omeiza, whose own
+						soccer journey began on the streets of Nigeria. What started as a
+						small training program has grown into a community of 50+ young
+						athletes across the Dallas–Fort Worth area.
 					</p>
 				</div>
 			</div>
@@ -44,7 +48,11 @@ export const OurStory: React.FC = () => {
 						Every lesson is designed to balance skill, fitness, and fun. Our
 						mission is simple: to grow the love of soccer, one player at a time.
 					</p>
-					<Button className="w-full rounded-full px-6 py-6 sm:w-auto">
+					<Button
+						nativeButton={false}
+						render={<Link hash={BOOKING_SECTION_ID} to="/" />}
+						className="w-full rounded-full px-6 py-6 sm:w-auto"
+					>
 						Start Your Journey
 					</Button>
 				</div>

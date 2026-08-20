@@ -11,6 +11,7 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Textarea } from "#/components/ui/textarea";
+import { CONTACT } from "#/lib/constants";
 
 const SUBJECTS = [
 	{ value: "classes", label: "Classes" },
@@ -25,7 +26,12 @@ const fieldClassName = "h-10";
 export const MessageForm: React.FC = () => {
 	return (
 		<section className="mx-auto flex max-w-360 flex-col gap-12 px-4 py-8 sm:px-8 sm:py-16 md:px-16">
-			<form className="flex w-full flex-col gap-8 sm:gap-12">
+			<form
+				action={`mailto:${CONTACT.email}`}
+				method="post"
+				encType="text/plain"
+				className="flex w-full flex-col gap-8 sm:gap-12"
+			>
 				<div className="flex flex-col items-start gap-6">
 					<div className="flex items-center gap-2">
 						<span className="relative flex size-2">

@@ -1,16 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import {
 	ArrowRightIcon,
-	CalendarIcon,
 	CircleDotIcon,
-	ClockIcon,
-	HourglassIcon,
-	RefreshCwIcon,
-	TrophyIcon,
+	MailIcon,
+	MapPinIcon,
+	PhoneIcon,
 	UserIcon,
+	UsersIcon,
 } from "lucide-react";
 import type React from "react";
 import { Button } from "#/components/ui/button";
+import { BOOKING_SECTION_ID, CONTACT } from "#/lib/constants";
 
 export const Classes: React.FC = () => {
 	return (
@@ -32,19 +32,18 @@ export const Classes: React.FC = () => {
 				<div className="grid w-full gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
 					<img
 						src="https://placehold.co/800x600/black/white?text=Class"
-						alt="Player shooting during competitive training"
+						alt="Kids training in a small group soccer session"
 						className="h-full min-h-64 w-full rounded-2xl object-cover outline outline-black/10 dark:outline-white/10"
 					/>
 					<div className="flex flex-col gap-6">
 						<p className="text-pretty font-medium text-2xl text-foreground leading-snug sm:text-3xl">
-							Competitive Training is designed for players ready to move beyond
-							the basics and raise their overall level.
+							Personalized 1:1 and small group soccer training for kids ages
+							6–12.
 						</p>
 						<p className="text-pretty text-muted-foreground">
-							This program focuses on advanced techniques, match strategy,
-							mental toughness, and physical conditioning. Each session
-							simulates real match scenarios to prepare players for competitive
-							play, tournaments, and long-term performance growth.
+							Sessions focus on skill, fitness, and fun — built around each
+							player's next step. We currently serve families in Allen,
+							McKinney, Melissa, and Princeton.
 						</p>
 					</div>
 				</div>
@@ -68,13 +67,13 @@ export const Classes: React.FC = () => {
 								</div>
 							</li>
 						))}
-						<li className="flex items-center sm:col-span-2 lg:col-span-1 lg:justify-end">
+						<li className="flex items-center sm:col-span-2 lg:col-span-2 lg:justify-end">
 							<Button
 								nativeButton={false}
-								render={<Link to={"/join" as never} />}
+								render={<Link hash={BOOKING_SECTION_ID} to="/" />}
 								className="h-auto w-full gap-2 rounded-full p-1 pl-4 lg:w-fit"
 							>
-								<p>Join This Class Now</p>
+								<p>Book a Session</p>
 								<span className="grid size-11 place-content-center rounded-full bg-white">
 									<ArrowRightIcon className="size-4 text-primary" />
 								</span>
@@ -89,38 +88,33 @@ export const Classes: React.FC = () => {
 
 const CLASS_DETAILS = [
 	{
-		icon: TrophyIcon,
-		label: "Level",
-		value: "Advanced",
-	},
-	{
-		icon: CalendarIcon,
-		label: "Days",
-		value: "Tuesday & Thursday",
-	},
-	{
-		icon: RefreshCwIcon,
-		label: "Number of Classes",
-		value: "2 Classes / Week",
-	},
-	{
-		icon: ClockIcon,
-		label: "Times",
-		value: "6PM - 8PM",
-	},
-	{
-		icon: HourglassIcon,
-		label: "Duration",
-		value: "6 Months",
-	},
-	{
-		icon: UserIcon,
-		label: "Coaches",
-		value: "Daniel Rivera",
+		icon: UsersIcon,
+		label: "Ages",
+		value: "6–12",
 	},
 	{
 		icon: CircleDotIcon,
-		label: "Class Availability",
-		value: "4 spots left",
+		label: "Format",
+		value: "1:1 & small group",
+	},
+	{
+		icon: MapPinIcon,
+		label: "Locations",
+		value: "Allen, McKinney, Melissa & Princeton",
+	},
+	{
+		icon: UserIcon,
+		label: "Coach",
+		value: "Omeiza Akerele",
+	},
+	{
+		icon: PhoneIcon,
+		label: "Phone",
+		value: CONTACT.phone,
+	},
+	{
+		icon: MailIcon,
+		label: "Email",
+		value: CONTACT.email,
 	},
 ] as const;

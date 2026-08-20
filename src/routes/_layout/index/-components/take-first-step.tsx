@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRightIcon } from "lucide-react";
 import type React from "react";
 import { Button } from "#/components/ui/button";
+import { BOOKING_SECTION_ID } from "#/lib/constants";
 
 export const TakeFirstStep: React.FC = () => {
 	return (
@@ -18,14 +19,13 @@ export const TakeFirstStep: React.FC = () => {
 							TAKE THE FIRST STEP TODAY
 						</h2>
 						<p className="w-full text-center text-sm text-white sm:w-[65ch] sm:text-base">
-							Train with expert coaches, access world-class pitches, and build
-							skills step by step, whether you're a beginner or aiming for
-							competition.
+							Train with Coach Omeiza in 1:1 and small group sessions for kids
+							ages 6–12, serving Allen, McKinney, Melissa, and Princeton.
 						</p>
 					</div>
 					<Button
 						nativeButton={false}
-						render={<Link to={"/join" as never} />}
+						render={<Link hash={BOOKING_SECTION_ID} to="/" />}
 						className="h-auto w-fit gap-2 rounded-full bg-white p-1 pl-4 text-foreground hover:bg-white"
 					>
 						<p>Get Started Now</p>

@@ -48,7 +48,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<body>
 				<ReactLenis
 					root
-					options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}
+					options={{
+						lerp: 0.1,
+						duration: 1.5,
+						smoothWheel: true,
+						anchors: true,
+					}}
 				>
 					{children}
 				</ReactLenis>

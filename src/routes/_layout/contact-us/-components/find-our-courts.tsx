@@ -1,5 +1,6 @@
 import { MailIcon, MapPinIcon, PhoneIcon } from "lucide-react";
 import type React from "react";
+import { CONTACT } from "#/lib/constants";
 import { cn } from "#/lib/utils";
 
 export const FindOurCourts: React.FC = () => {
@@ -18,7 +19,7 @@ export const FindOurCourts: React.FC = () => {
 						FIND OUR PITCHES
 					</h2>
 					<p className="max-w-[28ch] text-pretty text-muted-foreground">
-						Play on world-class pitches designed for every player's needs.
+						Play across Allen, McKinney, Melissa, and Princeton.
 					</p>
 				</div>
 			</div>
@@ -107,27 +108,43 @@ const CourtRow: React.FC<{
 
 const COURTS = [
 	{
-		id: "greenwood-park",
-		name: "Greenwood Park Pitch",
-		address: "456 Forest Road, Greenwood Park Area, Los Angeles, CA 90028",
-		phone: "(123) 777-8888",
-		phoneHref: "+11237778888",
-		email: "greenwood@handsfreesoccer.com",
-		mapUrl:
-			"https://www.google.com/maps/search/?api=1&query=456%20Forest%20Road%2C%20Greenwood%20Park%20Area%2C%20Los%20Angeles%2C%20CA%2090028",
-		embedUrl:
-			"https://maps.google.com/maps?q=456%20Forest%20Road%2C%20Greenwood%20Park%20Area%2C%20Los%20Angeles%2C%20CA%2090028&z=14&output=embed",
+		id: "allen",
+		name: "Allen",
+		address: "Allen, TX",
+		phone: CONTACT.phone,
+		phoneHref: CONTACT.phoneHref,
+		email: CONTACT.email,
+		mapUrl: "https://www.google.com/maps/search/?api=1&query=Allen%2C%20TX",
+		embedUrl: "https://maps.google.com/maps?q=Allen,+TX&z=12&output=embed",
 	},
 	{
-		id: "west-side",
-		name: "West Side Pitch",
-		address: "88 Sunset Avenue, West District, Los Angeles, CA 90026",
-		phone: "(123) 222-3333",
-		phoneHref: "+11232223333",
-		email: "west@handsfreesoccer.com",
-		mapUrl:
-			"https://www.google.com/maps/search/?api=1&query=88%20Sunset%20Avenue%2C%20West%20District%2C%20Los%20Angeles%2C%20CA%2090026",
-		embedUrl:
-			"https://maps.google.com/maps?q=88%20Sunset%20Avenue%2C%20West%20District%2C%20Los%20Angeles%2C%20CA%2090026&z=14&output=embed",
+		id: "mckinney",
+		name: "McKinney",
+		address: "McKinney, TX",
+		phone: CONTACT.phone,
+		phoneHref: CONTACT.phoneHref,
+		email: CONTACT.email,
+		mapUrl: "https://www.google.com/maps/search/?api=1&query=McKinney%2C%20TX",
+		embedUrl: "https://maps.google.com/maps?q=McKinney,+TX&z=12&output=embed",
+	},
+	{
+		id: "melissa",
+		name: "Melissa",
+		address: "Melissa, TX",
+		phone: CONTACT.phone,
+		phoneHref: CONTACT.phoneHref,
+		email: CONTACT.email,
+		mapUrl: "https://www.google.com/maps/search/?api=1&query=Melissa%2C%20TX",
+		embedUrl: "https://maps.google.com/maps?q=Melissa,+TX&z=12&output=embed",
+	},
+	{
+		id: "princeton",
+		name: "Princeton",
+		address: "Princeton, TX",
+		phone: CONTACT.phone,
+		phoneHref: CONTACT.phoneHref,
+		email: CONTACT.email,
+		mapUrl: "https://www.google.com/maps/search/?api=1&query=Princeton%2C%20TX",
+		embedUrl: "https://maps.google.com/maps?q=Princeton,+TX&z=12&output=embed",
 	},
 ] as const;

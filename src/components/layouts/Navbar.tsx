@@ -2,7 +2,7 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { cn } from "#/lib/utils";
-import { NAV_LINKS } from "../../lib/constants";
+import { BOOKING_SECTION_ID, NAV_LINKS } from "../../lib/constants";
 import { Button } from "../ui/button";
 import { MenuIcon, type MenuIconHandle } from "../ui/menu";
 import { MobileNavDrawer } from "./mobile-nav/MobileNavDrawer";
@@ -86,7 +86,7 @@ export function Navbar() {
 					</ul>
 					<Button
 						nativeButton={false}
-						render={<Link to={"/contact-us" as never} />}
+						render={<Link hash={BOOKING_SECTION_ID} to="/" />}
 						className="hidden px-6 py-6 font-normal sm:flex"
 					>
 						Join Us

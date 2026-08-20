@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRightIcon } from "lucide-react";
 import type React from "react";
 import { Button } from "#/components/ui/button";
+import { BOOKING_SECTION_ID } from "#/lib/constants";
 
 export const HeroSection: React.FC = () => {
 	return (
@@ -13,7 +14,7 @@ export const HeroSection: React.FC = () => {
 			<div className="relative flex w-full flex-1 flex-col overflow-clip rounded-3xl bg-black py-0 sm:min-h-120 sm:py-0">
 				<img
 					src="https://placehold.co/600x480/black/black"
-					alt="Hero Section"
+					alt="Soccer training session"
 					className="absolute h-full w-full object-cover"
 				/>
 				<div className="relative flex h-full flex-1 flex-col justify-evenly gap-8 p-8 sm:justify-start sm:gap-0">
@@ -24,13 +25,12 @@ export const HeroSection: React.FC = () => {
 					</div>
 					<div className="flex flex-col items-center justify-between gap-10 sm:flex-row">
 						<p className="w-full text-center text-base text-white sm:w-1/2 sm:text-balance sm:text-left sm:text-sm">
-							Train with experts coaches, access to standard training
-							facilities, latest equipment and build skills step by step whether
-							you are just starting or training for a competition
+							Personalized 1:1 and small group soccer training for kids ages
+							6–12 — now serving Allen, McKinney, Melissa, and Princeton.
 						</p>
 						<Button
 							nativeButton={false}
-							render={<Link to={"/join" as never} />}
+							render={<Link hash={BOOKING_SECTION_ID} to="/" />}
 							className="h-auto w-fit gap-2 rounded-full bg-white p-1 pl-4 text-foreground hover:bg-white"
 						>
 							<p>Join Now</p>

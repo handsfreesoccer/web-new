@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRightIcon, MailIcon, MapPinIcon, PhoneIcon } from "lucide-react";
 import type React from "react";
-import { NAV_LINKS } from "#/lib/constants";
+import { CONTACT, NAV_LINKS } from "#/lib/constants";
 import { FacebookIcon } from "../icons/facebook-icon";
 import { InstagramIcon } from "../icons/instagram-icon";
 import { Button } from "../ui/button";
@@ -21,14 +21,22 @@ export const Footer: React.FC = () => {
 						</p>
 					</div>
 					<div className="flex w-full flex-1 items-center self-center rounded-full bg-white px-0.75 py-1 transition-shadow focus-within:ring-3 focus-within:ring-ring/30 sm:max-w-xs sm:self-start md:min-w-xs">
-						<Input
-							type="email"
-							placeholder="Enter your email here"
-							className="rounded-full border-0 bg-transparent shadow-none focus-visible:border-transparent focus-visible:ring-0"
-						/>
-						<Button type="submit" className="size-11 rounded-full p-0">
-							<ArrowRightIcon />
-						</Button>
+						<form
+							action={`mailto:${CONTACT.email}`}
+							method="post"
+							encType="text/plain"
+							className="flex w-full items-center"
+						>
+							<Input
+								type="email"
+								name="email"
+								placeholder="Enter your email here"
+								className="rounded-full border-0 bg-transparent shadow-none focus-visible:border-transparent focus-visible:ring-0"
+							/>
+							<Button type="submit" className="size-11 rounded-full p-0">
+								<ArrowRightIcon />
+							</Button>
+						</form>
 					</div>
 				</div>
 				<hr className="block h-px w-full origin-center scale-y-[0.5] border-0 bg-white" />
@@ -85,29 +93,32 @@ export const Footer: React.FC = () => {
 							<ul className="flex flex-col gap-2">
 								<li>
 									<a
-										href="https://www.google.com/maps/search/?api=1&query=Chandigarh%2C%20India"
+										href="https://www.google.com/maps/search/?api=1&query=Allen%2C%20McKinney%2C%20Melissa%2C%20Princeton%2C%20TX"
 										target="_blank"
 										rel="noopener noreferrer"
 										className="flex items-center gap-2 font-light text-secondary-foreground tracking-wider duration-300 ease-in-out hover:font-semibold"
 									>
 										<MapPinIcon className="size-4 shrink-0" />
-										Chandigarh, India
+										{CONTACT.serviceArea}
 									</a>
 								</li>
 								<li>
 									<a
-										href="tel:+919876543210"
+										href={`tel:${CONTACT.phoneHref}`}
 										className="flex items-center gap-2 font-light text-secondary-foreground tracking-wider duration-300 ease-in-out hover:font-semibold"
 									>
 										<PhoneIcon className="size-4 shrink-0" />
-										+91 9876543210
+										{CONTACT.phone}
 									</a>
 								</li>
-								<li className="flex items-center gap-2">
-									<MailIcon className="size-4 shrink-0 text-white" />
-									<p className="font-light text-secondary-foreground tracking-wider">
-										info@handsfreesoccer.com
-									</p>
+								<li>
+									<a
+										href={`mailto:${CONTACT.email}`}
+										className="flex items-center gap-2 font-light text-secondary-foreground tracking-wider duration-300 ease-in-out hover:font-semibold"
+									>
+										<MailIcon className="size-4 shrink-0 text-white" />
+										{CONTACT.email}
+									</a>
 								</li>
 							</ul>
 						</div>
@@ -135,7 +146,7 @@ export const Footer: React.FC = () => {
 				</ul>
 				<hr className="block h-px w-full origin-center scale-y-[0.5] border-0 bg-white" />
 				<p className="text-center text-base text-white tracking-wider">
-					&copy; {new Date().getFullYear()} HandsfreeSoccer. All rights
+					&copy; {new Date().getFullYear()} HandsFree Soccer Academy. All rights
 					reserved.
 				</p>
 			</div>
