@@ -4,13 +4,13 @@ import { GalleryMasonryItem } from "#/components/gallery/gallery-masonry-item";
 import { MediaGalleryBoundary } from "#/components/gallery/media-gallery-lightbox";
 import { useGalleryMedia } from "#/hooks/use-media";
 import { GALLERY_MORE_SECTION_ID } from "#/lib/constants";
-import { FEATURED_GALLERY_COUNT, GALLERY_ITEMS } from "#/lib/gallery";
+import { resolveGalleryItems, splitGalleryItems } from "#/lib/gallery-utils";
 import { useHashScroll } from "#/lib/use-hash-scroll";
 
 export const MoreFromTheGallery: React.FC = () => {
 	useHashScroll(GALLERY_MORE_SECTION_ID);
 	const { data: galleryItems } = useGalleryMedia();
-	const more = (galleryItems ?? GALLERY_ITEMS).slice(FEATURED_GALLERY_COUNT);
+	const { more } = splitGalleryItems(resolveGalleryItems(galleryItems));
 
 	return (
 		<GalleryPlaybackBoundary items={more}>

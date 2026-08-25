@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
 <head>
-	<title>Appointment reminder</title>
+	<title>Admin sign in</title>
 	<meta charset="UTF-8" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<!--[if !mso]><!-->
@@ -85,7 +85,7 @@
 																		<tr>
 																			<td width="72" style="width: 72px">
 																				<div style="font-size: 0px">
-																					<img style="display: block; border: 0; height: auto; width: 100%; margin: 0; max-width: 100%;" width="72" height="72" alt="HandsFree Soccer Academy" src="{{app_url}}/brand/logo.png" />
+																					<img style="display: block; border: 0; height: auto; width: 100%; margin: 0; max-width: 100%;" width="72" height="72" alt="HandsFree Soccer Academy" src="{{{app_url}}}/brand/logo.png" />
 																				</div>
 																			</td>
 																		</tr>
@@ -103,7 +103,7 @@
 																	<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width: 100%">
 																		<tr>
 																			<td style="border-bottom: 1px solid #eff1f4; padding: 0 0 18px 0;">
-																				<h1 style="margin: 0; font-family: Montserrat, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif; line-height: 28px; font-weight: 700; font-size: 24px; letter-spacing: -1px; color: #141414; text-align: left; mso-line-height-rule: exactly; mso-text-raise: 1px;">Your appointment is tomorrow</h1>
+																				<h1 style="margin: 0; font-family: Montserrat, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif; line-height: 28px; font-weight: 700; font-size: 24px; letter-spacing: -1px; color: #141414; text-align: left; mso-line-height-rule: exactly; mso-text-raise: 1px;">Sign in to the dashboard</h1>
 																			</td>
 																		</tr>
 																	</table>
@@ -120,25 +120,7 @@
 																	<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width: 100%">
 																		<tr>
 																			<td>
-																				<p style="margin: 0; font-family: Open Sans, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif; line-height: 25px; font-weight: 400; font-size: 15px; letter-spacing: -0.1px; color: #141414; text-align: left; mso-line-height-rule: exactly; mso-text-raise: 3px;">Hi {{first_name}},</p>
-																			</td>
-																		</tr>
-																	</table>
-																</td>
-															</tr>
-
-															<tr>
-																<td>
-																	<div style="mso-line-height-rule: exactly; mso-line-height-alt: 12px; line-height: 12px; font-size: 1px; display: block;">&nbsp;</div>
-																</td>
-															</tr>
-
-															<tr>
-																<td align="center">
-																	<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width: 100%">
-																		<tr>
-																			<td>
-																				<p style="margin: 0; font-family: Open Sans, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif; line-height: 25px; font-weight: 400; font-size: 15px; letter-spacing: -0.1px; color: #141414; text-align: left; mso-line-height-rule: exactly; mso-text-raise: 3px;">We cannot wait to see you tomorrow.</p>
+																				<p style="margin: 0; font-family: Open Sans, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif; line-height: 25px; font-weight: 400; font-size: 15px; letter-spacing: -0.1px; color: #141414; text-align: left; mso-line-height-rule: exactly; mso-text-raise: 3px;">This link expires in 15 minutes. Use the button below to open the admin dashboard.</p>
 																			</td>
 																		</tr>
 																	</table>
@@ -153,13 +135,52 @@
 
 															<tr>
 																<td align="left">
-																	<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width: 100%;">
+																	<table class="t-cta-wrap" role="presentation" cellpadding="0" cellspacing="0" style="margin-right: auto; max-width: 514px;">
 																		<tr>
-																			<td style="background-color: #fdf2f2; border: 1px solid #f0c4c4; border-radius: 8px; padding: 16px 20px;">
-																				<p style="margin: 0; font-family: Open Sans, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif; line-height: 24px; font-weight: 400; font-size: 14px; color: #141414; text-align: left; mso-line-height-rule: exactly;">
-																					<strong>Location:</strong> <a href="{{maps_url}}" style="color: #a81414; text-decoration: underline; font-weight: 600;">Hands Free Soccer courts</a><br />
-																					<strong>Phone:</strong> <a href="tel:+14692882265" style="color: #a81414; text-decoration: underline; font-weight: 600;">(469) 288-2265</a>
-																				</p>
+																			<td style="width: auto">
+																				<table class="t-cta" role="presentation" cellpadding="0" cellspacing="0" style="width: auto; max-width: 514px;">
+																					<tr>
+																						<td style="overflow: hidden; background-color: #a81414; text-align: center; line-height: 34px; mso-line-height-rule: exactly; mso-text-raise: 5px; padding: 0 23px; border-radius: 40px;">
+																							<a href="{{{sign_in_url}}}" style="display: block; margin: 0; font-family: Sofia Sans, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif; line-height: 34px; font-weight: 700; font-size: 16px; letter-spacing: -0.2px; color: #ffffff; text-align: center; text-decoration: none; mso-line-height-rule: exactly; mso-text-raise: 5px;">Open dashboard</a>
+																						</td>
+																					</tr>
+																				</table>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+
+															<tr>
+																<td>
+																	<div style="mso-line-height-rule: exactly; mso-line-height-alt: 20px; line-height: 20px; font-size: 1px; display: block;">&nbsp;</div>
+																</td>
+															</tr>
+
+															<tr>
+																<td align="center">
+																	<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width: 100%">
+																		<tr>
+																			<td>
+																				<p style="margin: 0; font-family: Open Sans, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif; line-height: 25px; font-weight: 400; font-size: 14px; letter-spacing: -0.1px; color: #64748b; text-align: left; mso-line-height-rule: exactly; mso-text-raise: 3px;">If the button does not work, copy and paste this link into your browser:</p>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+
+															<tr>
+																<td>
+																	<div style="mso-line-height-rule: exactly; mso-line-height-alt: 8px; line-height: 8px; font-size: 1px; display: block;">&nbsp;</div>
+																</td>
+															</tr>
+
+															<tr>
+																<td align="center">
+																	<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width: 100%">
+																		<tr>
+																			<td>
+																				<p style="margin: 0; font-family: Open Sans, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif; line-height: 25px; font-weight: 400; font-size: 13px; letter-spacing: -0.1px; color: #141414; text-align: left; mso-line-height-rule: exactly; mso-text-raise: 3px;"><a href="{{{sign_in_url}}}" style="color: #a81414; word-break: break-all;">{{{sign_in_url}}}</a></p>
 																			</td>
 																		</tr>
 																	</table>
@@ -184,7 +205,7 @@
 																						</td>
 																						<td class="t-footer-gap" style="width: 20px;" width="20"></td>
 																						<td class="t-footer-meta" valign="top">
-																							<span style="display: block; margin: 0; font-family: Open Sans, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif; line-height: 20px; font-weight: 500; font-size: 14px; color: #b4becc; text-align: left; mso-line-height-rule: exactly; mso-text-raise: 2px;">&copy; {{year}} HandsFree Soccer Academy</span>
+																							<span style="display: block; margin: 0; font-family: Open Sans, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif; line-height: 20px; font-weight: 500; font-size: 14px; color: #b4becc; text-align: left; mso-line-height-rule: exactly; mso-text-raise: 2px;">&copy; {{{year}}} HandsFree Soccer Academy</span>
 																						</td>
 																					</tr>
 																				</table>

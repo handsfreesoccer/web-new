@@ -21,8 +21,8 @@
     "db:seed": "dotenv -e .env.local -- prisma db seed",
     "hex-to-oklch": "bun scripts/hex-to-oklch.ts",
     "cron:daily": "dotenv -e .env.local -- bun scripts/daily-cron.ts",
-    "resend:templates": "dotenv -e .env.local -- bun scripts/upload-resend-templates.ts",
-    "media:list": "dotenv -e .env.local -- bun scripts/list-r2-media.ts"
+    "resend:templates": "dotenv -e .env -e .env.local -- bun scripts/upload-resend-templates.ts",
+    "media:list": "dotenv -e .env -e .env.local -- bun scripts/list-r2-media.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1117.0",

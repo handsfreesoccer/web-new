@@ -7,12 +7,11 @@ import { MediaGalleryBoundary } from "#/components/gallery/media-gallery-lightbo
 import { Button } from "#/components/ui/button";
 import { useGalleryMedia } from "#/hooks/use-media";
 import { GALLERY_MORE_SECTION_ID } from "#/lib/constants";
-import { FEATURED_GALLERY_COUNT, GALLERY_ITEMS } from "#/lib/gallery";
+import { resolveGalleryItems, splitGalleryItems } from "#/lib/gallery-utils";
 
 export const LifeAtHFS: React.FC = () => {
 	const { data: galleryItems } = useGalleryMedia();
-	const items = galleryItems ?? GALLERY_ITEMS;
-	const featured = items.slice(0, FEATURED_GALLERY_COUNT);
+	const { featured } = splitGalleryItems(resolveGalleryItems(galleryItems));
 
 	return (
 		<GalleryPlaybackBoundary items={featured}>

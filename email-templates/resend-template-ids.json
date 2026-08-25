@@ -1,0 +1,62 @@
+[
+  {
+    "name": "booking-welcome",
+    "id": "9e2b311b-2a2e-43af-841b-82ddd94cd81f",
+    "alias": "booking-welcome",
+    "published": true,
+    "variables": [
+      "app_url",
+      "first_name",
+      "last_name",
+      "year"
+    ]
+  },
+  {
+    "name": "payment-link",
+    "id": "fc9ec1fe-3dfb-498b-b8d0-137932cd1734",
+    "alias": "payment-link",
+    "published": true,
+    "variables": [
+      "app_url",
+      "first_name",
+      "payment_url",
+      "year"
+    ]
+  },
+  {
+    "name": "appointment-reminder",
+    "id": "d91255cb-060c-4651-98ca-2b8d78b15e61",
+    "alias": "appointment-reminder",
+    "published": true,
+    "variables": [
+      "app_url",
+      "first_name",
+      "maps_url",
+      "year"
+    ]
+  },
+  {
+    "name": "contact-inquiry-received",
+    "id": "5cb41998-6186-4624-aa63-f4641eeb86a3",
+    "alias": "contact-inquiry-received",
+    "published": true,
+    "variables": [
+      "app_url",
+      "full_name",
+      "message",
+      "subject",
+      "year"
+    ]
+  },
+  {
+    "name": "admin-sign-in",
+    "id": "26ed7d68-0857-4401-b437-5a96314752ff",
+    "alias": "admin-sign-in",
+    "published": true,
+    "variables": [
+      "app_url",
+      "sign_in_url",
+      "year"
+    ]
+  }
+]

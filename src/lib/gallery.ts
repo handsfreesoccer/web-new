@@ -116,5 +116,7 @@ export const GALLERY_ITEMS: GalleryMedia[] = [
 
 export const FEATURED_GALLERY_COUNT = 6;
 
+/** @deprecated Use splitGalleryItems() for R2-backed gallery sections. */
 export const GALLERY_FEATURED = GALLERY_ITEMS.slice(0, FEATURED_GALLERY_COUNT);
+/** @deprecated Use splitGalleryItems() for R2-backed gallery sections. */
 export const GALLERY_MORE = GALLERY_ITEMS.slice(FEATURED_GALLERY_COUNT);

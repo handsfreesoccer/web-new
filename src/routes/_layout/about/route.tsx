@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { GalleryPlaybackProvider } from "#/components/gallery/gallery-playback";
 import { MediaGalleryProvider } from "#/components/gallery/media-gallery-lightbox";
 import { useGalleryMedia } from "#/hooks/use-media";
-import { GALLERY_ITEMS } from "#/lib/gallery";
+import { resolveGalleryItems, splitGalleryItems } from "#/lib/gallery-utils";
 import { pageTitle } from "#/lib/site-meta";
 import { Classes } from "./-components/classes";
 import { CoreValues } from "./-components/core-values";
@@ -22,11 +22,11 @@ export const Route = createFileRoute("/_layout/about")({
 
 function RouteComponent() {
 	const { data: galleryItems } = useGalleryMedia();
-	const items = galleryItems ?? GALLERY_ITEMS;
+	const { all } = splitGalleryItems(resolveGalleryItems(galleryItems));
 
 	return (
-		<GalleryPlaybackProvider items={items}>
-			<MediaGalleryProvider items={items}>
+		<GalleryPlaybackProvider items={all}>
+			<MediaGalleryProvider items={all}>
 				<div className="flex-1">
 					<HeroSection />
 					<HeadCoach />
