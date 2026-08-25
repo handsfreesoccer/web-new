@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import api from "#/api/http/xhr";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
@@ -9,7 +10,6 @@ import {
 	InputOTPSlot,
 } from "#/components/ui/input-otp";
 import { Label } from "#/components/ui/label";
-import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/login")({ component: LoginPage });
 
@@ -59,8 +59,9 @@ function LoginPage() {
 			}
 			setCodeSent(true);
 			toast.success("Check your email for the six-digit code.");
-			if (response.data.data.previewCode)
+			if (response.data.data.previewCode) {
 				toast.info(`Your magic code is ${response.data.data.previewCode}`);
+			}
 		} catch {
 			setLoading(false);
 			toast.error("Could not request a magic code.");
@@ -68,20 +69,22 @@ function LoginPage() {
 	}
 
 	return (
-		<main className="grid min-h-screen place-items-center bg-[var(--bg-base)] px-4">
-			<div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-xl">
+		<main className="grid min-h-screen place-items-center bg-(--bg-base) px-4">
+			<div className="flex w-full max-w-md flex-col gap-8 rounded-3xl bg-white p-8 shadow-xl">
 				<p className="font-bold text-primary text-sm tracking-[.16em]">
 					HANDS FREE SOCCER
 				</p>
 				{codeSent ? (
-					<>
-						<h1 className="mt-4 font-bold text-4xl text-secondary">
-							Enter your code
-						</h1>
-						<p className="mt-2 text-muted-foreground">
-							We sent a six-digit code to {email}.
-						</p>
-						<div className="mt-8 flex flex-col gap-3">
+					<div className="flex flex-col gap-8">
+						<div className="flex flex-col gap-2">
+							<h1 className="font-bold text-4xl text-secondary">
+								Enter your code
+							</h1>
+							<p className="text-muted-foreground">
+								We sent a six-digit code to {email}.
+							</p>
+						</div>
+						<div className="flex flex-col gap-3">
 							<Label htmlFor="admin-code">Verification code</Label>
 							<InputOTP
 								id="admin-code"
@@ -97,30 +100,32 @@ function LoginPage() {
 								</InputOTPGroup>
 							</InputOTP>
 						</div>
-						<Button
-							className="mt-6 w-full"
-							disabled={loading || code.length !== 6}
-							onClick={() => void verifyCode()}
-						>
-							{loading ? "Verifying..." : "Verify code"}
-						</Button>
-						<Button
-							variant="ghost"
-							className="mt-2 w-full"
-							onClick={() => setCodeSent(false)}
-						>
-							Use a different email
-						</Button>
-					</>
+						<div className="flex flex-col gap-2">
+							<Button
+								className="w-full"
+								disabled={loading || code.length !== 6}
+								onClick={() => void verifyCode()}
+							>
+								{loading ? "Verifying..." : "Verify code"}
+							</Button>
+							<Button
+								variant="ghost"
+								className="w-full"
+								onClick={() => setCodeSent(false)}
+							>
+								Use a different email
+							</Button>
+						</div>
+					</div>
 				) : (
-					<>
-						<h1 className="mt-4 font-bold text-4xl text-secondary">
-							Admin login
-						</h1>
-						<p className="mt-2 text-muted-foreground">
-							Request a secure six-digit code to manage students.
-						</p>
-						<div className="mt-8 flex flex-col gap-2">
+					<div className="flex flex-col gap-8">
+						<div className="flex flex-col gap-2">
+							<h1 className="font-bold text-4xl text-secondary">Admin login</h1>
+							<p className="text-muted-foreground">
+								Request a secure six-digit code to manage students.
+							</p>
+						</div>
+						<div className="flex flex-col gap-2">
 							<Label htmlFor="admin-email">Admin email</Label>
 							<Input
 								id="admin-email"
@@ -130,13 +135,13 @@ function LoginPage() {
 							/>
 						</div>
 						<Button
-							className="mt-6 w-full"
+							className="w-full"
 							disabled={loading}
 							onClick={() => void requestCode()}
 						>
 							{loading ? "Sending..." : "Email me a code"}
 						</Button>
-					</>
+					</div>
 				)}
 			</div>
 		</main>

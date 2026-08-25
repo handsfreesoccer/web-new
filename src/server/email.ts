@@ -25,7 +25,7 @@ type BookingEmail = {
 };
 
 const layout = (title: string, body: string) =>
-	`<!doctype html><html><body style="margin:0;background:#eef2f3;font-family:Arial,Helvetica,sans-serif;color:#12212b"><main style="max-width:600px;margin:32px auto;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 12px 30px rgba(18,33,43,.12)"><div style="height:8px;background:#b23a2f"></div><div style="padding:28px 32px 16px;text-align:center"><div style="width:170px;height:58px;margin:auto;border:1px dashed #b23a2f;border-radius:10px;line-height:58px;color:#b23a2f;font-size:11px;font-weight:bold;letter-spacing:1.5px">LOGO PLACEHOLDER</div></div><div style="padding:12px 40px 40px"><div style="color:#b23a2f;font-weight:800;letter-spacing:.12em;font-size:12px">HANDS FREE SOCCER</div><h1 style="color:#12212b">${title}</h1>${body}</div><div style="padding:20px 40px;background:#12212b;color:#fff;font-size:12px;line-height:1.5">Hands Free Soccer<br><span style="color:#b8c5ca">Serving Allen, McKinney, Melissa &amp; Princeton, TX</span></div></main></body></html>`;
+	`<!doctype html><html><body style="margin:0;background:#fff;font-family:Arial,Helvetica,sans-serif;color:#001219"><main style="max-width:600px;margin:32px auto;background:#fff;border:1px solid #001219;padding:44px 42px"><div style="width:140px;height:48px;border:1px dashed #a81414;border-radius:4px;line-height:48px;text-align:center;color:#a81414;font-size:11px;font-weight:bold;letter-spacing:1px">LOGO</div><div style="height:42px"></div><h1 style="border-bottom:1px solid #001219;padding-bottom:18px;color:#001219;font-size:24px">${title}</h1><div style="height:18px"></div>${body}<div style="height:40px"></div><div style="border-top:1px solid #001219;padding-top:24px;color:#001219;font-size:14px;line-height:20px"><strong>Hands Free Soccer</strong><br>Serving Allen, McKinney, Melissa &amp; Princeton, TX</div></main></body></html>`;
 
 async function send(params: Parameters<Resend["emails"]["send"]>[0]) {
 	if (!resend) return { id: "local-preview" };
@@ -70,7 +70,7 @@ export async function sendPaymentEmail(
 		subject: "Your Hands Free Soccer appointment payment link",
 		html: layout(
 			"We were glad to have you",
-			`<p>Hi ${booking.firstName},</p><p>Thank you for training with us. Use the link below to pay for your appointment.</p><p><a href="${paymentUrl}" style="display:inline-block;background:#2f6a4a;color:white;padding:14px 22px;border-radius:999px">Pay for appointment</a></p>`,
+			`<p>Hi ${booking.firstName},</p><p>Thank you for training with us. Use the link below to pay for your appointment.</p><p><a href="${paymentUrl}" style="display:inline-block;background:#a81414;color:#fff;padding:14px 22px;border-radius:4px">Pay for appointment</a></p>`,
 		),
 	});
 }
@@ -96,7 +96,7 @@ export async function sendAdminMagicLink(email: string, link: string) {
 		subject: "Your Hands Free Soccer admin sign-in link",
 		html: layout(
 			"Sign in to the dashboard",
-			`<p>This link expires in 15 minutes.</p><p><a href="${link}" style="display:inline-block;background:#2f6a4a;color:white;padding:14px 22px;border-radius:999px">Open dashboard</a></p>`,
+			`<p>This link expires in 15 minutes.</p><p><a href="${link}" style="display:inline-block;background:#a81414;color:#fff;padding:14px 22px;border-radius:4px">Open dashboard</a></p>`,
 		),
 	});
 }
@@ -111,7 +111,7 @@ export async function sendContactConfirmation(inquiry: ContactInput) {
 		subject: "We received your Hands Free Soccer inquiry",
 		html: layout(
 			"We received your inquiry",
-			`<p>Hi ${fullName},</p><p>Thank you for reaching out. Our team has received your inquiry and will reply as soon as possible.</p><div style="background:#f3faf5;border-left:4px solid #2f6a4a;padding:16px;margin:24px 0"><p><strong>Subject:</strong> ${subject}</p><p style="white-space:pre-wrap"><strong>Your message:</strong><br>${message}</p></div><p>If you need immediate assistance, call <a href="tel:+14692882265">(469) 288-2265</a>.</p>`,
+			`<p>Hi ${fullName},</p><p>Thank you for reaching out. Our team has received your inquiry and will reply as soon as possible.</p><div style="background:#a81414;color:#fff;padding:16px;margin:24px 0"><p style="color:#fff"><strong>Subject:</strong> ${subject}</p><p style="white-space:pre-wrap;color:#fff"><strong>Your message:</strong><br>${message}</p></div><p>If you need immediate assistance, call <a href="tel:+14692882265" style="color:#a81414">(469) 288-2265</a>.</p>`,
 		),
 	});
 }

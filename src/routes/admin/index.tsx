@@ -1,9 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { toast } from "sonner";
+import api from "#/api/http/xhr";
 import { Button } from "#/components/ui/button";
-import { Input } from "#/components/ui/input";
 import { Calendar } from "#/components/ui/calendar";
+import { Input } from "#/components/ui/input";
 import { Pagination } from "#/components/ui/pagination";
 import {
 	Table,
@@ -13,11 +15,10 @@ import {
 	TableHeader,
 	TableRow,
 } from "#/components/ui/table";
-import { toast } from "sonner";
-import api from "#/api/http/xhr";
 import { AdminAuthGuard } from "#/routes/admin/-components/admin-auth-guard";
 
 export const Route = createFileRoute("/admin/")({ component: AdminPage });
+
 type Booking = {
 	id: number;
 	firstName: string;
@@ -28,6 +29,7 @@ type Booking = {
 	appointmentStartUtc: string;
 	attendances: Array<{ attendedAt: string }>;
 };
+
 type StudentsResponse = {
 	data: Booking[];
 	meta: { pagination: { total_pages: number } };
@@ -72,22 +74,25 @@ function AdminPage() {
 			toast.error(result?.message ?? "Email could not be sent.");
 		},
 	});
+
 	async function markPresent(id: number, date = new Date()) {
 		await attendanceMutation.mutateAsync({ id, date });
 	}
+
 	async function sendEmail(bookingId: number, type: "reminder" | "payment") {
 		await emailMutation.mutateAsync({ bookingId, type });
 	}
+
 	return (
 		<AdminAuthGuard>
-			<main className="min-h-screen bg-[var(--bg-base)] px-4 py-8 sm:px-10">
-				<div className="mx-auto max-w-7xl">
+			<main className="flex min-h-screen flex-col bg-(--bg-base) px-4 py-8 sm:px-10">
+				<div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
 					<div className="flex flex-wrap items-end justify-between gap-4">
-						<div>
+						<div className="flex flex-col gap-2">
 							<p className="font-bold text-primary text-sm tracking-[.16em]">
 								HANDS FREE SOCCER
 							</p>
-							<h1 className="mt-2 font-bold text-4xl text-secondary">
+							<h1 className="font-bold text-4xl text-secondary">
 								Students dashboard
 							</h1>
 						</div>
@@ -101,7 +106,8 @@ function AdminPage() {
 							Sign out
 						</Button>
 					</div>
-					<div className="mt-8 rounded-3xl bg-white p-4 shadow-sm sm:p-6">
+
+					<div className="flex flex-col gap-4 rounded-3xl bg-white p-4 shadow-sm sm:p-6">
 						<Table>
 							<TableHeader>
 								<TableRow>
@@ -120,9 +126,11 @@ function AdminPage() {
 											{student.firstName} {student.lastName}
 										</TableCell>
 										<TableCell>
-											<div>{student.email}</div>
-											<div className="text-muted-foreground">
-												{student.phone}
+											<div className="flex flex-col gap-1">
+												<span>{student.email}</span>
+												<span className="text-muted-foreground">
+													{student.phone}
+												</span>
 											</div>
 										</TableCell>
 										<TableCell className="capitalize">
@@ -174,17 +182,16 @@ function AdminPage() {
 								No students have booked yet.
 							</p>
 						) : null}
-						<div className="mt-4">
-							<Pagination
-								page={page}
-								totalPages={totalPages}
-								onChange={setPage}
-							/>
-						</div>
+						<Pagination
+							page={page}
+							totalPages={totalPages}
+							onChange={setPage}
+						/>
 					</div>
+
 					{selected ? (
-						<div className="mt-6 rounded-3xl bg-white p-6 shadow-sm">
-							<div className="flex items-center justify-between">
+						<div className="flex flex-col gap-4 rounded-3xl bg-white p-6 shadow-sm">
+							<div className="flex items-center justify-between gap-4">
 								<h2 className="font-bold text-xl text-secondary">
 									Choose attendance date and time
 								</h2>
@@ -192,36 +199,39 @@ function AdminPage() {
 									Close
 								</Button>
 							</div>
-							<Calendar
-								mode="single"
-								selected={attendanceDate}
-								onSelect={setAttendanceDate}
-							/>
-							<Input
-								type="datetime-local"
-								value={
-									attendanceDate
-										? new Date(
-												attendanceDate.getTime() -
-													attendanceDate.getTimezoneOffset() * 60000,
-											)
-												.toISOString()
-												.slice(0, 16)
-										: ""
-								}
-								onChange={(event) =>
-									setAttendanceDate(new Date(event.target.value))
-								}
-							/>
-							<Button
-								className="mt-4"
-								onClick={() => {
-									if (attendanceDate)
-										void markPresent(selected, attendanceDate);
-								}}
-							>
-								Save attendance
-							</Button>
+							<div className="flex flex-col gap-4">
+								<Calendar
+									mode="single"
+									selected={attendanceDate}
+									onSelect={setAttendanceDate}
+								/>
+								<Input
+									type="datetime-local"
+									value={
+										attendanceDate
+											? new Date(
+													attendanceDate.getTime() -
+														attendanceDate.getTimezoneOffset() * 60000,
+												)
+													.toISOString()
+													.slice(0, 16)
+											: ""
+									}
+									onChange={(event) =>
+										setAttendanceDate(new Date(event.target.value))
+									}
+								/>
+								<Button
+									className="w-fit"
+									onClick={() => {
+										if (attendanceDate) {
+											void markPresent(selected, attendanceDate);
+										}
+									}}
+								>
+									Save attendance
+								</Button>
+							</div>
 						</div>
 					) : null}
 				</div>

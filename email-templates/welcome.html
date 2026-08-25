@@ -1,9 +1,176 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Booking received</title></head>
-<body style="margin:0;background:#12212b;font-family:Arial,Helvetica,sans-serif;color:#12212b">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#12212b"><tr><td align="center" style="padding:32px 16px">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background:#fff;border-radius:20px;overflow:hidden">
-<tr><td style="height:8px;background:#b23a2f;font-size:0">&nbsp;</td></tr>
-<tr><td align="center" style="padding:28px 32px 16px"><div style="width:170px;height:58px;border:1px dashed #b23a2f;border-radius:10px;line-height:58px;color:#b23a2f;font-size:11px;font-weight:bold;letter-spacing:1.5px">LOGO PLACEHOLDER</div></td></tr>
-<tr><td style="padding:12px 40px 40px"><p style="margin:0;color:#b23a2f;font-size:12px;font-weight:bold;letter-spacing:2px">HANDS FREE SOCCER</p><h1 style="margin:12px 0 18px;color:#12212b;font-size:30px">Thanks for registering</h1><p>Hi {{first_name}},</p><p>We have received your booking information and look forward to seeing you. Your calendar invite is attached to this email.</p><div style="margin-top:30px;padding:16px 18px;background:#b23a2f;border-radius:10px;color:#fff">Please keep this email for your appointment details.</div></td></tr>
-<tr><td style="padding:20px 40px;background:#12212b;color:#fff;font-size:12px">Hands Free Soccer<br>Serving Allen, McKinney, Melissa &amp; Princeton, TX</td></tr></table></td></tr></table></body></html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width"
+		/>
+		<title>Booking received</title>
+		<style>
+			body {
+				margin: 0;
+				background: #fff;
+				color: #001219;
+				font-family: Arial, Helvetica, sans-serif;
+			}
+			table {
+				border-collapse: separate;
+				table-layout: fixed;
+			}
+			a {
+				color: #a81414;
+			}
+			h1,
+			p {
+				margin: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<table
+			role="presentation"
+			width="100%"
+			cellpadding="0"
+			cellspacing="0"
+		>
+			<tr>
+				<td
+					align="center"
+					style="padding: 50px 16px; background: #fff"
+				>
+					<table
+						role="presentation"
+						width="600"
+						cellpadding="0"
+						cellspacing="0"
+						style="
+							width: 100%;
+							max-width: 600px;
+							border: 1px solid #001219;
+							background: #fff;
+						"
+					>
+						<tr>
+							<td style="padding: 44px 42px 32px">
+								<table
+									role="presentation"
+									width="100%"
+									cellpadding="0"
+									cellspacing="0"
+								>
+									<tr>
+										<td>
+											<div
+												style="
+													width: 140px;
+													height: 48px;
+													border: 1px dashed #a81414;
+													border-radius: 4px;
+													text-align: center;
+													line-height: 48px;
+													color: #a81414;
+													font-size: 11px;
+													font-weight: bold;
+													letter-spacing: 1px;
+												"
+											>
+												LOGO
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 42px; font-size: 1px">&nbsp;</td>
+									</tr>
+									<tr>
+										<td
+											style="
+												border-bottom: 1px solid #001219;
+												padding-bottom: 18px;
+											"
+										>
+											<h1
+												style="
+													font-size: 24px;
+													line-height: 28px;
+													color: #001219;
+												"
+											>
+												Thanks for registering
+											</h1>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 18px; font-size: 1px">&nbsp;</td>
+									</tr>
+									<tr>
+										<td>
+											<p
+												style="
+													font-size: 15px;
+													line-height: 25px;
+													color: #001219;
+												"
+											>
+												Hi {{first_name}} {{last_name}},
+											</p>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 12px; font-size: 1px">&nbsp;</td>
+									</tr>
+									<tr>
+										<td>
+											<p
+												style="
+													font-size: 15px;
+													line-height: 25px;
+													color: #001219;
+												"
+											>
+												We have received your booking information and look
+												forward to seeing you. Your calendar invite is attached
+												to this email.
+											</p>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 24px; font-size: 1px">&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="padding: 16px; background: #a81414; color: #fff">
+											<p
+												style="font-size: 14px; line-height: 22px; color: #fff"
+											>
+												Please keep this email for your appointment details.
+											</p>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 40px; font-size: 1px">&nbsp;</td>
+									</tr>
+									<tr>
+										<td
+											style="border-top: 1px solid #001219; padding-top: 24px"
+										>
+											<p
+												style="
+													font-size: 14px;
+													line-height: 20px;
+													color: #001219;
+												"
+											>
+												<strong>Hands Free Soccer</strong><br />Serving Allen,
+												McKinney, Melissa &amp; Princeton, TX
+											</p>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
