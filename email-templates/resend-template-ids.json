@@ -5,7 +5,6 @@
     "alias": "booking-welcome",
     "published": true,
     "variables": [
-      "app_url",
       "first_name",
       "last_name",
       "year"
@@ -17,7 +16,6 @@
     "alias": "payment-link",
     "published": true,
     "variables": [
-      "app_url",
       "first_name",
       "payment_url",
       "year"
@@ -29,7 +27,6 @@
     "alias": "appointment-reminder",
     "published": true,
     "variables": [
-      "app_url",
       "first_name",
       "maps_url",
       "year"
@@ -41,7 +38,6 @@
     "alias": "contact-inquiry-received",
     "published": true,
     "variables": [
-      "app_url",
       "full_name",
       "message",
       "subject",
@@ -54,7 +50,6 @@
     "alias": "admin-sign-in",
     "published": true,
     "variables": [
-      "app_url",
       "sign_in_url",
       "year"
     ]
