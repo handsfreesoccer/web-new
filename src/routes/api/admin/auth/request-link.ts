@@ -17,15 +17,15 @@ export const Route = createFileRoute("/api/admin/auth/request-link")({
 						"This email is not authorized.",
 						StatusCodes.FORBIDDEN,
 					);
-				const link = await issueAdminMagicLink();
-				await sendAdminMagicLink(ADMIN_EMAIL, link);
+				const magicLink = await issueAdminMagicLink();
+				await sendAdminMagicLink(ADMIN_EMAIL, magicLink.link);
 				return success(
 					{
 						...(process.env.NODE_ENV === "development"
-							? { previewUrl: link }
+							? { previewCode: magicLink.code, previewUrl: magicLink.link }
 							: {}),
 					},
-					"If authorized, a magic link has been sent.",
+					"If authorized, a magic code has been sent.",
 				);
 			},
 		},

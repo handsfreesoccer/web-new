@@ -9,8 +9,8 @@ export const Route = createFileRoute("/api/admin/auth/verify")({
 	server: {
 		handlers: {
 			GET: async ({ request }) => {
-				const token = new URL(request.url).searchParams.get("token");
-				const session = token ? await consumeMagicLink(token) : null;
+				const code = new URL(request.url).searchParams.get("code");
+				const session = code ? await consumeMagicLink(code) : null;
 				if (!session)
 					return failure(
 						"This magic link is invalid or expired.",

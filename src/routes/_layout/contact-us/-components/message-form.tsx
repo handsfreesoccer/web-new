@@ -1,7 +1,9 @@
 import { useForm } from "@tanstack/react-form";
+import { useMutation } from "@tanstack/react-query";
 import { ArrowRightIcon } from "lucide-react";
 import type React from "react";
 import { toast } from "sonner";
+import api from "#/api/http/xhr";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
@@ -30,6 +32,9 @@ type ContactValues = {
 };
 
 export const MessageForm: React.FC = () => {
+	const inquiryMutation = useMutation({
+		mutationFn: (data: ContactValues) => api.post("/contact-inquiries", data),
+	});
 	const form = useForm({
 		defaultValues: { fullName: "", email: "", subject: "classes", message: "" },
 		onSubmit: async ({ value }) => {
@@ -40,19 +45,12 @@ export const MessageForm: React.FC = () => {
 				);
 				return;
 			}
-			const response = await fetch("/api/contact-inquiries", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(parsed.data),
-			});
-			const result = (await response.json()) as {
-				success: boolean;
-				message?: string;
-				errors?: string[];
-			};
-			if (!response.ok || !result.success) {
+			const response = await inquiryMutation.mutateAsync(parsed.data);
+			if (!response.data.success) {
 				toast.error(
-					result.errors?.[0] ?? result.message ?? "Inquiry could not be sent.",
+					response.data.errors?.[0] ??
+						response.data.message ??
+						"Inquiry could not be sent.",
 				);
 				return;
 			}

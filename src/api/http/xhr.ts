@@ -20,7 +20,11 @@ http.interceptors.response.use(
 	(response) => response,
 	async (error) => {
 		const request = error.config;
-		if (error.response?.status !== StatusCodes.UNAUTHORIZED || request?._retry)
+		if (
+			error.response?.status !== StatusCodes.UNAUTHORIZED ||
+			request?._retry ||
+			request?.url?.includes("/admin/auth/refresh")
+		)
 			return Promise.reject(error);
 		request._retry = true;
 		refreshing ??= http
@@ -43,4 +47,5 @@ http.interceptors.response.use(
 		}
 	},
 );
+export { http };
 export default http;

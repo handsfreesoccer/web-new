@@ -11,15 +11,17 @@ export const hashToken = (value: string) =>
 	createHash("sha256").update(value).digest("hex");
 
 export async function issueAdminMagicLink() {
-	const token = randomBytes(32).toString("hex");
-	await redis.set(redisKeys.magicLink(token), ADMIN_EMAIL, 15 * 60);
-	return `${process.env.APP_URL ?? "http://localhost:5173"}/admin/login?token=${token}`;
+	const code = String(Math.floor(Math.random() * 1_000_000)).padStart(6, "0");
+	await redis.set(redisKeys.magicLink(code), ADMIN_EMAIL, 15 * 60);
+	return {
+		code,
+		link: `${process.env.APP_URL ?? "http://localhost:5173"}/admin/login?code=${code}`,
+	};
 }
 
-export async function consumeMagicLink(token: string) {
-	if ((await redis.get(redisKeys.magicLink(token))) !== ADMIN_EMAIL)
-		return null;
-	await redis.del(redisKeys.magicLink(token));
+export async function consumeMagicLink(code: string) {
+	if ((await redis.get(redisKeys.magicLink(code))) !== ADMIN_EMAIL) return null;
+	await redis.del(redisKeys.magicLink(code));
 	return createSession();
 }
 
