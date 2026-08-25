@@ -41,12 +41,12 @@ const CoreValueCarousel: React.FC = () => {
 							key={value.number}
 						>
 							<img
-								src="https://placehold.co/600x400/black/white"
+								src={value.image}
 								alt=""
 								className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 							/>
 							<div className="relative flex flex-1 flex-col justify-between gap-4">
-								<h3 className="w-full text-balance text-left font-bold text-6xl text-muted-foreground leading-tight transition-[font-size] duration-300 ease-out group-hover:text-4xl">
+								<h3 className="w-full text-balance text-left font-bold text-6xl text-muted-foreground leading-tight transition-[font-size] duration-300 ease-out group-hover:text-4xl group-hover:text-white">
 									{value.number}
 								</h3>
 								<div className="flex flex-col gap-2 text-left">
@@ -71,20 +71,24 @@ const VALUES = [
 		number: "01",
 		title: "DISCIPLINE",
 		body: "Strong fundamentals come from consistent practice.",
+		image: "/images/stock/stock-9.webp",
 	},
 	{
 		number: "02",
 		title: "PASSION",
 		body: "We teach with energy and genuine love for soccer.",
+		image: "/images/stock/stock-11.webp",
 	},
 	{
 		number: "03",
 		title: "GROWTH",
 		body: "Every player progresses at their own pace, with clear guidance.",
+		image: "/images/stock/stock-12.webp",
 	},
 	{
 		number: "04",
 		title: "COMMUNITY",
 		body: "We build connections that last beyond the pitch.",
+		image: "/images/stock/stock-10.webp",
 	},
 ];
