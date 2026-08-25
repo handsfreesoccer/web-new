@@ -27,8 +27,13 @@
     "alias": "appointment-reminder",
     "published": true,
     "variables": [
+      "appointment_date",
+      "appointment_end_time",
+      "appointment_start_time",
+      "class_type",
       "first_name",
       "maps_url",
+      "timezone_label",
       "year"
     ]
   },

@@ -55,6 +55,70 @@ type BookingEmail = {
 	appointmentStartUtc: Date;
 };
 
+type BookingReminderEmail = BookingEmail & {
+	classType: string;
+	appointmentEndUtc: Date | null;
+};
+
+const APPOINTMENT_TIMEZONE =
+	process.env.APPOINTMENT_TIMEZONE ?? "America/Chicago";
+
+const formatClassType = (classType: string) =>
+	classType.replaceAll("-", " ").replace(/\b\w/g, (char) => char.toUpperCase());
+
+const getAppointmentEnd = (booking: {
+	appointmentStartUtc: Date;
+	appointmentEndUtc: Date | null;
+}) =>
+	booking.appointmentEndUtc ??
+	new Date(booking.appointmentStartUtc.getTime() + 60 * 60 * 1000);
+
+const formatAppointmentVariables = (booking: {
+	appointmentStartUtc: Date;
+	appointmentEndUtc: Date | null;
+	classType: string;
+}) => {
+	const end = getAppointmentEnd(booking);
+	const timeFormat: Intl.DateTimeFormatOptions = {
+		timeZone: APPOINTMENT_TIMEZONE,
+		hour: "numeric",
+		minute: "2-digit",
+	};
+	const dateFormat: Intl.DateTimeFormatOptions = {
+		timeZone: APPOINTMENT_TIMEZONE,
+		weekday: "long",
+		month: "long",
+		day: "numeric",
+		year: "numeric",
+	};
+	const timezoneLabel =
+		new Intl.DateTimeFormat("en-US", {
+			timeZone: APPOINTMENT_TIMEZONE,
+			timeZoneName: "short",
+		})
+			.formatToParts(booking.appointmentStartUtc)
+			.find((part) => part.type === "timeZoneName")?.value ?? "Central";
+
+	const appointmentStartTime = new Intl.DateTimeFormat(
+		"en-US",
+		timeFormat,
+	).format(booking.appointmentStartUtc);
+	const appointmentEndTime = new Intl.DateTimeFormat("en-US", timeFormat).format(
+		end,
+	);
+
+	return {
+		appointment_date: new Intl.DateTimeFormat("en-US", dateFormat).format(
+			booking.appointmentStartUtc,
+		),
+		appointment_start_time: appointmentStartTime,
+		appointment_end_time: appointmentEndTime,
+		appointment_time_range: `${appointmentStartTime} – ${appointmentEndTime} ${timezoneLabel}`,
+		timezone_label: timezoneLabel,
+		class_type: formatClassType(booking.classType),
+	};
+};
+
 type TemplateVariables = Record<string, string | number>;
 
 const logEmailFailure = (label: string) => (error: unknown) => {
@@ -146,18 +210,33 @@ export async function sendPaymentEmail(
 	);
 }
 
-export async function sendReminderEmail(booking: BookingEmail) {
+export async function sendReminderEmail(booking: BookingReminderEmail) {
 	const maps =
 		process.env.GOOGLE_MAPS_URL ?? "https://maps.google.com/?q=Allen,Texas";
+	const end = getAppointmentEnd(booking);
 	return sendTemplate(
 		"appointment-reminder",
 		booking.email,
 		{
 			first_name: booking.firstName,
 			maps_url: maps,
+			...formatAppointmentVariables(booking),
 		},
 		{
 			subject: "Your Hands Free Soccer appointment is tomorrow",
+			attachments: [
+				{
+					filename: "hands-free-soccer-appointment.ics",
+					content: Buffer.from(
+						createCalendarInvite({
+							uid: String(booking.id),
+							firstName: booking.firstName,
+							start: booking.appointmentStartUtc,
+							end,
+						}),
+					).toString("base64"),
+				},
+			],
 		},
 	);
 }
@@ -213,6 +292,6 @@ export function queuePaymentEmail(booking: BookingEmail, paymentUrl: string) {
 }
 
 /** Fire-and-forget — does not block the caller. */
-export function queueReminderEmail(booking: BookingEmail) {
+export function queueReminderEmail(booking: BookingReminderEmail) {
 	void sendReminderEmail(booking).catch(logEmailFailure("appointment-reminder"));
 }
