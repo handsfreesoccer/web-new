@@ -1,11 +1,9 @@
 import { PrismaClient } from './generated/prisma/client.js'
-
 import { getDatabaseUrl } from './database-url.js'
+import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
 
-import { PrismaPg } from '@prisma/adapter-pg'
-
-const adapter = new PrismaPg({
-  connectionString: getDatabaseUrl(),
+const adapter = new PrismaBetterSqlite3({
+  url: getDatabaseUrl(),
 })
 
 declare global {

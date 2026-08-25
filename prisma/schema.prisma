@@ -4,11 +4,61 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
-model Todo {
+model Booking {
+  id                  Int          @id @default(autoincrement())
+  firstName           String
+  lastName            String
+  email               String
+  phone               String
+  classType           String
+  appointmentStartUtc DateTime
+  appointmentEndUtc   DateTime?
+  welcomeSentAt       DateTime?
+  reminderSentAt      DateTime?
+  paymentSentAt       DateTime?
+  paidAt              DateTime?
+  createdAt           DateTime     @default(now())
+  attendances         Attendance[]
+  emailLogs           EmailLog[]
+}
+
+model Attendance {
   id        Int      @id @default(autoincrement())
-  title     String
+  bookingId Int
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  attendedAt DateTime
   createdAt DateTime @default(now())
+}
+
+model EmailLog {
+  id           Int      @id @default(autoincrement())
+  bookingId    Int?
+  booking      Booking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  type         String
+  status       String
+  providerId   String?
+  scheduledFor DateTime?
+  sentAt       DateTime?
+  error        String?
+  createdAt    DateTime @default(now())
+}
+
+model AdminMagicLink {
+  id        Int      @id @default(autoincrement())
+  tokenHash String   @unique
+  email     String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+}
+
+model AdminSession {
+  id               Int      @id @default(autoincrement())
+  refreshTokenHash  String   @unique
+  email             String
+  expiresAt         DateTime
+  createdAt         DateTime @default(now())
 }

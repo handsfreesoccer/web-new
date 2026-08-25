@@ -10,6 +10,7 @@ import { ReactLenis } from "lenis/react";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles.css?url";
 import "lenis/dist/lenis.css"; // Prevents layout issues during scroll initializatio
+import { Toaster } from "#/components/ui/sonner";
 
 interface MyRouterContext {
 	queryClient: QueryClient;
@@ -56,6 +57,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 					}}
 				>
 					{children}
+					<Toaster />
 				</ReactLenis>
 				<TanStackDevtools
 					config={{

@@ -1,11 +1,9 @@
 import { PrismaClient } from '../src/generated/prisma/client.js'
-
 import { getDatabaseUrl } from '../src/database-url.js'
+import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
 
-import { PrismaPg } from '@prisma/adapter-pg'
-
-const adapter = new PrismaPg({
-  connectionString: getDatabaseUrl(),
+const adapter = new PrismaBetterSqlite3({
+  url: getDatabaseUrl(),
 })
 
 const prisma = new PrismaClient({ adapter })
@@ -13,19 +11,12 @@ const prisma = new PrismaClient({ adapter })
 async function main() {
   console.log('🌱 Seeding database...')
 
-  // Clear existing todos
-  await prisma.todo.deleteMany()
-
-  // Create example todos
-  const todos = await prisma.todo.createMany({
-    data: [
-      { title: 'Buy groceries' },
-      { title: 'Read a book' },
-      { title: 'Workout' },
-    ],
-  })
-
-  console.log(`✅ Created ${todos.count} todos`)
+  await prisma.attendance.deleteMany()
+  await prisma.emailLog.deleteMany()
+  await prisma.booking.deleteMany()
+  await prisma.adminMagicLink.deleteMany()
+  await prisma.adminSession.deleteMany()
+  console.log('✅ Database cleared')
 }
 
 main()

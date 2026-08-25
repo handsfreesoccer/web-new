@@ -13,6 +13,17 @@ import { Route as LayoutRouteRouteImport } from './routes/_layout/route'
 import { Route as LayoutIndexRouteRouteImport } from './routes/_layout/index/route'
 import { Route as LayoutAboutRouteRouteImport } from './routes/_layout/about/route'
 import { Route as LayoutContactUsRouteRouteImport } from './routes/_layout/contact-us/route'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as ApiBookingsRouteImport } from './routes/api/bookings'
+import { Route as ApiAdminEmailsRouteImport } from './routes/api/admin/emails'
+import { Route as ApiAdminStudentsRouteImport } from './routes/api/admin/students'
+import { Route as ApiCronDailyRouteImport } from './routes/api/cron/daily'
+import { Route as ApiAdminAuthLogoutRouteImport } from './routes/api/admin/auth/logout'
+import { Route as ApiAdminAuthRefreshRouteImport } from './routes/api/admin/auth/refresh'
+import { Route as ApiAdminAuthRequestLinkRouteImport } from './routes/api/admin/auth/request-link'
+import { Route as ApiAdminAuthVerifyRouteImport } from './routes/api/admin/auth/verify'
+import { Route as ApiAdminStudentsIdAttendanceRouteImport } from './routes/api/admin/students/$id/attendance'
 
 const LayoutRouteRoute = LayoutRouteRouteImport.update({
   id: '/_layout',
@@ -33,16 +44,94 @@ const LayoutContactUsRouteRoute = LayoutContactUsRouteRouteImport.update({
   path: '/contact-us',
   getParentRoute: () => LayoutRouteRoute,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiBookingsRoute = ApiBookingsRouteImport.update({
+  id: '/api/bookings',
+  path: '/api/bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminEmailsRoute = ApiAdminEmailsRouteImport.update({
+  id: '/api/admin/emails',
+  path: '/api/admin/emails',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminStudentsRoute = ApiAdminStudentsRouteImport.update({
+  id: '/api/admin/students',
+  path: '/api/admin/students',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCronDailyRoute = ApiCronDailyRouteImport.update({
+  id: '/api/cron/daily',
+  path: '/api/cron/daily',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminAuthLogoutRoute = ApiAdminAuthLogoutRouteImport.update({
+  id: '/api/admin/auth/logout',
+  path: '/api/admin/auth/logout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminAuthRefreshRoute = ApiAdminAuthRefreshRouteImport.update({
+  id: '/api/admin/auth/refresh',
+  path: '/api/admin/auth/refresh',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminAuthRequestLinkRoute = ApiAdminAuthRequestLinkRouteImport.update({
+  id: '/api/admin/auth/request-link',
+  path: '/api/admin/auth/request-link',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminAuthVerifyRoute = ApiAdminAuthVerifyRouteImport.update({
+  id: '/api/admin/auth/verify',
+  path: '/api/admin/auth/verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminStudentsIdAttendanceRoute =
+  ApiAdminStudentsIdAttendanceRouteImport.update({
+    id: '/$id/attendance',
+    path: '/$id/attendance',
+    getParentRoute: () => ApiAdminStudentsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRouteRoute
   '/about': typeof LayoutAboutRouteRoute
   '/contact-us': typeof LayoutContactUsRouteRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/api/bookings': typeof ApiBookingsRoute
+  '/admin/': typeof AdminIndexRoute
+  '/api/admin/emails': typeof ApiAdminEmailsRoute
+  '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
+  '/api/cron/daily': typeof ApiCronDailyRoute
+  '/api/admin/auth/logout': typeof ApiAdminAuthLogoutRoute
+  '/api/admin/auth/refresh': typeof ApiAdminAuthRefreshRoute
+  '/api/admin/auth/request-link': typeof ApiAdminAuthRequestLinkRoute
+  '/api/admin/auth/verify': typeof ApiAdminAuthVerifyRoute
+  '/api/admin/students/$id/attendance': typeof ApiAdminStudentsIdAttendanceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof LayoutIndexRouteRoute
   '/about': typeof LayoutAboutRouteRoute
   '/contact-us': typeof LayoutContactUsRouteRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/api/bookings': typeof ApiBookingsRoute
+  '/admin': typeof AdminIndexRoute
+  '/api/admin/emails': typeof ApiAdminEmailsRoute
+  '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
+  '/api/cron/daily': typeof ApiCronDailyRoute
+  '/api/admin/auth/logout': typeof ApiAdminAuthLogoutRoute
+  '/api/admin/auth/refresh': typeof ApiAdminAuthRefreshRoute
+  '/api/admin/auth/request-link': typeof ApiAdminAuthRequestLinkRoute
+  '/api/admin/auth/verify': typeof ApiAdminAuthVerifyRoute
+  '/api/admin/students/$id/attendance': typeof ApiAdminStudentsIdAttendanceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -50,22 +139,82 @@ export interface FileRoutesById {
   '/_layout/': typeof LayoutIndexRouteRoute
   '/_layout/about': typeof LayoutAboutRouteRoute
   '/_layout/contact-us': typeof LayoutContactUsRouteRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/api/bookings': typeof ApiBookingsRoute
+  '/admin/': typeof AdminIndexRoute
+  '/api/admin/emails': typeof ApiAdminEmailsRoute
+  '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
+  '/api/cron/daily': typeof ApiCronDailyRoute
+  '/api/admin/auth/logout': typeof ApiAdminAuthLogoutRoute
+  '/api/admin/auth/refresh': typeof ApiAdminAuthRefreshRoute
+  '/api/admin/auth/request-link': typeof ApiAdminAuthRequestLinkRoute
+  '/api/admin/auth/verify': typeof ApiAdminAuthVerifyRoute
+  '/api/admin/students/$id/attendance': typeof ApiAdminStudentsIdAttendanceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact-us'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact-us'
+    | '/admin/login'
+    | '/api/bookings'
+    | '/admin/'
+    | '/api/admin/emails'
+    | '/api/admin/students'
+    | '/api/cron/daily'
+    | '/api/admin/auth/logout'
+    | '/api/admin/auth/refresh'
+    | '/api/admin/auth/request-link'
+    | '/api/admin/auth/verify'
+    | '/api/admin/students/$id/attendance'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact-us'
+  to:
+    | '/'
+    | '/about'
+    | '/contact-us'
+    | '/admin/login'
+    | '/api/bookings'
+    | '/admin'
+    | '/api/admin/emails'
+    | '/api/admin/students'
+    | '/api/cron/daily'
+    | '/api/admin/auth/logout'
+    | '/api/admin/auth/refresh'
+    | '/api/admin/auth/request-link'
+    | '/api/admin/auth/verify'
+    | '/api/admin/students/$id/attendance'
   id:
     | '__root__'
     | '/_layout'
     | '/_layout/'
     | '/_layout/about'
     | '/_layout/contact-us'
+    | '/admin/login'
+    | '/api/bookings'
+    | '/admin/'
+    | '/api/admin/emails'
+    | '/api/admin/students'
+    | '/api/cron/daily'
+    | '/api/admin/auth/logout'
+    | '/api/admin/auth/refresh'
+    | '/api/admin/auth/request-link'
+    | '/api/admin/auth/verify'
+    | '/api/admin/students/$id/attendance'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   LayoutRouteRoute: typeof LayoutRouteRouteWithChildren
+  AdminLoginRoute: typeof AdminLoginRoute
+  ApiBookingsRoute: typeof ApiBookingsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  ApiAdminEmailsRoute: typeof ApiAdminEmailsRoute
+  ApiAdminStudentsRoute: typeof ApiAdminStudentsRouteWithChildren
+  ApiCronDailyRoute: typeof ApiCronDailyRoute
+  ApiAdminAuthLogoutRoute: typeof ApiAdminAuthLogoutRoute
+  ApiAdminAuthRefreshRoute: typeof ApiAdminAuthRefreshRoute
+  ApiAdminAuthRequestLinkRoute: typeof ApiAdminAuthRequestLinkRoute
+  ApiAdminAuthVerifyRoute: typeof ApiAdminAuthVerifyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -98,6 +247,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutContactUsRouteRouteImport
       parentRoute: typeof LayoutRouteRoute
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/bookings': {
+      id: '/api/bookings'
+      path: '/api/bookings'
+      fullPath: '/api/bookings'
+      preLoaderRoute: typeof ApiBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/emails': {
+      id: '/api/admin/emails'
+      path: '/api/admin/emails'
+      fullPath: '/api/admin/emails'
+      preLoaderRoute: typeof ApiAdminEmailsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/students': {
+      id: '/api/admin/students'
+      path: '/api/admin/students'
+      fullPath: '/api/admin/students'
+      preLoaderRoute: typeof ApiAdminStudentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/cron/daily': {
+      id: '/api/cron/daily'
+      path: '/api/cron/daily'
+      fullPath: '/api/cron/daily'
+      preLoaderRoute: typeof ApiCronDailyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/auth/logout': {
+      id: '/api/admin/auth/logout'
+      path: '/api/admin/auth/logout'
+      fullPath: '/api/admin/auth/logout'
+      preLoaderRoute: typeof ApiAdminAuthLogoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/auth/refresh': {
+      id: '/api/admin/auth/refresh'
+      path: '/api/admin/auth/refresh'
+      fullPath: '/api/admin/auth/refresh'
+      preLoaderRoute: typeof ApiAdminAuthRefreshRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/auth/request-link': {
+      id: '/api/admin/auth/request-link'
+      path: '/api/admin/auth/request-link'
+      fullPath: '/api/admin/auth/request-link'
+      preLoaderRoute: typeof ApiAdminAuthRequestLinkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/auth/verify': {
+      id: '/api/admin/auth/verify'
+      path: '/api/admin/auth/verify'
+      fullPath: '/api/admin/auth/verify'
+      preLoaderRoute: typeof ApiAdminAuthVerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/students/$id/attendance': {
+      id: '/api/admin/students/$id/attendance'
+      path: '/$id/attendance'
+      fullPath: '/api/admin/students/$id/attendance'
+      preLoaderRoute: typeof ApiAdminStudentsIdAttendanceRouteImport
+      parentRoute: typeof ApiAdminStudentsRoute
+    }
   }
 }
 
@@ -117,8 +343,29 @@ const LayoutRouteRouteWithChildren = LayoutRouteRoute._addFileChildren(
   LayoutRouteRouteChildren,
 )
 
+interface ApiAdminStudentsRouteChildren {
+  ApiAdminStudentsIdAttendanceRoute: typeof ApiAdminStudentsIdAttendanceRoute
+}
+
+const ApiAdminStudentsRouteChildren: ApiAdminStudentsRouteChildren = {
+  ApiAdminStudentsIdAttendanceRoute: ApiAdminStudentsIdAttendanceRoute,
+}
+
+const ApiAdminStudentsRouteWithChildren =
+  ApiAdminStudentsRoute._addFileChildren(ApiAdminStudentsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   LayoutRouteRoute: LayoutRouteRouteWithChildren,
+  AdminLoginRoute: AdminLoginRoute,
+  ApiBookingsRoute: ApiBookingsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  ApiAdminEmailsRoute: ApiAdminEmailsRoute,
+  ApiAdminStudentsRoute: ApiAdminStudentsRouteWithChildren,
+  ApiCronDailyRoute: ApiCronDailyRoute,
+  ApiAdminAuthLogoutRoute: ApiAdminAuthLogoutRoute,
+  ApiAdminAuthRefreshRoute: ApiAdminAuthRefreshRoute,
+  ApiAdminAuthRequestLinkRoute: ApiAdminAuthRequestLinkRoute,
+  ApiAdminAuthVerifyRoute: ApiAdminAuthVerifyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
