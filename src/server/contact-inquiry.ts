@@ -1,17 +1,14 @@
-import { sendContactConfirmation } from "#/server/email";
-import { appendContactInquiryToSpreadsheet } from "#/server/spreadsheet";
 import type { ContactInput } from "#/lib/contact-schema";
+import { sendContactConfirmation } from "#/server/email";
+import { runInBackground } from "#/server/run-in-background";
+import { appendContactInquiryToSpreadsheet } from "#/server/spreadsheet";
 
 export async function createContactInquiry(inquiry: ContactInput) {
 	await appendContactInquiryToSpreadsheet(inquiry);
 
-	let emailStatus: "sent" | "failed" = "sent";
-	try {
+	runInBackground("contact:confirmation", async () => {
 		await sendContactConfirmation(inquiry);
-	} catch (error) {
-		emailStatus = "failed";
-		console.error("[contact-inquiries]", error);
-	}
+	});
 
-	return { emailStatus };
+	return {};
 }
