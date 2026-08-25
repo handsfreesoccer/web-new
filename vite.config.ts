@@ -13,7 +13,11 @@ const config = defineConfig({
 		tailwindcss(),
 		tanstackStart(),
 		viteReact(),
-		nitro(),
+		nitro({
+			rollupConfig: {
+				external: ["better-sqlite3"],
+			},
+		}),
 		babel({ presets: [reactCompilerPreset()] }),
 	],
 	server: {

@@ -1,10 +1,11 @@
-import { prisma } from "#/db";
+import { getPrisma } from "#/db";
 import { sendPaymentEmail, sendReminderEmail } from "#/server/email";
 import { createAppointmentPaymentLink } from "#/server/stripe";
 
 const day = 24 * 60 * 60 * 1000;
 
 export async function processDueEmails(now = new Date()) {
+	const prisma = await getPrisma();
 	const tomorrowStart = new Date(now.getTime() + day);
 	tomorrowStart.setUTCHours(0, 0, 0, 0);
 	const tomorrowEnd = new Date(tomorrowStart.getTime() + day);

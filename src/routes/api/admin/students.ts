@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import "@tanstack/react-start";
 import "@tanstack/react-start/server";
-import { prisma } from "#/db";
+import { getPrisma } from "#/db";
 import { requireAdmin } from "#/server/admin-request";
 
 export const Route = createFileRoute("/api/admin/students")({
@@ -13,6 +13,7 @@ export const Route = createFileRoute("/api/admin/students")({
 				const url = new URL(request.url);
 				const page = Math.max(1, Number(url.searchParams.get("page") ?? 1));
 				const perPage = 20;
+				const prisma = await getPrisma();
 				const [items, total] = await Promise.all([
 					prisma.booking.findMany({
 						orderBy: { appointmentStartUtc: "desc" },

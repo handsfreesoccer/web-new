@@ -1,4 +1,4 @@
-import { prisma } from "#/db";
+import { getPrisma } from "#/db";
 import { bookingSchema, type BookingInput } from "#/lib/booking-schema";
 import { isAppointmentWithinAvailability } from "#/lib/booking-availability-schema";
 import { getBookingAvailability } from "#/server/booking-availability";
@@ -16,6 +16,7 @@ export async function createBooking(input: unknown) {
 	if (availabilityError) {
 		throw new Error(availabilityError);
 	}
+	const prisma = await getPrisma();
 	const booking = await prisma.booking.create({
 		data: {
 			firstName: parsed.firstName,
@@ -35,13 +36,15 @@ export async function createBooking(input: unknown) {
 
 	void sendWelcomeEmail(booking)
 		.then(async () => {
-			await prisma.booking.update({
+			const db = await getPrisma();
+			await db.booking.update({
 				where: { id: booking.id },
 				data: { welcomeSentAt: new Date() },
 			});
 		})
 		.catch(async (error) => {
-			await prisma.emailLog.create({
+			const db = await getPrisma();
+			await db.emailLog.create({
 				data: {
 					bookingId: booking.id,
 					type: "welcome",

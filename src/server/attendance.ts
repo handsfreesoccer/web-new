@@ -1,8 +1,9 @@
 import { endOfDay, endOfMonth, startOfDay, startOfMonth } from "date-fns";
-import { prisma } from "#/db";
+import { getPrisma } from "#/db";
 import { toDateKey } from "#/lib/admin-attendance";
 
 export async function listAttendancesByBookingId(bookingId: number) {
+	const prisma = await getPrisma();
 	return prisma.attendance.findMany({
 		where: { bookingId },
 		orderBy: { attendedAt: "desc" },
@@ -10,6 +11,7 @@ export async function listAttendancesByBookingId(bookingId: number) {
 }
 
 export async function listAttendancesByDate(date: Date) {
+	const prisma = await getPrisma();
 	const start = startOfDay(date);
 	const end = endOfDay(date);
 
@@ -34,6 +36,7 @@ export async function listAttendancesByDate(date: Date) {
 }
 
 export async function listAttendanceDatesByMonth(year: number, month: number) {
+	const prisma = await getPrisma();
 	const start = startOfMonth(new Date(year, month - 1, 1));
 	const end = endOfMonth(start);
 
@@ -54,6 +57,7 @@ export async function listAttendanceDatesByMonth(year: number, month: number) {
 }
 
 export async function createAttendance(bookingId: number, attendedAt: Date) {
+	const prisma = await getPrisma();
 	return prisma.attendance.create({
 		data: { bookingId, attendedAt },
 	});

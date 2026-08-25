@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { StatusCodes } from "http-status-codes";
 import "@tanstack/react-start";
 import "@tanstack/react-start/server";
-import { prisma } from "#/db";
+import { getPrisma } from "#/db";
 import { requireAdmin } from "#/server/admin-request";
 import { sendPaymentEmail, sendReminderEmail } from "#/server/email";
 import { createAppointmentPaymentLink } from "#/server/stripe";
@@ -30,6 +30,7 @@ export const Route = createFileRoute("/api/admin/emails")({
 						"Choose a booking and email type.",
 						StatusCodes.UNPROCESSABLE_ENTITY,
 					);
+				const prisma = await getPrisma();
 				const booking = await prisma.booking.findUnique({
 					where: { id: parsed.data.bookingId },
 				});

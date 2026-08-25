@@ -1,14 +1,28 @@
-const client = process.env.REDIS_URL
-	? new Bun.RedisClient(process.env.REDIS_URL)
-	: new Bun.RedisClient();
+type RedisClient = {
+	get: (key: string) => Promise<string | null>;
+	set: (key: string, value: string, ttlSeconds: number) => Promise<void>;
+	del: (key: string) => Promise<void>;
+};
+
+let clientPromise: Promise<RedisClient> | undefined;
+
+async function loadClient() {
+	if (typeof (globalThis as { Bun?: unknown }).Bun !== "undefined") {
+		return (await import("./redis.bun.js")).createRedisClient();
+	}
+	return (await import("./redis.node.js")).createRedisClient();
+}
+
+function getClient() {
+	clientPromise ??= loadClient();
+	return clientPromise;
+}
 
 export const redis = {
-	get: (key: string) => client.get(key),
-	set: async (key: string, value: string, ttlSeconds: number) => {
-		await client.set(key, value);
-		await client.expire(key, ttlSeconds);
-	},
-	del: (key: string) => client.del(key),
+	get: (key: string) => getClient().then((client) => client.get(key)),
+	set: (key: string, value: string, ttlSeconds: number) =>
+		getClient().then((client) => client.set(key, value, ttlSeconds)),
+	del: (key: string) => getClient().then((client) => client.del(key)),
 };
 
 export const redisKeys = {

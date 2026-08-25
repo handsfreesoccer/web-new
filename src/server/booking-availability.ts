@@ -1,4 +1,4 @@
-import { prisma } from "#/db";
+import { getPrisma } from "#/db";
 import {
 	DEFAULT_BOOKING_AVAILABILITY,
 	type BookingAvailability,
@@ -27,6 +27,7 @@ const toAvailability = (record: {
 });
 
 export async function getBookingAvailability(): Promise<BookingAvailability> {
+	const prisma = await getPrisma();
 	const record = await prisma.bookingAvailability.findUnique({ where: { id: 1 } });
 	if (!record) {
 		const created = await prisma.bookingAvailability.create({
@@ -48,6 +49,7 @@ export async function getBookingAvailability(): Promise<BookingAvailability> {
 }
 
 export async function updateBookingAvailability(input: BookingAvailabilityInput) {
+	const prisma = await getPrisma();
 	const uniqueDays = sortWeekdays(input.availableDays);
 	const record = await prisma.bookingAvailability.upsert({
 		where: { id: 1 },
