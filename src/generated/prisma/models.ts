@@ -11,4 +11,5 @@
 export type * from './models/Booking.ts'
 export type * from './models/Attendance.ts'
 export type * from './models/EmailLog.ts'
+export type * from './models/BookingAvailability.ts'
 export type * from './commonInputTypes.ts'

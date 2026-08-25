@@ -25,6 +25,11 @@ export const Route = createFileRoute("/api/bookings")({
 							StatusCodes.UNPROCESSABLE_ENTITY,
 							error.issues.map((issue) => issue.message),
 						);
+					if (error instanceof Error)
+						return failure(
+							error.message,
+							StatusCodes.UNPROCESSABLE_ENTITY,
+						);
 					return failure(
 						"We could not save your booking right now.",
 						StatusCodes.INTERNAL_SERVER_ERROR,

@@ -17,8 +17,18 @@ import {
 import {
 	DateTimePicker,
 	type DateTimeRange,
+	type MinuteStep,
 } from "#/components/ui-extended/date-time-picker";
+import { startOfDay } from "date-fns";
+import { useMemo } from "react";
+import { useBookingAvailability } from "#/hooks/use-booking-availability";
 import { bookingSchema } from "#/lib/booking-schema";
+import {
+	getBookingWindow,
+	timeStringToDate,
+	validateBookingAppointment,
+	weekdaysToIndices,
+} from "#/lib/booking-availability-schema";
 import { BOOKING_SECTION_ID } from "#/lib/constants";
 import { useHashScroll } from "#/lib/use-hash-scroll";
 
@@ -40,6 +50,26 @@ const fieldClassName = "h-10";
 
 export const BookYourFirstSession: React.FC = () => {
 	useHashScroll(BOOKING_SECTION_ID);
+	const {
+		data: availability,
+		isLoading: isAvailabilityLoading,
+		isFetching: isAvailabilityFetching,
+	} = useBookingAvailability();
+	const isLoadingAvailability = isAvailabilityLoading || isAvailabilityFetching;
+	const bookingWindow = useMemo(
+		() => (availability ? getBookingWindow(availability) : null),
+		[availability],
+	);
+	const calendarFrom = useMemo(() => {
+		const today = startOfDay(new Date());
+		if (!bookingWindow) return today;
+		const earliestDay = startOfDay(bookingWindow.earliest);
+		return earliestDay > today ? earliestDay : today;
+	}, [bookingWindow]);
+	const calendarTo = useMemo(() => {
+		if (!bookingWindow) return undefined;
+		return bookingWindow.latestDay;
+	}, [bookingWindow]);
 	const bookingMutation = useMutation({
 		mutationFn: (data: Record<string, unknown>) => api.post("/bookings", data),
 	});
@@ -54,6 +84,14 @@ export const BookYourFirstSession: React.FC = () => {
 		},
 		onSubmit: async ({ value }) => {
 			const typedValue = value as FormValues;
+			const appointmentError = validateBookingAppointment(
+				typedValue.appointment,
+				availability,
+			);
+			if (appointmentError) {
+				toast.error(appointmentError);
+				return;
+			}
 			const parsed = bookingSchema.safeParse({
 				...typedValue,
 				appointmentStart: typedValue.appointment.from,
@@ -197,15 +235,44 @@ export const BookYourFirstSession: React.FC = () => {
 								</div>
 							)}
 						</form.Field>
-						<form.Field name="appointment">
+						<form.Field
+							name="appointment"
+							validators={{
+								onSubmit: ({ value }) => {
+									const message = validateBookingAppointment(value, availability);
+									return message ?? undefined;
+								},
+							}}
+						>
 							{(field) => (
 								<div className="flex flex-col gap-2">
 									<Label htmlFor="appointment">Preferred Date & Time</Label>
 									<DateTimePicker
 										id="appointment"
-										from={new Date()}
-										placeholder="e.g. 09/12/2026 04:00 PM – 06:00 PM"
-										minuteStep={30}
+										from={calendarFrom}
+										to={calendarTo}
+										notBefore={bookingWindow?.earliest}
+										notAfter={bookingWindow?.latest}
+										placeholder={
+											isLoadingAvailability
+												? "Loading available times..."
+												: "e.g. 09/12/2026 04:00 PM – 06:00 PM"
+										}
+										minuteStep={
+											(availability?.minuteStep ?? 30) as MinuteStep
+										}
+										fromTime={timeStringToDate(
+											availability?.startTime ?? "09:00",
+										)}
+										toTime={timeStringToDate(
+											availability?.endTime ?? "17:00",
+										)}
+										availableWeekdays={
+											availability
+												? weekdaysToIndices(availability.availableDays)
+												: undefined
+										}
+										disabled={isLoadingAvailability}
 										value={field.state.value}
 										onChange={field.handleChange}
 									/>

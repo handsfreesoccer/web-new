@@ -13,11 +13,18 @@ export const bookingSchema = z
 			"biweekly-saturday",
 		]),
 		appointmentStart: z.coerce.date(),
-		appointmentEnd: z.coerce.date().optional(),
+		appointmentEnd: z.coerce.date(),
 	})
 	.refine((value) => value.appointmentStart.getTime() > Date.now(), {
 		message: "Choose a future appointment time",
 		path: ["appointmentStart"],
-	});
+	})
+	.refine(
+		(value) => value.appointmentEnd.getTime() > value.appointmentStart.getTime(),
+		{
+			message: "End time must be after start time",
+			path: ["appointmentEnd"],
+		},
+	);
 
 export type BookingInput = z.infer<typeof bookingSchema>;

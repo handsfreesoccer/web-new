@@ -45,3 +45,20 @@ model EmailLog {
   error        String?
   createdAt    DateTime @default(now())
 }
+
+model BookingAvailability {
+  id            Int      @id @default(1)
+  /// JSON array of weekday keys, e.g. ["monday","tuesday",…]
+  availableDays String   @default("[\"monday\",\"tuesday\",\"wednesday\",\"thursday\",\"friday\"]")
+  /// Local time window start, HH:mm
+  startTime     String   @default("09:00")
+  /// Local time window end, HH:mm
+  endTime       String   @default("17:00")
+  /// Slot interval in minutes: 5, 15, 30, or 60
+  minuteStep    Int      @default(30)
+  /// Minimum hours before an appointment can be booked
+  minNoticeHours Int     @default(24)
+  /// Maximum days ahead a booking can be made
+  maxAdvanceDays Int     @default(30)
+  updatedAt     DateTime @updatedAt
+}

@@ -1,10 +1,21 @@
 import { prisma } from "#/db";
 import { bookingSchema, type BookingInput } from "#/lib/booking-schema";
+import { isAppointmentWithinAvailability } from "#/lib/booking-availability-schema";
+import { getBookingAvailability } from "#/server/booking-availability";
 import { sendWelcomeEmail } from "#/server/email";
 import { appendBookingToSpreadsheet } from "#/server/spreadsheet";
 
 export async function createBooking(input: unknown) {
 	const parsed = bookingSchema.parse(input);
+	const availability = await getBookingAvailability();
+	const availabilityError = isAppointmentWithinAvailability(
+		parsed.appointmentStart,
+		parsed.appointmentEnd,
+		availability,
+	);
+	if (availabilityError) {
+		throw new Error(availabilityError);
+	}
 	const booking = await prisma.booking.create({
 		data: {
 			firstName: parsed.firstName,

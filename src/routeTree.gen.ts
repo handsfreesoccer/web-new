@@ -15,8 +15,11 @@ import { Route as LayoutAboutRouteRouteImport } from './routes/_layout/about/rou
 import { Route as LayoutContactUsRouteRouteImport } from './routes/_layout/contact-us/route'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as ApiBookingAvailabilityRouteImport } from './routes/api/booking-availability'
 import { Route as ApiBookingsRouteImport } from './routes/api/bookings'
 import { Route as ApiContactInquiriesRouteImport } from './routes/api/contact-inquiries'
+import { Route as ApiAdminAttendanceRouteImport } from './routes/api/admin/attendance'
+import { Route as ApiAdminBookingAvailabilityRouteImport } from './routes/api/admin/booking-availability'
 import { Route as ApiAdminEmailsRouteImport } from './routes/api/admin/emails'
 import { Route as ApiAdminStudentsRouteImport } from './routes/api/admin/students'
 import { Route as ApiCronDailyRouteImport } from './routes/api/cron/daily'
@@ -57,6 +60,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiBookingAvailabilityRoute = ApiBookingAvailabilityRouteImport.update({
+  id: '/api/booking-availability',
+  path: '/api/booking-availability',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiBookingsRoute = ApiBookingsRouteImport.update({
   id: '/api/bookings',
   path: '/api/bookings',
@@ -67,6 +75,17 @@ const ApiContactInquiriesRoute = ApiContactInquiriesRouteImport.update({
   path: '/api/contact-inquiries',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminAttendanceRoute = ApiAdminAttendanceRouteImport.update({
+  id: '/api/admin/attendance',
+  path: '/api/admin/attendance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminBookingAvailabilityRoute =
+  ApiAdminBookingAvailabilityRouteImport.update({
+    id: '/api/admin/booking-availability',
+    path: '/api/admin/booking-availability',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAdminEmailsRoute = ApiAdminEmailsRouteImport.update({
   id: '/api/admin/emails',
   path: '/api/admin/emails',
@@ -124,9 +143,12 @@ export interface FileRoutesByFullPath {
   '/about': typeof LayoutAboutRouteRoute
   '/contact-us': typeof LayoutContactUsRouteRoute
   '/admin/login': typeof AdminLoginRoute
+  '/api/booking-availability': typeof ApiBookingAvailabilityRoute
   '/api/bookings': typeof ApiBookingsRoute
   '/api/contact-inquiries': typeof ApiContactInquiriesRoute
   '/admin/': typeof AdminIndexRoute
+  '/api/admin/attendance': typeof ApiAdminAttendanceRoute
+  '/api/admin/booking-availability': typeof ApiAdminBookingAvailabilityRoute
   '/api/admin/emails': typeof ApiAdminEmailsRoute
   '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
   '/api/cron/daily': typeof ApiCronDailyRoute
@@ -143,9 +165,12 @@ export interface FileRoutesByTo {
   '/about': typeof LayoutAboutRouteRoute
   '/contact-us': typeof LayoutContactUsRouteRoute
   '/admin/login': typeof AdminLoginRoute
+  '/api/booking-availability': typeof ApiBookingAvailabilityRoute
   '/api/bookings': typeof ApiBookingsRoute
   '/api/contact-inquiries': typeof ApiContactInquiriesRoute
   '/admin': typeof AdminIndexRoute
+  '/api/admin/attendance': typeof ApiAdminAttendanceRoute
+  '/api/admin/booking-availability': typeof ApiAdminBookingAvailabilityRoute
   '/api/admin/emails': typeof ApiAdminEmailsRoute
   '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
   '/api/cron/daily': typeof ApiCronDailyRoute
@@ -164,9 +189,12 @@ export interface FileRoutesById {
   '/_layout/about': typeof LayoutAboutRouteRoute
   '/_layout/contact-us': typeof LayoutContactUsRouteRoute
   '/admin/login': typeof AdminLoginRoute
+  '/api/booking-availability': typeof ApiBookingAvailabilityRoute
   '/api/bookings': typeof ApiBookingsRoute
   '/api/contact-inquiries': typeof ApiContactInquiriesRoute
   '/admin/': typeof AdminIndexRoute
+  '/api/admin/attendance': typeof ApiAdminAttendanceRoute
+  '/api/admin/booking-availability': typeof ApiAdminBookingAvailabilityRoute
   '/api/admin/emails': typeof ApiAdminEmailsRoute
   '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
   '/api/cron/daily': typeof ApiCronDailyRoute
@@ -185,9 +213,12 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact-us'
     | '/admin/login'
+    | '/api/booking-availability'
     | '/api/bookings'
     | '/api/contact-inquiries'
     | '/admin/'
+    | '/api/admin/attendance'
+    | '/api/admin/booking-availability'
     | '/api/admin/emails'
     | '/api/admin/students'
     | '/api/cron/daily'
@@ -204,9 +235,12 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact-us'
     | '/admin/login'
+    | '/api/booking-availability'
     | '/api/bookings'
     | '/api/contact-inquiries'
     | '/admin'
+    | '/api/admin/attendance'
+    | '/api/admin/booking-availability'
     | '/api/admin/emails'
     | '/api/admin/students'
     | '/api/cron/daily'
@@ -224,9 +258,12 @@ export interface FileRouteTypes {
     | '/_layout/about'
     | '/_layout/contact-us'
     | '/admin/login'
+    | '/api/booking-availability'
     | '/api/bookings'
     | '/api/contact-inquiries'
     | '/admin/'
+    | '/api/admin/attendance'
+    | '/api/admin/booking-availability'
     | '/api/admin/emails'
     | '/api/admin/students'
     | '/api/cron/daily'
@@ -242,9 +279,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   LayoutRouteRoute: typeof LayoutRouteRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
+  ApiBookingAvailabilityRoute: typeof ApiBookingAvailabilityRoute
   ApiBookingsRoute: typeof ApiBookingsRoute
   ApiContactInquiriesRoute: typeof ApiContactInquiriesRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  ApiAdminAttendanceRoute: typeof ApiAdminAttendanceRoute
+  ApiAdminBookingAvailabilityRoute: typeof ApiAdminBookingAvailabilityRoute
   ApiAdminEmailsRoute: typeof ApiAdminEmailsRoute
   ApiAdminStudentsRoute: typeof ApiAdminStudentsRouteWithChildren
   ApiCronDailyRoute: typeof ApiCronDailyRoute
@@ -300,6 +340,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/booking-availability': {
+      id: '/api/booking-availability'
+      path: '/api/booking-availability'
+      fullPath: '/api/booking-availability'
+      preLoaderRoute: typeof ApiBookingAvailabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/bookings': {
       id: '/api/bookings'
       path: '/api/bookings'
@@ -312,6 +359,20 @@ declare module '@tanstack/react-router' {
       path: '/api/contact-inquiries'
       fullPath: '/api/contact-inquiries'
       preLoaderRoute: typeof ApiContactInquiriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/attendance': {
+      id: '/api/admin/attendance'
+      path: '/api/admin/attendance'
+      fullPath: '/api/admin/attendance'
+      preLoaderRoute: typeof ApiAdminAttendanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/booking-availability': {
+      id: '/api/admin/booking-availability'
+      path: '/api/admin/booking-availability'
+      fullPath: '/api/admin/booking-availability'
+      preLoaderRoute: typeof ApiAdminBookingAvailabilityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/admin/emails': {
@@ -417,9 +478,12 @@ const ApiAdminStudentsRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   LayoutRouteRoute: LayoutRouteRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
+  ApiBookingAvailabilityRoute: ApiBookingAvailabilityRoute,
   ApiBookingsRoute: ApiBookingsRoute,
   ApiContactInquiriesRoute: ApiContactInquiriesRoute,
   AdminIndexRoute: AdminIndexRoute,
+  ApiAdminAttendanceRoute: ApiAdminAttendanceRoute,
+  ApiAdminBookingAvailabilityRoute: ApiAdminBookingAvailabilityRoute,
   ApiAdminEmailsRoute: ApiAdminEmailsRoute,
   ApiAdminStudentsRoute: ApiAdminStudentsRouteWithChildren,
   ApiCronDailyRoute: ApiCronDailyRoute,

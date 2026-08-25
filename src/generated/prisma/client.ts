@@ -56,3 +56,8 @@ export type Attendance = Prisma.AttendanceModel
  * 
  */
 export type EmailLog = Prisma.EmailLogModel
+/**
+ * Model BookingAvailability
+ * 
+ */
+export type BookingAvailability = Prisma.BookingAvailabilityModel

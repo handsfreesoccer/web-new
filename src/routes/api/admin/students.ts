@@ -20,6 +20,7 @@ export const Route = createFileRoute("/api/admin/students")({
 						take: perPage,
 						include: {
 							attendances: { orderBy: { attendedAt: "desc" }, take: 1 },
+							_count: { select: { attendances: true } },
 						},
 					}),
 					prisma.booking.count(),

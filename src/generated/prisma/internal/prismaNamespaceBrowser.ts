@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Booking: 'Booking',
   Attendance: 'Attendance',
-  EmailLog: 'EmailLog'
+  EmailLog: 'EmailLog',
+  BookingAvailability: 'BookingAvailability'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -111,6 +112,20 @@ export const EmailLogScalarFieldEnum = {
 } as const
 
 export type EmailLogScalarFieldEnum = (typeof EmailLogScalarFieldEnum)[keyof typeof EmailLogScalarFieldEnum]
+
+
+export const BookingAvailabilityScalarFieldEnum = {
+  id: 'id',
+  availableDays: 'availableDays',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  minuteStep: 'minuteStep',
+  minNoticeHours: 'minNoticeHours',
+  maxAdvanceDays: 'maxAdvanceDays',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BookingAvailabilityScalarFieldEnum = (typeof BookingAvailabilityScalarFieldEnum)[keyof typeof BookingAvailabilityScalarFieldEnum]
 
 
 export const SortOrder = {

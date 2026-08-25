@@ -438,6 +438,15 @@ export type DateTimePickerProps = {
 	 * @default 5
 	 */
 	minuteStep?: MinuteStep;
+	/**
+	 * Allowed weekdays for calendar selection. `0` = Sunday … `6` = Saturday.
+	 * Days outside this list are disabled.
+	 */
+	availableWeekdays?: number[];
+	/** Earliest selectable instant — tightens times on that calendar day. */
+	notBefore?: Date;
+	/** Latest selectable instant — tightens times on that calendar day. */
+	notAfter?: Date;
 	/** Disables the trigger, calendar, and time lists. */
 	disabled?: boolean;
 	/** Extra classes for the trigger button. */
@@ -488,6 +497,9 @@ export function DateTimePicker({
 	placeholder,
 	is24hours = false,
 	minuteStep = 5,
+	availableWeekdays,
+	notBefore,
+	notAfter,
 	disabled,
 	className,
 }: DateTimePickerProps) {
@@ -504,9 +516,24 @@ export function DateTimePicker({
 			? "e.g. 09/12/2026 16:00 – 18:00"
 			: "e.g. 09/12/2026 04:00 PM – 06:00 PM");
 	const disabledDays = [
+		{ before: startOfDay(new Date()) },
 		...(from ? [{ before: startOfDay(from) }] : []),
 		...(to ? [{ after: startOfDay(to) }] : []),
 	];
+	const isCalendarDayDisabled = (date: Date) => {
+		const day = startOfDay(date);
+		const today = startOfDay(new Date());
+		if (day < today) return true;
+		if (from && day < startOfDay(from)) return true;
+		if (to && day.getTime() > startOfDay(to).getTime()) return true;
+		if (
+			availableWeekdays?.length &&
+			!availableWeekdays.includes(date.getDay())
+		) {
+			return true;
+		}
+		return false;
+	};
 	const minTimeMinutes = fromTime
 		? snapMinutesToStep(timeToMinutes(fromTime), "ceil", minuteStep)
 		: 0;
@@ -516,26 +543,80 @@ export function DateTimePicker({
 	const timeWindowStart = Math.min(minTimeMinutes, maxTimeMinutes);
 	const timeWindowEnd = Math.max(minTimeMinutes, maxTimeMinutes);
 
+	const getTimeBoundsForDate = (
+		date: Date | undefined,
+		bound: RangeBound,
+	) => {
+		let min = timeWindowStart;
+		let max = timeWindowEnd;
+		if (date && notBefore && isSameDay(date, notBefore)) {
+			min = Math.max(
+				min,
+				snapMinutesToStep(dateMinutes(notBefore), "ceil", minuteStep),
+			);
+		}
+		if (date && notAfter && isSameDay(date, notAfter)) {
+			max = Math.min(
+				max,
+				snapMinutesToStep(dateMinutes(notAfter), "floor", minuteStep),
+			);
+		}
+		if (
+			bound === "to" &&
+			date &&
+			selected.from &&
+			isSameDay(date, selected.from)
+		) {
+			min = Math.max(
+				min,
+				snapMinutesToStep(
+					dateMinutes(selected.from) + minuteStep,
+					"ceil",
+					minuteStep,
+				),
+			);
+		}
+		return {
+			min: Math.min(min, max),
+			max: Math.max(min, max),
+		};
+	};
+
 	const clampRange = (range: DateTimeRange): DateTimeRange => {
 		const ordered = orderRange(range);
-		return {
-			from: ordered.from
-				? clampDateToTimeWindow(
-						ordered.from,
-						timeWindowStart,
-						timeWindowEnd,
-						minuteStep,
-					)
-				: undefined,
-			to: ordered.to
-				? clampDateToTimeWindow(
-						ordered.to,
-						timeWindowStart,
-						timeWindowEnd,
-						minuteStep,
-					)
-				: undefined,
-		};
+		const fromBounds = getTimeBoundsForDate(ordered.from, "from");
+		const fromDate = ordered.from
+			? clampDateToTimeWindow(
+					ordered.from,
+					fromBounds.min,
+					fromBounds.max,
+					minuteStep,
+				)
+			: undefined;
+
+		const toDateInput = ordered.to ?? ordered.from;
+		const toBounds = getTimeBoundsForDate(toDateInput, "to");
+		let toDate = toDateInput
+			? clampDateToTimeWindow(
+					toDateInput,
+					toBounds.min,
+					toBounds.max,
+					minuteStep,
+				)
+			: undefined;
+
+		if (fromDate && toDate && toDate.getTime() <= fromDate.getTime()) {
+			const bumped = new Date(fromDate);
+			bumped.setMinutes(bumped.getMinutes() + minuteStep);
+			toDate = clampDateToTimeWindow(
+				bumped,
+				toBounds.min,
+				toBounds.max,
+				minuteStep,
+			);
+		}
+
+		return { from: fromDate, to: toDate };
 	};
 
 	const setSelected = (range: DateTimeRange) => {
@@ -636,7 +717,12 @@ export function DateTimePicker({
 								}
 								onSelect={handleDateSelect}
 								disabled={
-									disabled || (disabledDays.length ? disabledDays : undefined)
+									disabled ||
+									(availableWeekdays?.length
+										? isCalendarDayDisabled
+										: disabledDays.length
+											? disabledDays
+											: undefined)
 								}
 							/>
 						</div>
@@ -651,8 +737,8 @@ export function DateTimePicker({
 								date={selected.from}
 								is24hours={is24hours}
 								minuteStep={minuteStep}
-								minMinutes={timeWindowStart}
-								maxMinutes={timeWindowEnd}
+								minMinutes={getTimeBoundsForDate(selected.from, "from").min}
+								maxMinutes={getTimeBoundsForDate(selected.from, "from").max}
 								onTimeChange={(type, nextValue) =>
 									handleTimeChange("from", type, nextValue)
 								}
@@ -663,8 +749,12 @@ export function DateTimePicker({
 								date={selected.to}
 								is24hours={is24hours}
 								minuteStep={minuteStep}
-								minMinutes={timeWindowStart}
-								maxMinutes={timeWindowEnd}
+								minMinutes={
+									getTimeBoundsForDate(selected.to ?? selected.from, "to").min
+								}
+								maxMinutes={
+									getTimeBoundsForDate(selected.to ?? selected.from, "to").max
+								}
 								onTimeChange={(type, nextValue) =>
 									handleTimeChange("to", type, nextValue)
 								}
