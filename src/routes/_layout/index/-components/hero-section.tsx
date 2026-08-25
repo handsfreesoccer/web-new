@@ -2,9 +2,16 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRightIcon } from "lucide-react";
 import type React from "react";
 import { Button } from "#/components/ui/button";
+import { useSiteAssetUrl } from "#/hooks/use-media";
 import { BOOKING_SECTION_ID } from "#/lib/constants";
 
 export const HeroSection: React.FC = () => {
+	const heroImage = useSiteAssetUrl(
+		"home",
+		"hero",
+		"/images/stock/stock-2.webp",
+	);
+
 	return (
 		<section className="mx-auto flex max-w-360 flex-col gap-16 px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 			<h1 className="@container w-full text-center font-bold text-[min(4.5rem,calc(90cqi/11))] leading-tight">
@@ -13,7 +20,7 @@ export const HeroSection: React.FC = () => {
 			</h1>
 			<div className="relative flex w-full flex-1 flex-col overflow-clip rounded-3xl py-0 sm:min-h-120 sm:py-0">
 				<img
-					src="/images/stock/stock-2.webp"
+					src={heroImage}
 					alt="Soccer training session"
 					className="absolute h-full w-full object-cover"
 				/>

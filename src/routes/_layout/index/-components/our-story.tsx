@@ -1,9 +1,21 @@
 import { Link } from "@tanstack/react-router";
 import type React from "react";
 import { Button } from "#/components/ui/button";
+import { useSiteAssetUrl } from "#/hooks/use-media";
 import { BOOKING_SECTION_ID } from "#/lib/constants";
 
 export const OurStory: React.FC = () => {
+	const storyLeft = useSiteAssetUrl(
+		"home",
+		"story-left",
+		"https://placehold.co/320/black/black",
+	);
+	const storyRight = useSiteAssetUrl(
+		"home",
+		"story-right",
+		"https://placehold.co/320/black/black",
+	);
+
 	return (
 		<section className="mx-auto flex max-w-360 flex-col gap-12 px-4 py-8 sm:gap-16 sm:px-8 sm:py-16 md:px-16">
 			<div className="flex flex-1 flex-col items-start gap-6">
@@ -30,14 +42,14 @@ export const OurStory: React.FC = () => {
 				<div className="grid h-40 w-full grid-cols-2 gap-8 md:grid-cols-7 lg:max-w-[35%]">
 					<div className="relative col-span-1 h-full overflow-hidden rounded-2xl md:col-span-3">
 						<img
-							src="https://placehold.co/320/black/black"
+							src={storyLeft}
 							alt="Player walking on the pitch"
 							className="absolute inset-0 size-full object-cover outline-1 outline-black/10"
 						/>
 					</div>
 					<div className="relative col-span-1 h-full overflow-hidden rounded-2xl md:col-span-4">
 						<img
-							src="https://placehold.co/320/black/black"
+							src={storyRight}
 							alt="Player walking on the pitch"
 							className="absolute inset-0 size-full object-cover outline-1 outline-black/10"
 						/>

@@ -5,13 +5,18 @@ import { GalleryMasonryItem } from "#/components/gallery/gallery-masonry-item";
 import { GalleryPlaybackBoundary } from "#/components/gallery/gallery-playback";
 import { MediaGalleryBoundary } from "#/components/gallery/media-gallery-lightbox";
 import { Button } from "#/components/ui/button";
+import { useGalleryMedia } from "#/hooks/use-media";
 import { GALLERY_MORE_SECTION_ID } from "#/lib/constants";
-import { GALLERY_FEATURED } from "#/lib/gallery";
+import { FEATURED_GALLERY_COUNT, GALLERY_ITEMS } from "#/lib/gallery";
 
 export const LifeAtHFS: React.FC = () => {
+	const { data: galleryItems } = useGalleryMedia();
+	const items = galleryItems ?? GALLERY_ITEMS;
+	const featured = items.slice(0, FEATURED_GALLERY_COUNT);
+
 	return (
-		<GalleryPlaybackBoundary items={GALLERY_FEATURED}>
-			<MediaGalleryBoundary items={GALLERY_FEATURED}>
+		<GalleryPlaybackBoundary items={featured}>
+			<MediaGalleryBoundary items={featured}>
 				<section className="mx-auto flex flex-col items-center gap-16 overflow-hidden px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 					<div className="flex w-full max-w-360 flex-col gap-8">
 						<div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
@@ -35,7 +40,7 @@ export const LifeAtHFS: React.FC = () => {
 									</div>
 								</div>
 							</header>
-							{GALLERY_FEATURED.map((item) => (
+							{featured.map((item) => (
 								<GalleryMasonryItem key={item.id} item={item} />
 							))}
 						</div>

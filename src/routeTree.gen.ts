@@ -20,6 +20,8 @@ import { Route as ApiContactInquiriesRouteImport } from './routes/api/contact-in
 import { Route as ApiAdminEmailsRouteImport } from './routes/api/admin/emails'
 import { Route as ApiAdminStudentsRouteImport } from './routes/api/admin/students'
 import { Route as ApiCronDailyRouteImport } from './routes/api/cron/daily'
+import { Route as ApiMediaAssetsRouteImport } from './routes/api/media/assets'
+import { Route as ApiMediaGalleryRouteImport } from './routes/api/media/gallery'
 import { Route as ApiAdminAuthLogoutRouteImport } from './routes/api/admin/auth/logout'
 import { Route as ApiAdminAuthRefreshRouteImport } from './routes/api/admin/auth/refresh'
 import { Route as ApiAdminAuthRequestLinkRouteImport } from './routes/api/admin/auth/request-link'
@@ -80,6 +82,16 @@ const ApiCronDailyRoute = ApiCronDailyRouteImport.update({
   path: '/api/cron/daily',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiMediaAssetsRoute = ApiMediaAssetsRouteImport.update({
+  id: '/api/media/assets',
+  path: '/api/media/assets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiMediaGalleryRoute = ApiMediaGalleryRouteImport.update({
+  id: '/api/media/gallery',
+  path: '/api/media/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminAuthLogoutRoute = ApiAdminAuthLogoutRouteImport.update({
   id: '/api/admin/auth/logout',
   path: '/api/admin/auth/logout',
@@ -118,6 +130,8 @@ export interface FileRoutesByFullPath {
   '/api/admin/emails': typeof ApiAdminEmailsRoute
   '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
   '/api/cron/daily': typeof ApiCronDailyRoute
+  '/api/media/assets': typeof ApiMediaAssetsRoute
+  '/api/media/gallery': typeof ApiMediaGalleryRoute
   '/api/admin/auth/logout': typeof ApiAdminAuthLogoutRoute
   '/api/admin/auth/refresh': typeof ApiAdminAuthRefreshRoute
   '/api/admin/auth/request-link': typeof ApiAdminAuthRequestLinkRoute
@@ -135,6 +149,8 @@ export interface FileRoutesByTo {
   '/api/admin/emails': typeof ApiAdminEmailsRoute
   '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
   '/api/cron/daily': typeof ApiCronDailyRoute
+  '/api/media/assets': typeof ApiMediaAssetsRoute
+  '/api/media/gallery': typeof ApiMediaGalleryRoute
   '/api/admin/auth/logout': typeof ApiAdminAuthLogoutRoute
   '/api/admin/auth/refresh': typeof ApiAdminAuthRefreshRoute
   '/api/admin/auth/request-link': typeof ApiAdminAuthRequestLinkRoute
@@ -154,6 +170,8 @@ export interface FileRoutesById {
   '/api/admin/emails': typeof ApiAdminEmailsRoute
   '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
   '/api/cron/daily': typeof ApiCronDailyRoute
+  '/api/media/assets': typeof ApiMediaAssetsRoute
+  '/api/media/gallery': typeof ApiMediaGalleryRoute
   '/api/admin/auth/logout': typeof ApiAdminAuthLogoutRoute
   '/api/admin/auth/refresh': typeof ApiAdminAuthRefreshRoute
   '/api/admin/auth/request-link': typeof ApiAdminAuthRequestLinkRoute
@@ -173,6 +191,8 @@ export interface FileRouteTypes {
     | '/api/admin/emails'
     | '/api/admin/students'
     | '/api/cron/daily'
+    | '/api/media/assets'
+    | '/api/media/gallery'
     | '/api/admin/auth/logout'
     | '/api/admin/auth/refresh'
     | '/api/admin/auth/request-link'
@@ -190,6 +210,8 @@ export interface FileRouteTypes {
     | '/api/admin/emails'
     | '/api/admin/students'
     | '/api/cron/daily'
+    | '/api/media/assets'
+    | '/api/media/gallery'
     | '/api/admin/auth/logout'
     | '/api/admin/auth/refresh'
     | '/api/admin/auth/request-link'
@@ -208,6 +230,8 @@ export interface FileRouteTypes {
     | '/api/admin/emails'
     | '/api/admin/students'
     | '/api/cron/daily'
+    | '/api/media/assets'
+    | '/api/media/gallery'
     | '/api/admin/auth/logout'
     | '/api/admin/auth/refresh'
     | '/api/admin/auth/request-link'
@@ -224,6 +248,8 @@ export interface RootRouteChildren {
   ApiAdminEmailsRoute: typeof ApiAdminEmailsRoute
   ApiAdminStudentsRoute: typeof ApiAdminStudentsRouteWithChildren
   ApiCronDailyRoute: typeof ApiCronDailyRoute
+  ApiMediaAssetsRoute: typeof ApiMediaAssetsRoute
+  ApiMediaGalleryRoute: typeof ApiMediaGalleryRoute
   ApiAdminAuthLogoutRoute: typeof ApiAdminAuthLogoutRoute
   ApiAdminAuthRefreshRoute: typeof ApiAdminAuthRefreshRoute
   ApiAdminAuthRequestLinkRoute: typeof ApiAdminAuthRequestLinkRoute
@@ -309,6 +335,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCronDailyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/media/assets': {
+      id: '/api/media/assets'
+      path: '/api/media/assets'
+      fullPath: '/api/media/assets'
+      preLoaderRoute: typeof ApiMediaAssetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/media/gallery': {
+      id: '/api/media/gallery'
+      path: '/api/media/gallery'
+      fullPath: '/api/media/gallery'
+      preLoaderRoute: typeof ApiMediaGalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/auth/logout': {
       id: '/api/admin/auth/logout'
       path: '/api/admin/auth/logout'
@@ -383,6 +423,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminEmailsRoute: ApiAdminEmailsRoute,
   ApiAdminStudentsRoute: ApiAdminStudentsRouteWithChildren,
   ApiCronDailyRoute: ApiCronDailyRoute,
+  ApiMediaAssetsRoute: ApiMediaAssetsRoute,
+  ApiMediaGalleryRoute: ApiMediaGalleryRoute,
   ApiAdminAuthLogoutRoute: ApiAdminAuthLogoutRoute,
   ApiAdminAuthRefreshRoute: ApiAdminAuthRefreshRoute,
   ApiAdminAuthRequestLinkRoute: ApiAdminAuthRequestLinkRoute,

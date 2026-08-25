@@ -16,6 +16,7 @@ export type GalleryMedia = {
 	aspect?: GalleryAspect;
 };
 
+/** Fallback gallery used when R2 is not configured or the bucket is empty. */
 const SAMPLE_VIDEOS = {
 	training: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
 	match: "https://www.w3schools.com/html/mov_bbb.mp4",
