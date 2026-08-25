@@ -54,7 +54,7 @@ export const WhyWithUs: React.FC = () => {
 						<div className="grid h-full grid-cols-1 gap-4 sm:grid-cols-2 sm:grid-rows-5 md:gap-6">
 							<div className="relative overflow-hidden rounded-3xl sm:row-span-5 sm:min-h-0">
 								<img
-									src="https://placehold.co/320/black/black"
+									src="/images/stock/stock-1.webp"
 									alt="Player walking on the pitch"
 									className="absolute inset-0 size-full object-cover outline-1 outline-black/10"
 								/>
@@ -69,7 +69,7 @@ export const WhyWithUs: React.FC = () => {
 							</div>
 							<div className="relative row-span-3 min-h-40 overflow-hidden rounded-3xl sm:min-h-0">
 								<img
-									src="https://placehold.co/600x480/black/black"
+									src="/images/stock/stock-6.webp"
 									alt="Soccer ball on the pitch line"
 									className="absolute inset-0 size-full object-cover outline-1 outline-black/10"
 								/>

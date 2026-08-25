@@ -11,9 +11,9 @@ export const HeroSection: React.FC = () => {
 				<span className="block">OWN YOUR GAME WITH</span>
 				<span className="block whitespace-nowrap">HANDSFREESOCCER</span>
 			</h1>
-			<div className="relative flex w-full flex-1 flex-col overflow-clip rounded-3xl bg-black py-0 sm:min-h-120 sm:py-0">
+			<div className="relative flex w-full flex-1 flex-col overflow-clip rounded-3xl py-0 sm:min-h-120 sm:py-0">
 				<img
-					src="https://placehold.co/600x480/black/black"
+					src="/images/stock/stock-2.webp"
 					alt="Soccer training session"
 					className="absolute h-full w-full object-cover"
 				/>
@@ -26,7 +26,7 @@ export const HeroSection: React.FC = () => {
 					<div className="flex flex-col items-center justify-between gap-10 sm:flex-row">
 						<p className="w-full text-center text-base text-white sm:w-1/2 sm:text-balance sm:text-left sm:text-sm">
 							Personalized 1:1 and small group soccer training for kids ages
-							6–12 — now serving Allen, McKinney, Melissa, and Princeton.
+							6-12 — now serving Allen, McKinney, Melissa, and Princeton.
 						</p>
 						<Button
 							nativeButton={false}
