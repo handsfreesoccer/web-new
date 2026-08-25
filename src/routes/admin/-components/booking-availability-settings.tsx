@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import api from "#/api/http/xhr";
 import type { V2SuccessResponse } from "#/api/http/shared";
@@ -26,6 +26,45 @@ import {
 import { bookingAvailabilityQueryKey } from "#/hooks/use-booking-availability";
 import { cn } from "#/lib/utils";
 
+function toComparablePayload(
+	data: Pick<
+		BookingAvailability,
+		| "availableDays"
+		| "startTime"
+		| "endTime"
+		| "minuteStep"
+		| "minNoticeHours"
+		| "maxAdvanceDays"
+	>,
+): BookingAvailability {
+	return {
+		availableDays: sortWeekdays(data.availableDays),
+		startTime: data.startTime,
+		endTime: data.endTime,
+		minuteStep: data.minuteStep,
+		minNoticeHours:
+			Number.isFinite(data.minNoticeHours) && data.minNoticeHours > 0
+				? data.minNoticeHours
+				: DEFAULT_BOOKING_AVAILABILITY.minNoticeHours,
+		maxAdvanceDays:
+			Number.isFinite(data.maxAdvanceDays) && data.maxAdvanceDays > 0
+				? data.maxAdvanceDays
+				: DEFAULT_BOOKING_AVAILABILITY.maxAdvanceDays,
+	};
+}
+
+function availabilityPayloadsEqual(a: BookingAvailability, b: BookingAvailability) {
+	return (
+		a.startTime === b.startTime &&
+		a.endTime === b.endTime &&
+		a.minuteStep === b.minuteStep &&
+		a.minNoticeHours === b.minNoticeHours &&
+		a.maxAdvanceDays === b.maxAdvanceDays &&
+		a.availableDays.length === b.availableDays.length &&
+		a.availableDays.every((day, index) => day === b.availableDays[index])
+	);
+}
+
 export function BookingAvailabilitySettings() {
 	const queryClient = useQueryClient();
 	const availabilityQuery = useQuery({
@@ -43,28 +82,27 @@ export function BookingAvailabilitySettings() {
 	const [minuteStep, setMinuteStep] = useState<BookingAvailability["minuteStep"]>(30);
 	const [minNoticeHours, setMinNoticeHours] = useState(24);
 	const [maxAdvanceDays, setMaxAdvanceDays] = useState(30);
+	const [lastSavedPayload, setLastSavedPayload] =
+		useState<BookingAvailability | null>(null);
 
 	useEffect(() => {
 		if (!availabilityQuery.data) return;
-		setAvailableDays(availabilityQuery.data.availableDays);
-		setStartTime(availabilityQuery.data.startTime);
-		setEndTime(availabilityQuery.data.endTime);
-		setMinuteStep(availabilityQuery.data.minuteStep);
-		setMinNoticeHours(
-			availabilityQuery.data.minNoticeHours ??
-				DEFAULT_BOOKING_AVAILABILITY.minNoticeHours,
-		);
-		setMaxAdvanceDays(
-			availabilityQuery.data.maxAdvanceDays ??
-				DEFAULT_BOOKING_AVAILABILITY.maxAdvanceDays,
-		);
+		const payload = toComparablePayload(availabilityQuery.data);
+		setLastSavedPayload(payload);
+		setAvailableDays(payload.availableDays);
+		setStartTime(payload.startTime);
+		setEndTime(payload.endTime);
+		setMinuteStep(payload.minuteStep);
+		setMinNoticeHours(payload.minNoticeHours);
+		setMaxAdvanceDays(payload.maxAdvanceDays);
 	}, [availabilityQuery.data]);
 
 	const saveMutation = useMutation({
 		mutationFn: (payload: BookingAvailability) =>
 			api.put("/admin/booking-availability", payload),
-		onSuccess: () => {
+		onSuccess: (_data, payload) => {
 			toast.success("Booking availability updated.");
+			setLastSavedPayload(toComparablePayload(payload));
 			void queryClient.invalidateQueries({
 				queryKey: ["admin-booking-availability"],
 			});
@@ -79,20 +117,30 @@ export function BookingAvailabilitySettings() {
 		},
 	});
 
-	const buildPayload = (): BookingAvailability => ({
-		availableDays,
-		startTime,
-		endTime,
-		minuteStep,
-		minNoticeHours:
-			Number.isFinite(minNoticeHours) && minNoticeHours > 0
-				? minNoticeHours
-				: DEFAULT_BOOKING_AVAILABILITY.minNoticeHours,
-		maxAdvanceDays:
-			Number.isFinite(maxAdvanceDays) && maxAdvanceDays > 0
-				? maxAdvanceDays
-				: DEFAULT_BOOKING_AVAILABILITY.maxAdvanceDays,
-	});
+	const currentPayload = useMemo(
+		() =>
+			toComparablePayload({
+				availableDays,
+				startTime,
+				endTime,
+				minuteStep,
+				minNoticeHours,
+				maxAdvanceDays,
+			}),
+		[
+			availableDays,
+			startTime,
+			endTime,
+			minuteStep,
+			minNoticeHours,
+			maxAdvanceDays,
+		],
+	);
+
+	const isDirty =
+		lastSavedPayload !== null &&
+		!availabilityPayloadsEqual(lastSavedPayload, currentPayload);
+
 	const toggleDay = (day: Weekday) => {
 		setAvailableDays((current) =>
 			current.includes(day)
@@ -213,13 +261,20 @@ export function BookingAvailabilitySettings() {
 					</div>
 				</div>
 
-				<Button
-					className="w-fit"
-					disabled={saveMutation.isPending || availabilityQuery.isLoading}
-					onClick={() => void saveMutation.mutateAsync(buildPayload())}
-				>
-					{saveMutation.isPending ? "Saving..." : "Save availability"}
-				</Button>
+				<div className="flex flex-wrap items-center gap-3">
+					<Button
+						className="w-fit"
+						disabled={
+							!isDirty || saveMutation.isPending || availabilityQuery.isLoading
+						}
+						onClick={() => void saveMutation.mutateAsync(currentPayload)}
+					>
+						{saveMutation.isPending ? "Saving..." : "Save availability"}
+					</Button>
+					{isDirty ? (
+						<p className="text-muted-foreground text-sm">Unsaved changes</p>
+					) : null}
+				</div>
 			</div>
 		</section>
 	);

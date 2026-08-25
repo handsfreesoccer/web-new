@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { startOfDay, startOfMonth } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
-import api from "#/api/http/xhr";
 import type { V2SuccessResponse } from "#/api/http/shared";
 import { unwrapV2Data } from "#/api/http/shared";
+import api from "#/api/http/xhr";
 import { Calendar } from "#/components/ui/calendar";
 import {
 	Table,
@@ -76,9 +76,9 @@ export function AttendanceByDayTab() {
 		queryKey: attendanceByDateQueryKey(dateKey),
 		enabled: Boolean(selectedDate),
 		queryFn: async () => {
-			const response = await api.get<V2SuccessResponse<AttendanceWithBooking[]>>(
-				`/admin/attendance?date=${dateKey}`,
-			);
+			const response = await api.get<
+				V2SuccessResponse<AttendanceWithBooking[]>
+			>(`/admin/attendance?date=${dateKey}`);
 			return unwrapV2Data(response);
 		},
 	});
@@ -88,8 +88,8 @@ export function AttendanceByDayTab() {
 
 	return (
 		<div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-			<div className="flex shrink-0 flex-col gap-3">
-				<p className="text-muted-foreground text-sm">
+			<div className="flex flex-col gap-3">
+				<p className="max-w-sm text-muted-foreground text-sm">
 					Only days with recorded attendance can be selected. Change month to
 					load more dates.
 				</p>

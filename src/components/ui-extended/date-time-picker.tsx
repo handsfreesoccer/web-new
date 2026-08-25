@@ -767,3 +767,129 @@ export function DateTimePicker({
 		</div>
 	);
 }
+
+export type DateTimeSinglePickerProps = {
+	value?: Date;
+	defaultValue?: Date;
+	onChange?: (date: Date | undefined) => void;
+	minuteStep?: MinuteStep;
+	is24hours?: boolean;
+	/** Latest selectable instant — disables later calendar days and times. */
+	notAfter?: Date;
+	disabled?: boolean;
+	className?: string;
+};
+
+/**
+ * Inline calendar + time picker for a single date-time (no popover).
+ */
+export function DateTimeSinglePicker({
+	value,
+	defaultValue,
+	onChange,
+	minuteStep = 15,
+	is24hours = false,
+	notAfter = new Date(),
+	disabled,
+	className,
+}: DateTimeSinglePickerProps) {
+	const [uncontrolledValue, setUncontrolledValue] = React.useState<Date | undefined>(
+		defaultValue,
+	);
+	const selected = value ?? uncontrolledValue;
+
+	const setSelected = (next: Date | undefined) => {
+		if (value === undefined) {
+			setUncontrolledValue(next);
+		}
+		onChange?.(next);
+	};
+
+	const getTimeBounds = (date: Date | undefined) => {
+		const min = 0;
+		let max = dayEndMinutes(minuteStep);
+		if (date && notAfter && isSameDay(date, notAfter)) {
+			max = Math.min(
+				max,
+				snapMinutesToStep(dateMinutes(notAfter), "floor", minuteStep),
+			);
+		}
+		return {
+			min,
+			max: Math.max(min, max),
+		};
+	};
+
+	const clampSelected = (date: Date) => {
+		const bounds = getTimeBounds(date);
+		return clampDateToTimeWindow(date, bounds.min, bounds.max, minuteStep);
+	};
+
+	const handleDateSelect = (date: Date | undefined) => {
+		if (!date) return;
+		setSelected(clampSelected(mergeDateWithTime(date, selected)));
+	};
+
+	const handleTimeChange = (type: TimePart, nextValue: number) => {
+		if (!selected) return;
+		const next = applyTime(selected, type, nextValue, is24hours, minuteStep);
+		setSelected(clampSelected(next));
+	};
+
+	const [calendarHeight, setCalendarHeight] = React.useState<number>();
+	const calendarObserverRef = React.useRef<ResizeObserver | null>(null);
+	const calendarRef = React.useCallback((node: HTMLDivElement | null) => {
+		calendarObserverRef.current?.disconnect();
+		calendarObserverRef.current = null;
+
+		if (!node) return;
+
+		const updateHeight = () => {
+			setCalendarHeight(node.getBoundingClientRect().height);
+		};
+
+		updateHeight();
+		const observer = new ResizeObserver(updateHeight);
+		observer.observe(node);
+		calendarObserverRef.current = observer;
+	}, []);
+
+	const timeBounds = getTimeBounds(selected);
+
+	return (
+		<div
+			className={cn(
+				"flex w-fit flex-col overflow-hidden rounded-2xl border border-border/60 bg-background sm:flex-row",
+				className,
+			)}
+		>
+			<div ref={calendarRef} className="shrink-0">
+				<Calendar
+					mode="single"
+					selected={selected}
+					onSelect={handleDateSelect}
+					disabled={
+						disabled
+							? true
+							: [{ after: startOfDay(notAfter) }]
+					}
+				/>
+			</div>
+			<div
+				className="flex min-h-0 min-w-0 flex-col overflow-hidden border-border border-t sm:border-t-0 sm:border-l"
+				style={calendarHeight ? { height: calendarHeight } : undefined}
+			>
+				<TimeBoundPicker
+					label="Time"
+					date={selected}
+					is24hours={is24hours}
+					minuteStep={minuteStep}
+					minMinutes={timeBounds.min}
+					maxMinutes={timeBounds.max}
+					onTimeChange={handleTimeChange}
+					disabled={disabled || !selected}
+				/>
+			</div>
+		</div>
+	);
+}
