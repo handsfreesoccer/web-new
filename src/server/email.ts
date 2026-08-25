@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import type { ContactInput } from "#/lib/contact-schema";
+import { ADMIN_EMAIL } from "#/server/auth";
 import { createCalendarInvite } from "#/server/calendar";
 import {
 	currentYear,
@@ -22,6 +23,30 @@ const appUrl = (process.env.APP_URL ?? "http://localhost:5173").replace(
 	"",
 );
 
+const isSandboxMode = () => from.includes("@resend.dev");
+
+const sandboxRecipient = () =>
+	process.env.RESEND_SANDBOX_TO?.trim() || ADMIN_EMAIL;
+
+const resolveRecipients = (to: string | string[]) => {
+	if (!isSandboxMode()) return to;
+
+	const intended = Array.isArray(to) ? to.join(", ") : to;
+	const redirected = sandboxRecipient();
+
+	if (intended.toLowerCase() !== redirected.toLowerCase()) {
+		console.info(`[email] Resend sandbox redirect: ${intended} → ${redirected}`);
+	}
+
+	return redirected;
+};
+
+const sandboxSubject = (to: string | string[], subject?: string) => {
+	if (!isSandboxMode() || !subject) return subject;
+	const intended = Array.isArray(to) ? to.join(", ") : to;
+	return `[Sandbox · intended: ${intended}] ${subject}`;
+};
+
 type BookingEmail = {
 	id: number;
 	firstName: string;
@@ -31,6 +56,13 @@ type BookingEmail = {
 };
 
 type TemplateVariables = Record<string, string | number>;
+
+const logEmailFailure = (label: string) => (error: unknown) => {
+	console.error(
+		`[email:${label}]`,
+		error instanceof Error ? error.message : error,
+	);
+};
 
 async function sendTemplate(
 	template: ResendTemplateName,
@@ -43,12 +75,15 @@ async function sendTemplate(
 		>;
 	},
 ) {
-	if (!resend) return { id: "local-preview" };
+	if (!resend) {
+		console.info(`[email] Skipped (${template}) — RESEND_API_KEY is not set`);
+		return { id: "local-preview" };
+	}
 
 	const payload = {
 		from,
-		to,
-		subject: options?.subject,
+		to: resolveRecipients(to),
+		subject: sandboxSubject(to, options?.subject),
 		template: {
 			id: getResendTemplateId(template),
 			variables: {
@@ -62,6 +97,7 @@ async function sendTemplate(
 
 	const result = await resend.emails.send(payload);
 	if (result.error) throw new Error(result.error.message);
+	console.info(`[email] Sent ${template} → ${payload.to}`);
 	return result.data;
 }
 
@@ -152,4 +188,31 @@ export async function sendContactConfirmation(inquiry: ContactInput) {
 			subject: "We received your Hands Free Soccer inquiry",
 		},
 	);
+}
+
+/** Fire-and-forget — does not block the caller. */
+export function queueWelcomeEmail(booking: BookingEmail) {
+	void sendWelcomeEmail(booking).catch(logEmailFailure("booking-welcome"));
+}
+
+/** Fire-and-forget — does not block the caller. */
+export function queueContactConfirmation(inquiry: ContactInput) {
+	void sendContactConfirmation(inquiry).catch(
+		logEmailFailure("contact-inquiry-received"),
+	);
+}
+
+/** Fire-and-forget — does not block the caller. */
+export function queueAdminMagicLink(email: string, link: string) {
+	void sendAdminMagicLink(email, link).catch(logEmailFailure("admin-sign-in"));
+}
+
+/** Fire-and-forget — does not block the caller. */
+export function queuePaymentEmail(booking: BookingEmail, paymentUrl: string) {
+	void sendPaymentEmail(booking, paymentUrl).catch(logEmailFailure("payment-link"));
+}
+
+/** Fire-and-forget — does not block the caller. */
+export function queueReminderEmail(booking: BookingEmail) {
+	void sendReminderEmail(booking).catch(logEmailFailure("appointment-reminder"));
 }

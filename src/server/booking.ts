@@ -1,7 +1,6 @@
 import { prisma } from "#/db";
 import { bookingSchema, type BookingInput } from "#/lib/booking-schema";
 import { sendWelcomeEmail } from "#/server/email";
-import { runInBackground } from "#/server/run-in-background";
 import { appendBookingToSpreadsheet } from "#/server/spreadsheet";
 
 export async function createBooking(input: unknown) {
@@ -23,14 +22,14 @@ export async function createBooking(input: unknown) {
 	};
 	await appendBookingToSpreadsheet(spreadsheetInput);
 
-	runInBackground(`booking:welcome:${booking.id}`, async () => {
-		try {
-			await sendWelcomeEmail(booking);
+	void sendWelcomeEmail(booking)
+		.then(async () => {
 			await prisma.booking.update({
 				where: { id: booking.id },
 				data: { welcomeSentAt: new Date() },
 			});
-		} catch (error) {
+		})
+		.catch(async (error) => {
 			await prisma.emailLog.create({
 				data: {
 					bookingId: booking.id,
@@ -39,8 +38,7 @@ export async function createBooking(input: unknown) {
 					error: error instanceof Error ? error.message : String(error),
 				},
 			});
-		}
-	});
+		});
 
 	return { id: booking.id };
 }

@@ -3,8 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import "@tanstack/react-start";
 import "@tanstack/react-start/server";
 import { ADMIN_EMAIL, issueAdminMagicLink } from "#/server/auth";
-import { sendAdminMagicLink } from "#/server/email";
-import { runInBackground } from "#/server/run-in-background";
+import { queueAdminMagicLink } from "#/server/email";
 import { failure, jsonBody, success } from "#/server/response";
 
 export const Route = createFileRoute("/api/admin/auth/request-link")({
@@ -19,9 +18,7 @@ export const Route = createFileRoute("/api/admin/auth/request-link")({
 						StatusCodes.FORBIDDEN,
 					);
 				const magicLink = await issueAdminMagicLink();
-				runInBackground("admin:magic-link", async () => {
-					await sendAdminMagicLink(ADMIN_EMAIL, magicLink.link);
-				});
+				queueAdminMagicLink(ADMIN_EMAIL, magicLink.link);
 				return success(
 					{
 						...(process.env.NODE_ENV === "development"
