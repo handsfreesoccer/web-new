@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { GalleryPlaybackProvider } from "#/components/gallery/gallery-playback";
 import { MediaGalleryProvider } from "#/components/gallery/media-gallery-lightbox";
 import { GALLERY_ITEMS } from "#/lib/gallery";
+import { pageTitle } from "#/lib/site-meta";
 import { Classes } from "./-components/classes";
 import { CoreValues } from "./-components/core-values";
 import { HeadCoach } from "./-components/head-coach";
@@ -12,6 +13,9 @@ import { Story } from "./-components/story";
 import { TakeTheFirstSteps } from "./-components/take-the-first-steps";
 
 export const Route = createFileRoute("/_layout/about")({
+	head: () => ({
+		meta: [{ title: pageTitle("About Us") }],
+	}),
 	component: RouteComponent,
 });
 

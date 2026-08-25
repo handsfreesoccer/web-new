@@ -11,6 +11,7 @@ import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles.css?url";
 import "lenis/dist/lenis.css"; // Prevents layout issues during scroll initializatio
 import { Toaster } from "#/components/ui/sonner";
+import { defaultPageTitle } from "#/lib/site-meta";
 
 interface MyRouterContext {
 	queryClient: QueryClient;
@@ -27,7 +28,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "HandsFree Soccer Academy",
+				title: defaultPageTitle,
 			},
 			{
 				name: "theme-color",
@@ -42,7 +43,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			{
 				rel: "icon",
 				href: "/favicon.ico",
-				type: "image/png",
+				sizes: "any",
+			},
+			{
+				rel: "shortcut icon",
+				href: "/favicon.ico",
 			},
 			{
 				rel: "apple-touch-icon",

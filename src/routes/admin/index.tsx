@@ -16,8 +16,14 @@ import {
 	TableRow,
 } from "#/components/ui/table";
 import { AdminAuthGuard } from "#/routes/admin/-components/admin-auth-guard";
+import { pageTitle } from "#/lib/site-meta";
 
-export const Route = createFileRoute("/admin/")({ component: AdminPage });
+export const Route = createFileRoute("/admin/")({
+	head: () => ({
+		meta: [{ title: pageTitle("Admin Dashboard") }],
+	}),
+	component: AdminPage,
+});
 
 type Booking = {
 	id: number;
