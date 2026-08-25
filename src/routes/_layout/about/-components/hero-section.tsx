@@ -20,9 +20,9 @@ export const HeroSection: React.FC = () => {
 				</div>
 				<div className="relative flex h-90 flex-col justify-evenly gap-8 overflow-hidden rounded-3xl">
 					<img
-						src="https://placehold.co/600x480/black/black"
-						alt="Hero Section"
-						className="absolute h-full w-full object-cover"
+						src="/images/stock/stock-4.webp"
+						alt="About Us"
+						className="absolute h-full w-full object-cover object-[50%_70%]"
 					/>
 				</div>
 			</div>

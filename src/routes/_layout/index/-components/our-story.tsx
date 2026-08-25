@@ -40,16 +40,16 @@ export const OurStory: React.FC = () => {
 			</div>
 			<div className="flex w-full flex-col justify-between gap-8 lg:flex-row lg:gap-10">
 				<div className="grid h-40 w-full grid-cols-2 gap-8 md:grid-cols-7 lg:max-w-[35%]">
-					<div className="relative col-span-1 h-full overflow-hidden rounded-2xl md:col-span-3">
+					<div className="relative col-span-1 h-full overflow-hidden rounded-2xl md:col-span-4">
 						<img
-							src={storyLeft}
+							src="/images/stock/stock-5.webp"
 							alt="Player walking on the pitch"
 							className="absolute inset-0 size-full object-cover outline-1 outline-black/10"
 						/>
 					</div>
-					<div className="relative col-span-1 h-full overflow-hidden rounded-2xl md:col-span-4">
+					<div className="relative col-span-1 h-full overflow-hidden rounded-2xl md:col-span-3">
 						<img
-							src={storyRight}
+							src="/images/stock/stock-6.webp"
 							alt="Player walking on the pitch"
 							className="absolute inset-0 size-full object-cover outline-1 outline-black/10"
 						/>

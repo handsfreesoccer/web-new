@@ -7,13 +7,6 @@ import api from "#/api/http/xhr";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
-import { BOOKING_SECTION_ID } from "#/lib/constants";
-import { useHashScroll } from "#/lib/use-hash-scroll";
-import { bookingSchema } from "#/lib/booking-schema";
-import {
-	DateTimePicker,
-	type DateTimeRange,
-} from "#/components/ui-extended/date-time-picker";
 import {
 	Select,
 	SelectContent,
@@ -21,6 +14,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#/components/ui/select";
+import {
+	DateTimePicker,
+	type DateTimeRange,
+} from "#/components/ui-extended/date-time-picker";
+import { bookingSchema } from "#/lib/booking-schema";
+import { BOOKING_SECTION_ID } from "#/lib/constants";
+import { useHashScroll } from "#/lib/use-hash-scroll";
 
 const CLASSES = [
 	{ value: "beginner", label: "Beginner" },
@@ -95,7 +95,7 @@ export const BookYourFirstSession: React.FC = () => {
 		>
 			<div className="relative grid w-full place-content-center overflow-hidden rounded-3xl p-4 sm:p-16">
 				<img
-					src="https://placehold.co/600x480/black/black"
+					src="/images/stock/stock-3.webp"
 					alt="Book Your First Session"
 					className="absolute inset-0 size-full object-cover"
 				/>

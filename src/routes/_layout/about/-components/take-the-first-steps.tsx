@@ -9,7 +9,7 @@ export const TakeTheFirstSteps: React.FC = () => {
 		<section className="mx-auto flex flex-col items-center gap-16 overflow-hidden px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 			<div className="relative w-full max-w-360 overflow-hidden rounded-3xl">
 				<img
-					src="https://placehold.co/600x480/black/black"
+					src="/images/stock/stock-8.webp"
 					alt="Hero Section"
 					className="absolute h-full w-full object-cover"
 				/>
