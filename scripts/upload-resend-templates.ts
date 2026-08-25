@@ -8,6 +8,7 @@ const templates = [
 	["Hands Free Soccer welcome", "welcome.html", "We received your Hands Free Soccer booking"],
 	["Hands Free Soccer payment link", "payment-link.html", "Your Hands Free Soccer payment link"],
 	["Hands Free Soccer reminder", "reminder.html", "Your Hands Free Soccer appointment is tomorrow"],
+	["Hands Free Soccer inquiry received", "contact-inquiry-received.html", "We received your Hands Free Soccer inquiry"],
 ] as const;
 for (const [name, file, subject] of templates) {
 	const html = await readFile(new URL(`../email-templates/${file}`, import.meta.url), "utf8");

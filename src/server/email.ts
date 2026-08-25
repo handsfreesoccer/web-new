@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import type { ContactInput } from "#/lib/contact-schema";
 import { createCalendarInvite } from "#/server/calendar";
 
 const resend = process.env.RESEND_API_KEY
@@ -6,6 +7,14 @@ const resend = process.env.RESEND_API_KEY
 	: null;
 const from =
 	process.env.EMAIL_FROM ?? "Hands Free Soccer <handsfreesoccer@gmail.com>";
+
+const escapeHtml = (value: string) =>
+	value
+		.replaceAll("&", "&amp;")
+		.replaceAll("<", "&lt;")
+		.replaceAll(">", "&gt;")
+		.replaceAll('"', "&quot;")
+		.replaceAll("'", "&#039;");
 
 type BookingEmail = {
 	id: number;
@@ -88,6 +97,21 @@ export async function sendAdminMagicLink(email: string, link: string) {
 		html: layout(
 			"Sign in to the dashboard",
 			`<p>This link expires in 15 minutes.</p><p><a href="${link}" style="display:inline-block;background:#2f6a4a;color:white;padding:14px 22px;border-radius:999px">Open dashboard</a></p>`,
+		),
+	});
+}
+
+export async function sendContactConfirmation(inquiry: ContactInput) {
+	const fullName = escapeHtml(inquiry.fullName);
+	const subject = escapeHtml(inquiry.subject);
+	const message = escapeHtml(inquiry.message);
+	return send({
+		from,
+		to: inquiry.email,
+		subject: "We received your Hands Free Soccer inquiry",
+		html: layout(
+			"We received your inquiry",
+			`<p>Hi ${fullName},</p><p>Thank you for reaching out. Our team has received your inquiry and will reply as soon as possible.</p><div style="background:#f3faf5;border-left:4px solid #2f6a4a;padding:16px;margin:24px 0"><p><strong>Subject:</strong> ${subject}</p><p style="white-space:pre-wrap"><strong>Your message:</strong><br>${message}</p></div><p>If you need immediate assistance, call <a href="tel:+14692882265">(469) 288-2265</a>.</p>`,
 		),
 	});
 }

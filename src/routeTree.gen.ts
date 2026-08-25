@@ -16,6 +16,7 @@ import { Route as LayoutContactUsRouteRouteImport } from './routes/_layout/conta
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as ApiBookingsRouteImport } from './routes/api/bookings'
+import { Route as ApiContactInquiriesRouteImport } from './routes/api/contact-inquiries'
 import { Route as ApiAdminEmailsRouteImport } from './routes/api/admin/emails'
 import { Route as ApiAdminStudentsRouteImport } from './routes/api/admin/students'
 import { Route as ApiCronDailyRouteImport } from './routes/api/cron/daily'
@@ -57,6 +58,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
 const ApiBookingsRoute = ApiBookingsRouteImport.update({
   id: '/api/bookings',
   path: '/api/bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiContactInquiriesRoute = ApiContactInquiriesRouteImport.update({
+  id: '/api/contact-inquiries',
+  path: '/api/contact-inquiries',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAdminEmailsRoute = ApiAdminEmailsRouteImport.update({
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/contact-us': typeof LayoutContactUsRouteRoute
   '/admin/login': typeof AdminLoginRoute
   '/api/bookings': typeof ApiBookingsRoute
+  '/api/contact-inquiries': typeof ApiContactInquiriesRoute
   '/admin/': typeof AdminIndexRoute
   '/api/admin/emails': typeof ApiAdminEmailsRoute
   '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/contact-us': typeof LayoutContactUsRouteRoute
   '/admin/login': typeof AdminLoginRoute
   '/api/bookings': typeof ApiBookingsRoute
+  '/api/contact-inquiries': typeof ApiContactInquiriesRoute
   '/admin': typeof AdminIndexRoute
   '/api/admin/emails': typeof ApiAdminEmailsRoute
   '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/_layout/contact-us': typeof LayoutContactUsRouteRoute
   '/admin/login': typeof AdminLoginRoute
   '/api/bookings': typeof ApiBookingsRoute
+  '/api/contact-inquiries': typeof ApiContactInquiriesRoute
   '/admin/': typeof AdminIndexRoute
   '/api/admin/emails': typeof ApiAdminEmailsRoute
   '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
@@ -159,6 +168,7 @@ export interface FileRouteTypes {
     | '/contact-us'
     | '/admin/login'
     | '/api/bookings'
+    | '/api/contact-inquiries'
     | '/admin/'
     | '/api/admin/emails'
     | '/api/admin/students'
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/contact-us'
     | '/admin/login'
     | '/api/bookings'
+    | '/api/contact-inquiries'
     | '/admin'
     | '/api/admin/emails'
     | '/api/admin/students'
@@ -192,6 +203,7 @@ export interface FileRouteTypes {
     | '/_layout/contact-us'
     | '/admin/login'
     | '/api/bookings'
+    | '/api/contact-inquiries'
     | '/admin/'
     | '/api/admin/emails'
     | '/api/admin/students'
@@ -207,6 +219,7 @@ export interface RootRouteChildren {
   LayoutRouteRoute: typeof LayoutRouteRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
   ApiBookingsRoute: typeof ApiBookingsRoute
+  ApiContactInquiriesRoute: typeof ApiContactInquiriesRoute
   AdminIndexRoute: typeof AdminIndexRoute
   ApiAdminEmailsRoute: typeof ApiAdminEmailsRoute
   ApiAdminStudentsRoute: typeof ApiAdminStudentsRouteWithChildren
@@ -266,6 +279,13 @@ declare module '@tanstack/react-router' {
       path: '/api/bookings'
       fullPath: '/api/bookings'
       preLoaderRoute: typeof ApiBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/contact-inquiries': {
+      id: '/api/contact-inquiries'
+      path: '/api/contact-inquiries'
+      fullPath: '/api/contact-inquiries'
+      preLoaderRoute: typeof ApiContactInquiriesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/admin/emails': {
@@ -358,6 +378,7 @@ const rootRouteChildren: RootRouteChildren = {
   LayoutRouteRoute: LayoutRouteRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
   ApiBookingsRoute: ApiBookingsRoute,
+  ApiContactInquiriesRoute: ApiContactInquiriesRoute,
   AdminIndexRoute: AdminIndexRoute,
   ApiAdminEmailsRoute: ApiAdminEmailsRoute,
   ApiAdminStudentsRoute: ApiAdminStudentsRouteWithChildren,

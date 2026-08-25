@@ -1,5 +1,7 @@
+import { useForm } from "@tanstack/react-form";
 import { ArrowRightIcon } from "lucide-react";
 import type React from "react";
+import { toast } from "sonner";
 import { Button } from "#/components/ui/button";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
@@ -11,7 +13,7 @@ import {
 	SelectValue,
 } from "#/components/ui/select";
 import { Textarea } from "#/components/ui/textarea";
-import { CONTACT } from "#/lib/constants";
+import { contactSchema } from "#/lib/contact-schema";
 
 const SUBJECTS = [
 	{ value: "classes", label: "Classes" },
@@ -20,16 +22,57 @@ const SUBJECTS = [
 	{ value: "private", label: "Private Coaching" },
 	{ value: "other", label: "Other" },
 ] as const;
-
-const fieldClassName = "h-10";
+type ContactValues = {
+	fullName: string;
+	email: string;
+	subject: (typeof SUBJECTS)[number]["value"];
+	message: string;
+};
 
 export const MessageForm: React.FC = () => {
+	const form = useForm({
+		defaultValues: { fullName: "", email: "", subject: "classes", message: "" },
+		onSubmit: async ({ value }) => {
+			const parsed = contactSchema.safeParse(value);
+			if (!parsed.success) {
+				toast.error(
+					parsed.error.issues[0]?.message ?? "Please complete the form.",
+				);
+				return;
+			}
+			const response = await fetch("/api/contact-inquiries", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(parsed.data),
+			});
+			const result = (await response.json()) as {
+				success: boolean;
+				message?: string;
+				errors?: string[];
+			};
+			if (!response.ok || !result.success) {
+				toast.error(
+					result.errors?.[0] ?? result.message ?? "Inquiry could not be sent.",
+				);
+				return;
+			}
+			toast.success("Your inquiry has been received.");
+			form.reset();
+		},
+	});
+	const error = (field: { state: { meta: { errors: unknown[] } } }) =>
+		field.state.meta.errors[0] ? (
+			<p className="text-destructive text-xs">
+				{String(field.state.meta.errors[0])}
+			</p>
+		) : null;
 	return (
 		<section className="mx-auto flex max-w-360 flex-col gap-12 px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 			<form
-				action={`mailto:${CONTACT.email}`}
-				method="post"
-				encType="text/plain"
+				onSubmit={(event) => {
+					event.preventDefault();
+					void form.handleSubmit();
+				}}
 				className="flex w-full flex-col gap-8 sm:gap-12"
 			>
 				<div className="flex flex-col items-start gap-6">
@@ -49,59 +92,89 @@ export const MessageForm: React.FC = () => {
 						</p>
 					</div>
 				</div>
-
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-					<div className="flex flex-col gap-2">
-						<Label htmlFor="fullName">Full Name</Label>
-						<Input
-							type="text"
-							id="fullName"
-							name="fullName"
-							autoComplete="name"
-							placeholder="Full Name"
-							className={fieldClassName}
-						/>
-					</div>
-					<div className="flex flex-col gap-2">
-						<Label htmlFor="email">Email</Label>
-						<Input
-							type="email"
-							id="email"
-							name="email"
-							autoComplete="email"
-							placeholder="Email"
-							className={fieldClassName}
-						/>
-					</div>
-					<div className="flex flex-col gap-2 sm:col-span-2">
-						<Label htmlFor="subject">Subject</Label>
-						<Select name="subject" id="subject">
-							<SelectTrigger
-								className={`${fieldClassName} w-full [&_svg]:text-secondary`}
-							>
-								<SelectValue placeholder="Subject" />
-							</SelectTrigger>
-							<SelectContent align="start" alignItemWithTrigger={false}>
-								{SUBJECTS.map((subject) => (
-									<SelectItem key={subject.value} value={subject.value}>
-										{subject.label}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
-					</div>
-					<div className="flex flex-col gap-2 sm:col-span-2">
-						<Label htmlFor="message">Message</Label>
-						<Textarea
-							id="message"
-							name="message"
-							placeholder="Message"
-							rows={6}
-							className="min-h-32"
-						/>
-					</div>
+					<form.Field name="fullName">
+						{(field) => (
+							<div className="flex flex-col gap-2">
+								<Label htmlFor="fullName">Full Name</Label>
+								<Input
+									id="fullName"
+									name="fullName"
+									autoComplete="name"
+									placeholder="Full Name"
+									value={field.state.value}
+									onBlur={field.handleBlur}
+									onChange={(event) => field.handleChange(event.target.value)}
+								/>
+								{error(field)}
+							</div>
+						)}
+					</form.Field>
+					<form.Field name="email">
+						{(field) => (
+							<div className="flex flex-col gap-2">
+								<Label htmlFor="contact-email">Email</Label>
+								<Input
+									id="contact-email"
+									name="email"
+									type="email"
+									autoComplete="email"
+									placeholder="Email"
+									value={field.state.value}
+									onBlur={field.handleBlur}
+									onChange={(event) => field.handleChange(event.target.value)}
+								/>
+								{error(field)}
+							</div>
+						)}
+					</form.Field>
+					<form.Field name="subject">
+						{(field) => (
+							<div className="flex flex-col gap-2 sm:col-span-2">
+								<Label htmlFor="subject">Subject</Label>
+								<Select
+									value={field.state.value}
+									onValueChange={(value) =>
+										field.handleChange(value as ContactValues["subject"])
+									}
+								>
+									<SelectTrigger
+										id="subject"
+										className="h-10 w-full capitalize [&_svg]:text-secondary"
+									>
+										<SelectValue placeholder="Subject" />
+									</SelectTrigger>
+									<SelectContent align="start" alignItemWithTrigger={false}>
+										{SUBJECTS.map((subject) => (
+											<SelectItem key={subject.value} value={subject.value}>
+												{subject.label}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+								{error(field)}
+							</div>
+						)}
+					</form.Field>
+					<form.Field name="message">
+						{(field) => (
+							<div className="flex flex-col gap-2 sm:col-span-2">
+								<Label htmlFor="message">Message</Label>
+								<Textarea
+									id="message"
+									name="message"
+									placeholder="Message"
+									rows={6}
+									className="min-h-32"
+									value={field.state.value}
+									onBlur={field.handleBlur}
+									onChange={(event) => field.handleChange(event.target.value)}
+								/>
+								{error(field)}
+							</div>
+						)}
+					</form.Field>
 				</div>
-
 				<Button
 					type="submit"
 					className="h-auto w-fit cursor-pointer gap-2 self-end rounded-full bg-primary p-1.5 pl-4 text-foreground hover:bg-primary"
