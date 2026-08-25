@@ -33,7 +33,7 @@ export const HeroSection: React.FC = () => {
 					<div className="flex flex-col items-center justify-between gap-10 sm:flex-row">
 						<p className="w-full text-center text-base text-white sm:w-1/2 sm:text-balance sm:text-left sm:text-sm">
 							Personalized 1:1 and small group soccer training for kids ages
-							6-12 — now serving Allen, McKinney, Melissa, and Princeton.
+							6-18 — now serving Allen, McKinney, Melissa, and Princeton.
 						</p>
 						<Button
 							nativeButton={false}
