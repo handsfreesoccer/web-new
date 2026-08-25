@@ -42,7 +42,7 @@ export const LifeAtHFS: React.FC = () => {
 						<Button
 							nativeButton={false}
 							render={<Link hash={GALLERY_MORE_SECTION_ID} to="/about" />}
-							className="h-auto w-fit gap-2 self-end rounded-full p-1 pl-4`"
+							className="h-auto w-fit gap-2 self-end rounded-full p-1 pl-4"
 						>
 							<p>View more</p>
 							<span className="grid size-11 place-content-center rounded-full bg-white">

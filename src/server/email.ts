@@ -25,7 +25,7 @@ type BookingEmail = {
 };
 
 const layout = (title: string, body: string) =>
-	`<!doctype html><html><body style="margin:0;background:#e7f3ec;font-family:Arial,sans-serif;color:#173a40"><main style="max-width:600px;margin:32px auto;background:#fff;border:1px solid #d9e8df;border-radius:16px;padding:40px"><div style="color:#2f6a4a;font-weight:800;letter-spacing:.08em">HANDS FREE SOCCER</div><h1 style="color:#173a40">${title}</h1>${body}<hr style="border:0;border-top:1px solid #d9e8df;margin:32px 0"><small style="color:#416166">Hands Free Soccer · Allen, McKinney, Melissa & Princeton, TX</small></main></body></html>`;
+	`<!doctype html><html><body style="margin:0;background:#eef2f3;font-family:Arial,Helvetica,sans-serif;color:#12212b"><main style="max-width:600px;margin:32px auto;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 12px 30px rgba(18,33,43,.12)"><div style="height:8px;background:#b23a2f"></div><div style="padding:28px 32px 16px;text-align:center"><div style="width:170px;height:58px;margin:auto;border:1px dashed #b23a2f;border-radius:10px;line-height:58px;color:#b23a2f;font-size:11px;font-weight:bold;letter-spacing:1.5px">LOGO PLACEHOLDER</div></div><div style="padding:12px 40px 40px"><div style="color:#b23a2f;font-weight:800;letter-spacing:.12em;font-size:12px">HANDS FREE SOCCER</div><h1 style="color:#12212b">${title}</h1>${body}</div><div style="padding:20px 40px;background:#12212b;color:#fff;font-size:12px;line-height:1.5">Hands Free Soccer<br><span style="color:#b8c5ca">Serving Allen, McKinney, Melissa &amp; Princeton, TX</span></div></main></body></html>`;
 
 async function send(params: Parameters<Resend["emails"]["send"]>[0]) {
 	if (!resend) return { id: "local-preview" };

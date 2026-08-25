@@ -14,8 +14,6 @@ async function main() {
   await prisma.attendance.deleteMany()
   await prisma.emailLog.deleteMany()
   await prisma.booking.deleteMany()
-  await prisma.adminMagicLink.deleteMany()
-  await prisma.adminSession.deleteMany()
   console.log('✅ Database cleared')
 }
 

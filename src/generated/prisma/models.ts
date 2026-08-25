@@ -11,6 +11,4 @@
 export type * from './models/Booking.ts'
 export type * from './models/Attendance.ts'
 export type * from './models/EmailLog.ts'
-export type * from './models/AdminMagicLink.ts'
-export type * from './models/AdminSession.ts'
 export type * from './commonInputTypes.ts'

@@ -53,9 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Booking: 'Booking',
   Attendance: 'Attendance',
-  EmailLog: 'EmailLog',
-  AdminMagicLink: 'AdminMagicLink',
-  AdminSession: 'AdminSession'
+  EmailLog: 'EmailLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -113,29 +111,6 @@ export const EmailLogScalarFieldEnum = {
 } as const
 
 export type EmailLogScalarFieldEnum = (typeof EmailLogScalarFieldEnum)[keyof typeof EmailLogScalarFieldEnum]
-
-
-export const AdminMagicLinkScalarFieldEnum = {
-  id: 'id',
-  tokenHash: 'tokenHash',
-  email: 'email',
-  expiresAt: 'expiresAt',
-  usedAt: 'usedAt',
-  createdAt: 'createdAt'
-} as const
-
-export type AdminMagicLinkScalarFieldEnum = (typeof AdminMagicLinkScalarFieldEnum)[keyof typeof AdminMagicLinkScalarFieldEnum]
-
-
-export const AdminSessionScalarFieldEnum = {
-  id: 'id',
-  refreshTokenHash: 'refreshTokenHash',
-  email: 'email',
-  expiresAt: 'expiresAt',
-  createdAt: 'createdAt'
-} as const
-
-export type AdminSessionScalarFieldEnum = (typeof AdminSessionScalarFieldEnum)[keyof typeof AdminSessionScalarFieldEnum]
 
 
 export const SortOrder = {

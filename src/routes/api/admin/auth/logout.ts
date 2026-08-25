@@ -1,8 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import "@tanstack/react-start";
 import "@tanstack/react-start/server";
-import { clearRefreshCookie, hashToken, REFRESH_COOKIE } from "#/server/auth";
-import { prisma } from "#/db";
+import {
+	clearRefreshCookie,
+	REFRESH_COOKIE,
+	revokeRefreshToken,
+} from "#/server/auth";
 
 export const Route = createFileRoute("/api/admin/auth/logout")({
 	server: {
@@ -11,10 +14,7 @@ export const Route = createFileRoute("/api/admin/auth/logout")({
 				const token = request.headers
 					.get("cookie")
 					?.match(new RegExp(`${REFRESH_COOKIE}=([^;]+)`))?.[1];
-				if (token)
-					await prisma.adminSession.deleteMany({
-						where: { refreshTokenHash: hashToken(token) },
-					});
+				if (token) await revokeRefreshToken(token);
 				return new Response(
 					JSON.stringify({ success: true, message: "Signed out.", data: {} }),
 					{

@@ -399,9 +399,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Booking: 'Booking',
   Attendance: 'Attendance',
-  EmailLog: 'EmailLog',
-  AdminMagicLink: 'AdminMagicLink',
-  AdminSession: 'AdminSession'
+  EmailLog: 'EmailLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -417,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "booking" | "attendance" | "emailLog" | "adminMagicLink" | "adminSession"
+    modelProps: "booking" | "attendance" | "emailLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -643,154 +641,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    AdminMagicLink: {
-      payload: Prisma.$AdminMagicLinkPayload<ExtArgs>
-      fields: Prisma.AdminMagicLinkFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.AdminMagicLinkFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMagicLinkPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.AdminMagicLinkFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMagicLinkPayload>
-        }
-        findFirst: {
-          args: Prisma.AdminMagicLinkFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMagicLinkPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.AdminMagicLinkFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMagicLinkPayload>
-        }
-        findMany: {
-          args: Prisma.AdminMagicLinkFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMagicLinkPayload>[]
-        }
-        create: {
-          args: Prisma.AdminMagicLinkCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMagicLinkPayload>
-        }
-        createMany: {
-          args: Prisma.AdminMagicLinkCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.AdminMagicLinkCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMagicLinkPayload>[]
-        }
-        delete: {
-          args: Prisma.AdminMagicLinkDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMagicLinkPayload>
-        }
-        update: {
-          args: Prisma.AdminMagicLinkUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMagicLinkPayload>
-        }
-        deleteMany: {
-          args: Prisma.AdminMagicLinkDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.AdminMagicLinkUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.AdminMagicLinkUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMagicLinkPayload>[]
-        }
-        upsert: {
-          args: Prisma.AdminMagicLinkUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMagicLinkPayload>
-        }
-        aggregate: {
-          args: Prisma.AdminMagicLinkAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAdminMagicLink>
-        }
-        groupBy: {
-          args: Prisma.AdminMagicLinkGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AdminMagicLinkGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.AdminMagicLinkCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AdminMagicLinkCountAggregateOutputType> | number
-        }
-      }
-    }
-    AdminSession: {
-      payload: Prisma.$AdminSessionPayload<ExtArgs>
-      fields: Prisma.AdminSessionFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.AdminSessionFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.AdminSessionFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>
-        }
-        findFirst: {
-          args: Prisma.AdminSessionFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.AdminSessionFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>
-        }
-        findMany: {
-          args: Prisma.AdminSessionFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>[]
-        }
-        create: {
-          args: Prisma.AdminSessionCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>
-        }
-        createMany: {
-          args: Prisma.AdminSessionCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.AdminSessionCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>[]
-        }
-        delete: {
-          args: Prisma.AdminSessionDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>
-        }
-        update: {
-          args: Prisma.AdminSessionUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>
-        }
-        deleteMany: {
-          args: Prisma.AdminSessionDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.AdminSessionUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.AdminSessionUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>[]
-        }
-        upsert: {
-          args: Prisma.AdminSessionUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>
-        }
-        aggregate: {
-          args: Prisma.AdminSessionAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAdminSession>
-        }
-        groupBy: {
-          args: Prisma.AdminSessionGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AdminSessionGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.AdminSessionCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AdminSessionCountAggregateOutputType> | number
-        }
-      }
-    }
   }
 } & {
   other: {
@@ -869,29 +719,6 @@ export const EmailLogScalarFieldEnum = {
 } as const
 
 export type EmailLogScalarFieldEnum = (typeof EmailLogScalarFieldEnum)[keyof typeof EmailLogScalarFieldEnum]
-
-
-export const AdminMagicLinkScalarFieldEnum = {
-  id: 'id',
-  tokenHash: 'tokenHash',
-  email: 'email',
-  expiresAt: 'expiresAt',
-  usedAt: 'usedAt',
-  createdAt: 'createdAt'
-} as const
-
-export type AdminMagicLinkScalarFieldEnum = (typeof AdminMagicLinkScalarFieldEnum)[keyof typeof AdminMagicLinkScalarFieldEnum]
-
-
-export const AdminSessionScalarFieldEnum = {
-  id: 'id',
-  refreshTokenHash: 'refreshTokenHash',
-  email: 'email',
-  expiresAt: 'expiresAt',
-  createdAt: 'createdAt'
-} as const
-
-export type AdminSessionScalarFieldEnum = (typeof AdminSessionScalarFieldEnum)[keyof typeof AdminSessionScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1097,8 +924,6 @@ export type GlobalOmitConfig = {
   booking?: Prisma.BookingOmit
   attendance?: Prisma.AttendanceOmit
   emailLog?: Prisma.EmailLogOmit
-  adminMagicLink?: Prisma.AdminMagicLinkOmit
-  adminSession?: Prisma.AdminSessionOmit
 }
 
 /* Types for Logging */

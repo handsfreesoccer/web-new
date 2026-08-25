@@ -32,13 +32,3 @@ export type Attendance = Prisma.AttendanceModel
  * 
  */
 export type EmailLog = Prisma.EmailLogModel
-/**
- * Model AdminMagicLink
- * 
- */
-export type AdminMagicLink = Prisma.AdminMagicLinkModel
-/**
- * Model AdminSession
- * 
- */
-export type AdminSession = Prisma.AdminSessionModel

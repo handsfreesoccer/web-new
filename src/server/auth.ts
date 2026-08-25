@@ -1,6 +1,6 @@
 import { createHash, randomBytes } from "node:crypto";
 import { jwtVerify, SignJWT } from "jose";
-import { prisma } from "#/db";
+import { redis, redisKeys } from "#/server/redis";
 
 export const ADMIN_EMAIL = "handsfreesoccer@gmail.com";
 const secret = new TextEncoder().encode(
@@ -12,59 +12,42 @@ export const hashToken = (value: string) =>
 
 export async function issueAdminMagicLink() {
 	const token = randomBytes(32).toString("hex");
-	await prisma.adminMagicLink.create({
-		data: {
-			email: ADMIN_EMAIL,
-			tokenHash: hashToken(token),
-			expiresAt: new Date(Date.now() + 15 * 60 * 1000),
-		},
-	});
+	await redis.set(redisKeys.magicLink(token), ADMIN_EMAIL, 15 * 60);
 	return `${process.env.APP_URL ?? "http://localhost:5173"}/admin/login?token=${token}`;
 }
 
 export async function consumeMagicLink(token: string) {
-	const link = await prisma.adminMagicLink.findFirst({
-		where: {
-			tokenHash: hashToken(token),
-			email: ADMIN_EMAIL,
-			usedAt: null,
-			expiresAt: { gt: new Date() },
-		},
-	});
-	if (!link) return null;
-	await prisma.adminMagicLink.update({
-		where: { id: link.id },
-		data: { usedAt: new Date() },
-	});
+	if ((await redis.get(redisKeys.magicLink(token))) !== ADMIN_EMAIL)
+		return null;
+	await redis.del(redisKeys.magicLink(token));
 	return createSession();
 }
 
 export async function createSession() {
 	const refreshToken = randomBytes(48).toString("hex");
 	const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-	await prisma.adminSession.create({
-		data: {
-			email: ADMIN_EMAIL,
-			refreshTokenHash: hashToken(refreshToken),
-			expiresAt,
-		},
-	});
+	await redis.set(
+		redisKeys.refreshToken(hashToken(refreshToken)),
+		ADMIN_EMAIL,
+		30 * 24 * 60 * 60,
+	);
 	return { refreshToken, accessToken: await createAccessToken(), expiresAt };
 }
 
 export async function refreshSession(refreshToken: string) {
-	const session = await prisma.adminSession.findFirst({
-		where: {
-			refreshTokenHash: hashToken(refreshToken),
-			email: ADMIN_EMAIL,
-			expiresAt: { gt: new Date() },
-		},
-	});
-	if (!session) return null;
+	if (
+		(await redis.get(redisKeys.refreshToken(hashToken(refreshToken)))) !==
+		ADMIN_EMAIL
+	)
+		return null;
 	return {
 		accessToken: await createAccessToken(),
-		expiresAt: session.expiresAt,
+		expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
 	};
+}
+
+export async function revokeRefreshToken(refreshToken: string) {
+	await redis.del(redisKeys.refreshToken(hashToken(refreshToken)));
 }
 
 export async function verifyAccessToken(token: string) {
