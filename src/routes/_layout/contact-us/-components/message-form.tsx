@@ -45,17 +45,21 @@ export const MessageForm: React.FC = () => {
 				);
 				return;
 			}
-			const response = await inquiryMutation.mutateAsync(parsed.data);
-			if (!response.data.success) {
-				toast.error(
-					response.data.errors?.[0] ??
-						response.data.message ??
-						"Inquiry could not be sent.",
-				);
-				return;
+			try {
+				const response = await inquiryMutation.mutateAsync(parsed.data);
+				if (!response.data.success) {
+					toast.error(
+						response.data.errors?.[0] ??
+							response.data.message ??
+							"Inquiry could not be sent.",
+					);
+					return;
+				}
+				toast.success("Your inquiry has been received.");
+				form.reset();
+			} catch {
+				toast.error("We could not send your inquiry right now.");
 			}
-			toast.success("Your inquiry has been received.");
-			form.reset();
 		},
 	});
 	const error = (field: { state: { meta: { errors: unknown[] } } }) =>
@@ -175,9 +179,12 @@ export const MessageForm: React.FC = () => {
 				</div>
 				<Button
 					type="submit"
-					className="h-auto w-fit cursor-pointer gap-2 self-end rounded-full bg-primary p-1.5 pl-4 text-foreground hover:bg-primary"
+					disabled={inquiryMutation.isPending}
+					className="h-auto w-fit cursor-pointer gap-2 self-end rounded-full bg-primary p-1.5 pl-4 text-foreground hover:bg-primary disabled:cursor-not-allowed disabled:opacity-60"
 				>
-					<p className="text-white">Submit</p>
+					<p className="text-white">
+						{inquiryMutation.isPending ? "Submitting..." : "Submit"}
+					</p>
 					<span className="grid size-11 place-content-center rounded-full bg-white">
 						<ArrowRightIcon className="size-4 text-primary" />
 					</span>

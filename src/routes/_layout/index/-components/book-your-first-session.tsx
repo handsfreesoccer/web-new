@@ -65,21 +65,25 @@ export const BookYourFirstSession: React.FC = () => {
 				);
 				return;
 			}
-			const response = await bookingMutation.mutateAsync({
-				...parsed.data,
-				appointmentStart: parsed.data.appointmentStart.toISOString(),
-				appointmentEnd: parsed.data.appointmentEnd?.toISOString(),
-			});
-			if (!response.data.success) {
-				toast.error(
-					response.data.errors?.[0] ??
-						response.data.message ??
-						"Booking could not be submitted.",
-				);
-				return;
+			try {
+				const response = await bookingMutation.mutateAsync({
+					...parsed.data,
+					appointmentStart: parsed.data.appointmentStart.toISOString(),
+					appointmentEnd: parsed.data.appointmentEnd?.toISOString(),
+				});
+				if (!response.data.success) {
+					toast.error(
+						response.data.errors?.[0] ??
+							response.data.message ??
+							"Booking could not be submitted.",
+					);
+					return;
+				}
+				toast.success("Your booking information has been submitted.");
+				form.reset();
+			} catch {
+				toast.error("We could not save your booking right now.");
 			}
-			toast.success("Your booking information has been submitted.");
-			form.reset();
 		},
 	});
 	const error = (field: { state: { meta: { errors: unknown[] } } }) =>
@@ -212,9 +216,14 @@ export const BookYourFirstSession: React.FC = () => {
 					</div>
 					<Button
 						type="submit"
-						className="h-auto w-fit cursor-pointer gap-2 self-end rounded-full bg-primary p-1.5 pl-4 text-foreground hover:bg-primary"
+						disabled={bookingMutation.isPending}
+						className="h-auto w-fit cursor-pointer gap-2 self-end rounded-full bg-primary p-1.5 pl-4 text-foreground hover:bg-primary disabled:cursor-not-allowed disabled:opacity-60"
 					>
-						<p className="text-white">Book Your Session</p>
+						<p className="text-white">
+							{bookingMutation.isPending
+								? "Submitting..."
+								: "Book Your Session"}
+						</p>
 						<span className="grid size-11 place-content-center rounded-full bg-white">
 							<ArrowRightIcon className="size-4 text-primary" />
 						</span>

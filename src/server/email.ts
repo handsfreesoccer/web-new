@@ -10,8 +10,13 @@ import {
 const resend = process.env.RESEND_API_KEY
 	? new Resend(process.env.RESEND_API_KEY)
 	: null;
-const from =
-	process.env.EMAIL_FROM ?? "Hands Free Soccer <handsfreesoccer@gmail.com>";
+
+const resolveEmailFrom = () =>
+	process.env.RESEND_FROM?.trim() ||
+	process.env.EMAIL_FROM?.trim() ||
+	"Hands Free Soccer <onboarding@resend.dev>";
+
+const from = resolveEmailFrom();
 const appUrl = (process.env.APP_URL ?? "http://localhost:5173").replace(
 	/\/$/,
 	"",
