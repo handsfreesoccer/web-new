@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { cn } from "#/lib/utils";
 import { BOOKING_SECTION_ID, NAV_LINKS } from "../../lib/constants";
+import { LogoIcon } from "../icons/logo-icon";
 import { Button } from "../ui/button";
 import { MenuIcon, type MenuIconHandle } from "../ui/menu";
 import { MobileNavDrawer } from "./mobile-nav/MobileNavDrawer";
@@ -65,8 +66,8 @@ export function Navbar() {
 			>
 				<div className="flex w-full max-w-360 items-center justify-between px-4 py-2 sm:px-8 md:px-16">
 					<div className="flex items-center gap-2">
-						<Link to="/">
-							<div className="h-18 w-25 bg-black/10" />
+						<Link to="/" aria-label="HandsFree Soccer Academy home">
+							<LogoIcon className="h-14 w-auto sm:h-16" />
 						</Link>
 					</div>
 					<ul className="hidden items-center gap-10 sm:flex">

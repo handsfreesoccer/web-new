@@ -4,6 +4,7 @@ import type React from "react";
 import { CONTACT, NAV_LINKS } from "#/lib/constants";
 import { FacebookIcon } from "../icons/facebook-icon";
 import { InstagramIcon } from "../icons/instagram-icon";
+import { LogoIcon } from "../icons/logo-icon";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
@@ -43,8 +44,8 @@ export const Footer: React.FC = () => {
 				<div className="flex flex-wrap justify-between gap-4 sm:gap-8">
 					<div className="flex flex-col gap-4">
 						<div className="flex flex-col items-center gap-3 sm:items-start">
-							<Link to="/">
-								<div className="h-18 w-25 bg-white" />
+							<Link to="/" aria-label="HandsFree Soccer Academy home">
+								<LogoIcon className="h-16 w-auto sm:h-18" />
 							</Link>
 							<p className="text-center font-light text-white tracking-wider sm:text-left">
 								Coaching every player, at every level, in every stage of the
