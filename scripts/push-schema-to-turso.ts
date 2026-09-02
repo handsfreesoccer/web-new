@@ -1,25 +1,47 @@
-import { join } from "node:path";
 import { createClient } from "@libsql/client";
-import { Database } from "bun:sqlite";
 import { getTursoAuthToken, getTursoDatabaseUrl } from "../src/database-url.js";
-
-const localPath = join(process.cwd(), "prisma/dev.db");
-const local = new Database(localPath, { readonly: true });
-const schema = local.query("SELECT sql FROM sqlite_master WHERE type IN ('table', 'index') AND sql IS NOT NULL AND name NOT LIKE 'sqlite_%'").all() as Array<{ sql: string }>;
-local.close();
 
 const turso = createClient({
 	url: getTursoDatabaseUrl(),
 	authToken: getTursoAuthToken(),
 });
 
-for (const { sql } of schema) {
-	const statement = sql
-		.replace(/^CREATE TABLE "/, 'CREATE TABLE IF NOT EXISTS "')
-		.replace(/^CREATE UNIQUE INDEX "/, 'CREATE UNIQUE INDEX IF NOT EXISTS "')
-		.replace(/^CREATE INDEX "/, 'CREATE INDEX IF NOT EXISTS "');
-	await turso.execute(statement);
-	console.log(`Applied: ${statement.slice(0, 80)}...`);
+const result = Bun.spawnSync(
+	[
+		"bunx",
+		"prisma",
+		"migrate",
+		"diff",
+		"--from-empty",
+		"--to-schema",
+		"prisma/schema.prisma",
+		"--script",
+	],
+	{ cwd: process.cwd(), stdout: "pipe", stderr: "pipe", env: process.env },
+);
+
+if (result.exitCode !== 0) {
+	console.error(result.stderr.toString());
+	process.exit(result.exitCode ?? 1);
 }
 
-console.log(`Applied ${schema.length} schema statements to Turso.`);
+const sql = result.stdout
+	.toString()
+	.split("\n")
+	.filter((line) => !line.trim().startsWith("--"))
+	.join("\n");
+const statements = sql
+	.split(";")
+	.map((statement) => statement.trim())
+	.filter((statement) => statement.length > 0);
+
+for (const statement of statements) {
+	const safe = statement
+		.replace(/^CREATE TABLE "/i, 'CREATE TABLE IF NOT EXISTS "')
+		.replace(/^CREATE UNIQUE INDEX "/i, 'CREATE UNIQUE INDEX IF NOT EXISTS "')
+		.replace(/^CREATE INDEX "/i, 'CREATE INDEX IF NOT EXISTS "');
+	await turso.execute(safe);
+	console.log(`Applied: ${safe.slice(0, 80)}...`);
+}
+
+console.log(`Applied ${statements.length} schema statements to Turso.`);
