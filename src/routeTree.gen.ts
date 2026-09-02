@@ -20,6 +20,7 @@ import { Route as ApiBookingsRouteImport } from './routes/api/bookings'
 import { Route as ApiContactInquiriesRouteImport } from './routes/api/contact-inquiries'
 import { Route as ApiAdminAttendanceRouteImport } from './routes/api/admin/attendance'
 import { Route as ApiAdminBookingAvailabilityRouteImport } from './routes/api/admin/booking-availability'
+import { Route as ApiAdminContactInquiriesRouteImport } from './routes/api/admin/contact-inquiries'
 import { Route as ApiAdminEmailsRouteImport } from './routes/api/admin/emails'
 import { Route as ApiAdminStudentsRouteImport } from './routes/api/admin/students'
 import { Route as ApiCronDailyRouteImport } from './routes/api/cron/daily'
@@ -86,6 +87,12 @@ const ApiAdminBookingAvailabilityRoute =
     path: '/api/admin/booking-availability',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAdminContactInquiriesRoute =
+  ApiAdminContactInquiriesRouteImport.update({
+    id: '/api/admin/contact-inquiries',
+    path: '/api/admin/contact-inquiries',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAdminEmailsRoute = ApiAdminEmailsRouteImport.update({
   id: '/api/admin/emails',
   path: '/api/admin/emails',
@@ -149,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/api/admin/attendance': typeof ApiAdminAttendanceRoute
   '/api/admin/booking-availability': typeof ApiAdminBookingAvailabilityRoute
+  '/api/admin/contact-inquiries': typeof ApiAdminContactInquiriesRoute
   '/api/admin/emails': typeof ApiAdminEmailsRoute
   '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
   '/api/cron/daily': typeof ApiCronDailyRoute
@@ -171,6 +179,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/api/admin/attendance': typeof ApiAdminAttendanceRoute
   '/api/admin/booking-availability': typeof ApiAdminBookingAvailabilityRoute
+  '/api/admin/contact-inquiries': typeof ApiAdminContactInquiriesRoute
   '/api/admin/emails': typeof ApiAdminEmailsRoute
   '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
   '/api/cron/daily': typeof ApiCronDailyRoute
@@ -195,6 +204,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/api/admin/attendance': typeof ApiAdminAttendanceRoute
   '/api/admin/booking-availability': typeof ApiAdminBookingAvailabilityRoute
+  '/api/admin/contact-inquiries': typeof ApiAdminContactInquiriesRoute
   '/api/admin/emails': typeof ApiAdminEmailsRoute
   '/api/admin/students': typeof ApiAdminStudentsRouteWithChildren
   '/api/cron/daily': typeof ApiCronDailyRoute
@@ -219,6 +229,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/api/admin/attendance'
     | '/api/admin/booking-availability'
+    | '/api/admin/contact-inquiries'
     | '/api/admin/emails'
     | '/api/admin/students'
     | '/api/cron/daily'
@@ -241,6 +252,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/api/admin/attendance'
     | '/api/admin/booking-availability'
+    | '/api/admin/contact-inquiries'
     | '/api/admin/emails'
     | '/api/admin/students'
     | '/api/cron/daily'
@@ -264,6 +276,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/api/admin/attendance'
     | '/api/admin/booking-availability'
+    | '/api/admin/contact-inquiries'
     | '/api/admin/emails'
     | '/api/admin/students'
     | '/api/cron/daily'
@@ -285,6 +298,7 @@ export interface RootRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
   ApiAdminAttendanceRoute: typeof ApiAdminAttendanceRoute
   ApiAdminBookingAvailabilityRoute: typeof ApiAdminBookingAvailabilityRoute
+  ApiAdminContactInquiriesRoute: typeof ApiAdminContactInquiriesRoute
   ApiAdminEmailsRoute: typeof ApiAdminEmailsRoute
   ApiAdminStudentsRoute: typeof ApiAdminStudentsRouteWithChildren
   ApiCronDailyRoute: typeof ApiCronDailyRoute
@@ -373,6 +387,13 @@ declare module '@tanstack/react-router' {
       path: '/api/admin/booking-availability'
       fullPath: '/api/admin/booking-availability'
       preLoaderRoute: typeof ApiAdminBookingAvailabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/contact-inquiries': {
+      id: '/api/admin/contact-inquiries'
+      path: '/api/admin/contact-inquiries'
+      fullPath: '/api/admin/contact-inquiries'
+      preLoaderRoute: typeof ApiAdminContactInquiriesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/admin/emails': {
@@ -484,6 +505,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
   ApiAdminAttendanceRoute: ApiAdminAttendanceRoute,
   ApiAdminBookingAvailabilityRoute: ApiAdminBookingAvailabilityRoute,
+  ApiAdminContactInquiriesRoute: ApiAdminContactInquiriesRoute,
   ApiAdminEmailsRoute: ApiAdminEmailsRoute,
   ApiAdminStudentsRoute: ApiAdminStudentsRouteWithChildren,
   ApiCronDailyRoute: ApiCronDailyRoute,
