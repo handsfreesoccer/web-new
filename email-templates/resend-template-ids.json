@@ -37,6 +37,7 @@
       "first_name",
       "maps_url",
       "timezone_label",
+      "when",
       "year"
     ]
   },

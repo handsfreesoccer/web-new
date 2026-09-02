@@ -12,7 +12,7 @@ const templates = [
 	[
 		"appointment-reminder",
 		"appointment-reminder.html",
-		"Your Hands Free Soccer appointment is tomorrow",
+		"Your Hands Free Soccer appointment is {{{when}}}",
 	],
 	[
 		"contact-inquiry-received",

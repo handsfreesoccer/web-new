@@ -119,6 +119,30 @@ const formatAppointmentVariables = (booking: {
 	};
 };
 
+const zonedYmd = (date: Date) => {
+	const parts = new Intl.DateTimeFormat("en-US", {
+		timeZone: APPOINTMENT_TIMEZONE,
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+	}).formatToParts(date);
+	const value = (type: Intl.DateTimeFormatPartTypes) =>
+		Number(parts.find((part) => part.type === type)?.value);
+	return Date.UTC(value("year"), value("month") - 1, value("day"));
+};
+
+export function appointmentWhenPhrase(
+	appointmentStartUtc: Date,
+	now = new Date(),
+) {
+	const days = Math.round(
+		(zonedYmd(appointmentStartUtc) - zonedYmd(now)) / 86_400_000,
+	);
+	if (days <= 0) return "today";
+	if (days === 1) return "tomorrow";
+	return `in ${days} days`;
+}
+
 type TemplateVariables = Record<string, string | number>;
 
 const logEmailFailure = (label: string) => (error: unknown) => {
@@ -216,16 +240,18 @@ export async function sendReminderEmail(booking: BookingReminderEmail) {
 	const maps =
 		process.env.GOOGLE_MAPS_URL ?? "https://maps.google.com/?q=Allen,Texas";
 	const end = getAppointmentEnd(booking);
+	const when = appointmentWhenPhrase(booking.appointmentStartUtc);
 	return sendTemplate(
 		"appointment-reminder",
 		booking.email,
 		{
 			first_name: booking.firstName,
 			maps_url: maps,
+			when,
 			...formatAppointmentVariables(booking),
 		},
 		{
-			subject: "Your Hands Free Soccer appointment is tomorrow",
+			subject: `Your Hands Free Soccer appointment is ${when}`,
 			attachments: [
 				{
 					filename: "hands-free-soccer-appointment.ics",
