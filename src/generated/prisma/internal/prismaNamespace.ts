@@ -400,7 +400,9 @@ export const ModelName = {
   Booking: 'Booking',
   Attendance: 'Attendance',
   EmailLog: 'EmailLog',
-  BookingAvailability: 'BookingAvailability'
+  BookingAvailability: 'BookingAvailability',
+  ContactInquiry: 'ContactInquiry',
+  CronJob: 'CronJob'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -416,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "booking" | "attendance" | "emailLog" | "bookingAvailability"
+    modelProps: "booking" | "attendance" | "emailLog" | "bookingAvailability" | "contactInquiry" | "cronJob"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -716,6 +718,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ContactInquiry: {
+      payload: Prisma.$ContactInquiryPayload<ExtArgs>
+      fields: Prisma.ContactInquiryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ContactInquiryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContactInquiryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ContactInquiryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContactInquiryPayload>
+        }
+        findFirst: {
+          args: Prisma.ContactInquiryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContactInquiryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ContactInquiryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContactInquiryPayload>
+        }
+        findMany: {
+          args: Prisma.ContactInquiryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContactInquiryPayload>[]
+        }
+        create: {
+          args: Prisma.ContactInquiryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContactInquiryPayload>
+        }
+        createMany: {
+          args: Prisma.ContactInquiryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ContactInquiryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContactInquiryPayload>[]
+        }
+        delete: {
+          args: Prisma.ContactInquiryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContactInquiryPayload>
+        }
+        update: {
+          args: Prisma.ContactInquiryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContactInquiryPayload>
+        }
+        deleteMany: {
+          args: Prisma.ContactInquiryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ContactInquiryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ContactInquiryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContactInquiryPayload>[]
+        }
+        upsert: {
+          args: Prisma.ContactInquiryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContactInquiryPayload>
+        }
+        aggregate: {
+          args: Prisma.ContactInquiryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateContactInquiry>
+        }
+        groupBy: {
+          args: Prisma.ContactInquiryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContactInquiryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ContactInquiryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContactInquiryCountAggregateOutputType> | number
+        }
+      }
+    }
+    CronJob: {
+      payload: Prisma.$CronJobPayload<ExtArgs>
+      fields: Prisma.CronJobFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CronJobFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronJobPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CronJobFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronJobPayload>
+        }
+        findFirst: {
+          args: Prisma.CronJobFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronJobPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CronJobFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronJobPayload>
+        }
+        findMany: {
+          args: Prisma.CronJobFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronJobPayload>[]
+        }
+        create: {
+          args: Prisma.CronJobCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronJobPayload>
+        }
+        createMany: {
+          args: Prisma.CronJobCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CronJobCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronJobPayload>[]
+        }
+        delete: {
+          args: Prisma.CronJobDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronJobPayload>
+        }
+        update: {
+          args: Prisma.CronJobUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronJobPayload>
+        }
+        deleteMany: {
+          args: Prisma.CronJobDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CronJobUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CronJobUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronJobPayload>[]
+        }
+        upsert: {
+          args: Prisma.CronJobUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CronJobPayload>
+        }
+        aggregate: {
+          args: Prisma.CronJobAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCronJob>
+        }
+        groupBy: {
+          args: Prisma.CronJobGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CronJobGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CronJobCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CronJobCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -808,6 +958,34 @@ export const BookingAvailabilityScalarFieldEnum = {
 } as const
 
 export type BookingAvailabilityScalarFieldEnum = (typeof BookingAvailabilityScalarFieldEnum)[keyof typeof BookingAvailabilityScalarFieldEnum]
+
+
+export const ContactInquiryScalarFieldEnum = {
+  id: 'id',
+  fullName: 'fullName',
+  email: 'email',
+  subject: 'subject',
+  message: 'message',
+  createdAt: 'createdAt'
+} as const
+
+export type ContactInquiryScalarFieldEnum = (typeof ContactInquiryScalarFieldEnum)[keyof typeof ContactInquiryScalarFieldEnum]
+
+
+export const CronJobScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  bookingId: 'bookingId',
+  scheduledFor: 'scheduledFor',
+  status: 'status',
+  attempts: 'attempts',
+  lastError: 'lastError',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CronJobScalarFieldEnum = (typeof CronJobScalarFieldEnum)[keyof typeof CronJobScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1014,6 +1192,8 @@ export type GlobalOmitConfig = {
   attendance?: Prisma.AttendanceOmit
   emailLog?: Prisma.EmailLogOmit
   bookingAvailability?: Prisma.BookingAvailabilityOmit
+  contactInquiry?: Prisma.ContactInquiryOmit
+  cronJob?: Prisma.CronJobOmit
 }
 
 /* Types for Logging */

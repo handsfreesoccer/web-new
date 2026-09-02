@@ -37,3 +37,13 @@ export type EmailLog = Prisma.EmailLogModel
  * 
  */
 export type BookingAvailability = Prisma.BookingAvailabilityModel
+/**
+ * Model ContactInquiry
+ * 
+ */
+export type ContactInquiry = Prisma.ContactInquiryModel
+/**
+ * Model CronJob
+ * Queued reminder/payment emails processed by the daily cron.
+ */
+export type CronJob = Prisma.CronJobModel

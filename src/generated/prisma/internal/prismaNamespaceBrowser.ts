@@ -54,7 +54,9 @@ export const ModelName = {
   Booking: 'Booking',
   Attendance: 'Attendance',
   EmailLog: 'EmailLog',
-  BookingAvailability: 'BookingAvailability'
+  BookingAvailability: 'BookingAvailability',
+  ContactInquiry: 'ContactInquiry',
+  CronJob: 'CronJob'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -126,6 +128,34 @@ export const BookingAvailabilityScalarFieldEnum = {
 } as const
 
 export type BookingAvailabilityScalarFieldEnum = (typeof BookingAvailabilityScalarFieldEnum)[keyof typeof BookingAvailabilityScalarFieldEnum]
+
+
+export const ContactInquiryScalarFieldEnum = {
+  id: 'id',
+  fullName: 'fullName',
+  email: 'email',
+  subject: 'subject',
+  message: 'message',
+  createdAt: 'createdAt'
+} as const
+
+export type ContactInquiryScalarFieldEnum = (typeof ContactInquiryScalarFieldEnum)[keyof typeof ContactInquiryScalarFieldEnum]
+
+
+export const CronJobScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  bookingId: 'bookingId',
+  scheduledFor: 'scheduledFor',
+  status: 'status',
+  attempts: 'attempts',
+  lastError: 'lastError',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CronJobScalarFieldEnum = (typeof CronJobScalarFieldEnum)[keyof typeof CronJobScalarFieldEnum]
 
 
 export const SortOrder = {

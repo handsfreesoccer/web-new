@@ -1,18 +1,21 @@
-import { isAbsolute, join } from "node:path";
+export function getTursoDatabaseUrl() {
+	const url =
+		process.env.TURSO_DATABASE_URL?.trim() ||
+		process.env.DATABASE_URL?.trim();
 
-export function getDatabaseUrl() {
-	return process.env.DATABASE_URL ?? "file:./prisma/dev.db";
-}
-
-export function getSqliteFilePath() {
-	const databaseUrl = getDatabaseUrl();
-	let filePath = databaseUrl.startsWith("file:")
-		? databaseUrl.slice("file:".length)
-		: databaseUrl;
-
-	if (!isAbsolute(filePath)) {
-		filePath = join(process.cwd(), filePath);
+	if (!url) {
+		throw new Error(
+			"TURSO_DATABASE_URL (or DATABASE_URL) is required. Example: libsql://your-db.turso.io",
+		);
 	}
 
-	return filePath;
+	return url;
+}
+
+export function getTursoAuthToken() {
+	const token = process.env.TURSO_AUTH_TOKEN?.trim();
+	if (!token) {
+		throw new Error("TURSO_AUTH_TOKEN is required to connect to Turso.");
+	}
+	return token;
 }

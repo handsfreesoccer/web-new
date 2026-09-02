@@ -1,9 +1,9 @@
 import { getPrisma } from "#/db";
-import { bookingSchema, type BookingInput } from "#/lib/booking-schema";
+import { bookingSchema } from "#/lib/booking-schema";
 import { isAppointmentWithinAvailability } from "#/lib/booking-availability-schema";
 import { getBookingAvailability } from "#/server/booking-availability";
+import { scheduleBookingCronJobs } from "#/server/cron";
 import { sendWelcomeEmail } from "#/server/email";
-import { appendBookingToSpreadsheet } from "#/server/spreadsheet";
 
 export async function createBooking(input: unknown) {
 	const parsed = bookingSchema.parse(input);
@@ -28,11 +28,8 @@ export async function createBooking(input: unknown) {
 			appointmentEndUtc: parsed.appointmentEnd,
 		},
 	});
-	const spreadsheetInput: BookingInput & { id: number } = {
-		...parsed,
-		id: booking.id,
-	};
-	await appendBookingToSpreadsheet(spreadsheetInput);
+
+	await scheduleBookingCronJobs(booking);
 
 	void sendWelcomeEmail(booking)
 		.then(async () => {

@@ -16,8 +16,11 @@
     "alias": "payment-link",
     "published": true,
     "variables": [
+      "coach_email",
+      "coach_name",
+      "coach_phone",
+      "coach_phone_href",
       "first_name",
-      "payment_url",
       "year"
     ]
   },

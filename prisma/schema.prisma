@@ -23,6 +23,7 @@ model Booking {
   createdAt           DateTime     @default(now())
   attendances         Attendance[]
   emailLogs           EmailLog[]
+  cronJobs            CronJob[]
 }
 
 model Attendance {
@@ -61,4 +62,31 @@ model BookingAvailability {
   /// Maximum days ahead a booking can be made
   maxAdvanceDays Int     @default(30)
   updatedAt     DateTime @updatedAt
+}
+
+model ContactInquiry {
+  id        Int      @id @default(autoincrement())
+  fullName  String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+/// Queued reminder/payment emails processed by the daily cron.
+model CronJob {
+  id           Int      @id @default(autoincrement())
+  type         String
+  bookingId    Int
+  booking      Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  scheduledFor DateTime
+  status       String   @default("pending")
+  attempts     Int      @default(0)
+  lastError    String?
+  sentAt       DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([bookingId, type])
+  @@index([status, scheduledFor])
 }

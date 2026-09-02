@@ -282,6 +282,7 @@ export type BookingWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
   attendances?: Prisma.AttendanceListRelationFilter
   emailLogs?: Prisma.EmailLogListRelationFilter
+  cronJobs?: Prisma.CronJobListRelationFilter
 }
 
 export type BookingOrderByWithRelationInput = {
@@ -300,6 +301,7 @@ export type BookingOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   attendances?: Prisma.AttendanceOrderByRelationAggregateInput
   emailLogs?: Prisma.EmailLogOrderByRelationAggregateInput
+  cronJobs?: Prisma.CronJobOrderByRelationAggregateInput
 }
 
 export type BookingWhereUniqueInput = Prisma.AtLeast<{
@@ -321,6 +323,7 @@ export type BookingWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Booking"> | Date | string
   attendances?: Prisma.AttendanceListRelationFilter
   emailLogs?: Prisma.EmailLogListRelationFilter
+  cronJobs?: Prisma.CronJobListRelationFilter
 }, "id">
 
 export type BookingOrderByWithAggregationInput = {
@@ -378,6 +381,7 @@ export type BookingCreateInput = {
   createdAt?: Date | string
   attendances?: Prisma.AttendanceCreateNestedManyWithoutBookingInput
   emailLogs?: Prisma.EmailLogCreateNestedManyWithoutBookingInput
+  cronJobs?: Prisma.CronJobCreateNestedManyWithoutBookingInput
 }
 
 export type BookingUncheckedCreateInput = {
@@ -396,6 +400,7 @@ export type BookingUncheckedCreateInput = {
   createdAt?: Date | string
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutBookingInput
   emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutBookingInput
+  cronJobs?: Prisma.CronJobUncheckedCreateNestedManyWithoutBookingInput
 }
 
 export type BookingUpdateInput = {
@@ -413,6 +418,7 @@ export type BookingUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendances?: Prisma.AttendanceUpdateManyWithoutBookingNestedInput
   emailLogs?: Prisma.EmailLogUpdateManyWithoutBookingNestedInput
+  cronJobs?: Prisma.CronJobUpdateManyWithoutBookingNestedInput
 }
 
 export type BookingUncheckedUpdateInput = {
@@ -431,6 +437,7 @@ export type BookingUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutBookingNestedInput
   emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutBookingNestedInput
+  cronJobs?: Prisma.CronJobUncheckedUpdateManyWithoutBookingNestedInput
 }
 
 export type BookingCreateManyInput = {
@@ -596,6 +603,20 @@ export type BookingUpdateOneWithoutEmailLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BookingUpdateToOneWithWhereWithoutEmailLogsInput, Prisma.BookingUpdateWithoutEmailLogsInput>, Prisma.BookingUncheckedUpdateWithoutEmailLogsInput>
 }
 
+export type BookingCreateNestedOneWithoutCronJobsInput = {
+  create?: Prisma.XOR<Prisma.BookingCreateWithoutCronJobsInput, Prisma.BookingUncheckedCreateWithoutCronJobsInput>
+  connectOrCreate?: Prisma.BookingCreateOrConnectWithoutCronJobsInput
+  connect?: Prisma.BookingWhereUniqueInput
+}
+
+export type BookingUpdateOneRequiredWithoutCronJobsNestedInput = {
+  create?: Prisma.XOR<Prisma.BookingCreateWithoutCronJobsInput, Prisma.BookingUncheckedCreateWithoutCronJobsInput>
+  connectOrCreate?: Prisma.BookingCreateOrConnectWithoutCronJobsInput
+  upsert?: Prisma.BookingUpsertWithoutCronJobsInput
+  connect?: Prisma.BookingWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BookingUpdateToOneWithWhereWithoutCronJobsInput, Prisma.BookingUpdateWithoutCronJobsInput>, Prisma.BookingUncheckedUpdateWithoutCronJobsInput>
+}
+
 export type BookingCreateWithoutAttendancesInput = {
   firstName: string
   lastName: string
@@ -610,6 +631,7 @@ export type BookingCreateWithoutAttendancesInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   emailLogs?: Prisma.EmailLogCreateNestedManyWithoutBookingInput
+  cronJobs?: Prisma.CronJobCreateNestedManyWithoutBookingInput
 }
 
 export type BookingUncheckedCreateWithoutAttendancesInput = {
@@ -627,6 +649,7 @@ export type BookingUncheckedCreateWithoutAttendancesInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutBookingInput
+  cronJobs?: Prisma.CronJobUncheckedCreateNestedManyWithoutBookingInput
 }
 
 export type BookingCreateOrConnectWithoutAttendancesInput = {
@@ -659,6 +682,7 @@ export type BookingUpdateWithoutAttendancesInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   emailLogs?: Prisma.EmailLogUpdateManyWithoutBookingNestedInput
+  cronJobs?: Prisma.CronJobUpdateManyWithoutBookingNestedInput
 }
 
 export type BookingUncheckedUpdateWithoutAttendancesInput = {
@@ -676,6 +700,7 @@ export type BookingUncheckedUpdateWithoutAttendancesInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutBookingNestedInput
+  cronJobs?: Prisma.CronJobUncheckedUpdateManyWithoutBookingNestedInput
 }
 
 export type BookingCreateWithoutEmailLogsInput = {
@@ -692,6 +717,7 @@ export type BookingCreateWithoutEmailLogsInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   attendances?: Prisma.AttendanceCreateNestedManyWithoutBookingInput
+  cronJobs?: Prisma.CronJobCreateNestedManyWithoutBookingInput
 }
 
 export type BookingUncheckedCreateWithoutEmailLogsInput = {
@@ -709,6 +735,7 @@ export type BookingUncheckedCreateWithoutEmailLogsInput = {
   paidAt?: Date | string | null
   createdAt?: Date | string
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutBookingInput
+  cronJobs?: Prisma.CronJobUncheckedCreateNestedManyWithoutBookingInput
 }
 
 export type BookingCreateOrConnectWithoutEmailLogsInput = {
@@ -741,6 +768,7 @@ export type BookingUpdateWithoutEmailLogsInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendances?: Prisma.AttendanceUpdateManyWithoutBookingNestedInput
+  cronJobs?: Prisma.CronJobUpdateManyWithoutBookingNestedInput
 }
 
 export type BookingUncheckedUpdateWithoutEmailLogsInput = {
@@ -758,6 +786,93 @@ export type BookingUncheckedUpdateWithoutEmailLogsInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutBookingNestedInput
+  cronJobs?: Prisma.CronJobUncheckedUpdateManyWithoutBookingNestedInput
+}
+
+export type BookingCreateWithoutCronJobsInput = {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  classType: string
+  appointmentStartUtc: Date | string
+  appointmentEndUtc?: Date | string | null
+  welcomeSentAt?: Date | string | null
+  reminderSentAt?: Date | string | null
+  paymentSentAt?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutBookingInput
+  emailLogs?: Prisma.EmailLogCreateNestedManyWithoutBookingInput
+}
+
+export type BookingUncheckedCreateWithoutCronJobsInput = {
+  id?: number
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  classType: string
+  appointmentStartUtc: Date | string
+  appointmentEndUtc?: Date | string | null
+  welcomeSentAt?: Date | string | null
+  reminderSentAt?: Date | string | null
+  paymentSentAt?: Date | string | null
+  paidAt?: Date | string | null
+  createdAt?: Date | string
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutBookingInput
+  emailLogs?: Prisma.EmailLogUncheckedCreateNestedManyWithoutBookingInput
+}
+
+export type BookingCreateOrConnectWithoutCronJobsInput = {
+  where: Prisma.BookingWhereUniqueInput
+  create: Prisma.XOR<Prisma.BookingCreateWithoutCronJobsInput, Prisma.BookingUncheckedCreateWithoutCronJobsInput>
+}
+
+export type BookingUpsertWithoutCronJobsInput = {
+  update: Prisma.XOR<Prisma.BookingUpdateWithoutCronJobsInput, Prisma.BookingUncheckedUpdateWithoutCronJobsInput>
+  create: Prisma.XOR<Prisma.BookingCreateWithoutCronJobsInput, Prisma.BookingUncheckedCreateWithoutCronJobsInput>
+  where?: Prisma.BookingWhereInput
+}
+
+export type BookingUpdateToOneWithWhereWithoutCronJobsInput = {
+  where?: Prisma.BookingWhereInput
+  data: Prisma.XOR<Prisma.BookingUpdateWithoutCronJobsInput, Prisma.BookingUncheckedUpdateWithoutCronJobsInput>
+}
+
+export type BookingUpdateWithoutCronJobsInput = {
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  classType?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentStartUtc?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  appointmentEndUtc?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendances?: Prisma.AttendanceUpdateManyWithoutBookingNestedInput
+  emailLogs?: Prisma.EmailLogUpdateManyWithoutBookingNestedInput
+}
+
+export type BookingUncheckedUpdateWithoutCronJobsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  classType?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentStartUtc?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  appointmentEndUtc?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  welcomeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutBookingNestedInput
+  emailLogs?: Prisma.EmailLogUncheckedUpdateManyWithoutBookingNestedInput
 }
 
 
@@ -768,11 +883,13 @@ export type BookingUncheckedUpdateWithoutEmailLogsInput = {
 export type BookingCountOutputType = {
   attendances: number
   emailLogs: number
+  cronJobs: number
 }
 
 export type BookingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attendances?: boolean | BookingCountOutputTypeCountAttendancesArgs
   emailLogs?: boolean | BookingCountOutputTypeCountEmailLogsArgs
+  cronJobs?: boolean | BookingCountOutputTypeCountCronJobsArgs
 }
 
 /**
@@ -799,6 +916,13 @@ export type BookingCountOutputTypeCountEmailLogsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.EmailLogWhereInput
 }
 
+/**
+ * BookingCountOutputType without action
+ */
+export type BookingCountOutputTypeCountCronJobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CronJobWhereInput
+}
+
 
 export type BookingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -816,6 +940,7 @@ export type BookingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   attendances?: boolean | Prisma.Booking$attendancesArgs<ExtArgs>
   emailLogs?: boolean | Prisma.Booking$emailLogsArgs<ExtArgs>
+  cronJobs?: boolean | Prisma.Booking$cronJobsArgs<ExtArgs>
   _count?: boolean | Prisma.BookingCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["booking"]>
 
@@ -871,6 +996,7 @@ export type BookingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type BookingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attendances?: boolean | Prisma.Booking$attendancesArgs<ExtArgs>
   emailLogs?: boolean | Prisma.Booking$emailLogsArgs<ExtArgs>
+  cronJobs?: boolean | Prisma.Booking$cronJobsArgs<ExtArgs>
   _count?: boolean | Prisma.BookingCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BookingIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -881,6 +1007,7 @@ export type $BookingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     attendances: Prisma.$AttendancePayload<ExtArgs>[]
     emailLogs: Prisma.$EmailLogPayload<ExtArgs>[]
+    cronJobs: Prisma.$CronJobPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1292,6 +1419,7 @@ export interface Prisma__BookingClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   attendances<T extends Prisma.Booking$attendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Booking$attendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   emailLogs<T extends Prisma.Booking$emailLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Booking$emailLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmailLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cronJobs<T extends Prisma.Booking$cronJobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Booking$cronJobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CronJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1770,6 +1898,30 @@ export type Booking$emailLogsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.EmailLogScalarFieldEnum | Prisma.EmailLogScalarFieldEnum[]
+}
+
+/**
+ * Booking.cronJobs
+ */
+export type Booking$cronJobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CronJob
+   */
+  select?: Prisma.CronJobSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CronJob
+   */
+  omit?: Prisma.CronJobOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CronJobInclude<ExtArgs> | null
+  where?: Prisma.CronJobWhereInput
+  orderBy?: Prisma.CronJobOrderByWithRelationInput | Prisma.CronJobOrderByWithRelationInput[]
+  cursor?: Prisma.CronJobWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CronJobScalarFieldEnum | Prisma.CronJobScalarFieldEnum[]
 }
 
 /**

@@ -4,8 +4,8 @@ import "@tanstack/react-start";
 import "@tanstack/react-start/server";
 import { getPrisma } from "#/db";
 import { requireAdmin } from "#/server/admin-request";
+import { type CronJobType, markCronJobSent } from "#/server/cron";
 import { sendPaymentEmail, sendReminderEmail } from "#/server/email";
-import { createAppointmentPaymentLink } from "#/server/stripe";
 import { failure, jsonBody, success } from "#/server/response";
 import { z } from "zod";
 
@@ -37,16 +37,10 @@ export const Route = createFileRoute("/api/admin/emails")({
 				if (!booking)
 					return failure("Student was not found.", StatusCodes.NOT_FOUND);
 				try {
-					if (parsed.data.type === "reminder") await sendReminderEmail(booking);
-					else {
-						const url = await createAppointmentPaymentLink(booking);
-						if (!url)
-							return failure(
-								"Configure Stripe before sending a payment email.",
-								StatusCodes.SERVICE_UNAVAILABLE,
-							);
-						await sendPaymentEmail(booking, url);
-					}
+					const type = parsed.data.type as CronJobType;
+					if (type === "reminder") await sendReminderEmail(booking);
+					else await sendPaymentEmail(booking);
+					await markCronJobSent(booking.id, type);
 					return success({}, "Email sent.");
 				} catch {
 					return failure(

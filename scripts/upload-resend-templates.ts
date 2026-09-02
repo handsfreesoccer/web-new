@@ -8,7 +8,7 @@ const resend = new Resend(apiKey);
 
 const templates = [
 	["booking-welcome", "booking-welcome.html", "We received your Hands Free Soccer booking"],
-	["payment-link", "payment-link.html", "Your Hands Free Soccer payment link"],
+	["payment-link", "payment-link.html", "Hands Free Soccer — payment for your session"],
 	[
 		"appointment-reminder",
 		"appointment-reminder.html",

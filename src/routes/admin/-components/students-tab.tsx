@@ -152,7 +152,7 @@ export function StudentsTab() {
 													})
 												}
 											>
-												Payment
+												Payment note
 											</Button>
 										</div>
 									</TableCell>

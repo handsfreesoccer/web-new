@@ -1,25 +1,27 @@
-import { type PrismaClient, Prisma } from "./generated/prisma/client.js";
+import { PrismaLibSql } from "@prisma/adapter-libsql";
+import { Prisma, PrismaClient } from "./generated/prisma/client.js";
+import { getTursoAuthToken, getTursoDatabaseUrl } from "./database-url.js";
 
 const CLIENT_SCHEMA_KEY = JSON.stringify({
 	Booking: Prisma.BookingScalarFieldEnum,
 	BookingAvailability: Prisma.BookingAvailabilityScalarFieldEnum,
 	Attendance: Prisma.AttendanceScalarFieldEnum,
 	EmailLog: Prisma.EmailLogScalarFieldEnum,
+	ContactInquiry: Prisma.ContactInquiryScalarFieldEnum,
+	CronJob: Prisma.CronJobScalarFieldEnum,
 });
 
 declare global {
 	var __prisma: PrismaClient | undefined;
 	var __prismaSchemaKey: string | undefined;
-	var __prismaInit: Promise<PrismaClient> | undefined;
 }
 
-async function loadPrismaClient() {
-	if (typeof (globalThis as { Bun?: unknown }).Bun !== "undefined") {
-		const { createBunPrismaClient } = await import("./db.bun.js");
-		return createBunPrismaClient();
-	}
-	const { createNodePrismaClient } = await import("./db.node.js");
-	return createNodePrismaClient();
+function createPrismaClient() {
+	const adapter = new PrismaLibSql({
+		url: getTursoDatabaseUrl(),
+		authToken: getTursoAuthToken(),
+	});
+	return new PrismaClient({ adapter });
 }
 
 export async function getPrisma() {
@@ -31,20 +33,14 @@ export async function getPrisma() {
 		void globalThis.__prisma?.$disconnect();
 		globalThis.__prisma = undefined;
 		globalThis.__prismaSchemaKey = undefined;
-		globalThis.__prismaInit = undefined;
 	}
 
-	if (globalThis.__prisma) {
-		return globalThis.__prisma;
-	}
-
-	globalThis.__prismaInit ??= loadPrismaClient().then((client) => {
-		globalThis.__prisma = client;
+	if (!globalThis.__prisma) {
+		globalThis.__prisma = createPrismaClient();
 		globalThis.__prismaSchemaKey = CLIENT_SCHEMA_KEY;
-		return client;
-	});
+	}
 
-	return globalThis.__prismaInit;
+	return globalThis.__prisma;
 }
 
 if (import.meta.hot) {
@@ -52,6 +48,5 @@ if (import.meta.hot) {
 		void globalThis.__prisma?.$disconnect();
 		globalThis.__prisma = undefined;
 		globalThis.__prismaSchemaKey = undefined;
-		globalThis.__prismaInit = undefined;
 	});
 }

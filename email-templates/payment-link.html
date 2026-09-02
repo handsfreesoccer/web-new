@@ -6,7 +6,7 @@
 	lang="en"
 >
 	<head>
-		<title>Payment link</title>
+		<title>Payment for your session</title>
 		<meta charset="UTF-8" />
 		<meta
 			http-equiv="Content-Type"
@@ -483,9 +483,10 @@
 																							mso-text-raise: 3px;
 																						"
 																					>
-																						Thank you for training with us. Use
-																						the link below to pay for your
-																						appointment.
+																						Thank you for training with us.
+																						Please reach out to the head coach
+																						to arrange payment for this
+																						session.
 																					</p>
 																				</td>
 																			</tr>
@@ -512,67 +513,62 @@
 																<tr>
 																	<td align="left">
 																		<table
-																			class="t-cta-wrap"
 																			role="presentation"
 																			cellpadding="0"
 																			cellspacing="0"
-																			style="
-																				margin-right: auto;
-																				max-width: 514px;
-																			"
+																			width="100%"
+																			style="width: 100%"
 																		>
 																			<tr>
-																				<td style="width: auto">
-																					<table
-																						class="t-cta"
-																						role="presentation"
-																						cellpadding="0"
-																						cellspacing="0"
+																				<td
+																					style="
+																						background-color: #fdf2f2;
+																						border: 1px solid #f0c4c4;
+																						border-radius: 8px;
+																						padding: 16px 20px;
+																					"
+																				>
+																					<p
 																						style="
-																							width: auto;
-																							max-width: 514px;
+																							margin: 0;
+																							font-family:
+																								Open Sans,
+																								BlinkMacSystemFont,
+																								Segoe UI,
+																								Helvetica Neue,
+																								Arial,
+																								sans-serif;
+																							line-height: 24px;
+																							font-weight: 400;
+																							font-size: 14px;
+																							color: #141414;
+																							text-align: left;
+																							mso-line-height-rule: exactly;
 																						"
 																					>
-																						<tr>
-																							<td
-																								style="
-																									overflow: hidden;
-																									background-color: #a81414;
-																									text-align: center;
-																									line-height: 34px;
-																									mso-line-height-rule: exactly;
-																									mso-text-raise: 5px;
-																									padding: 0 23px;
-																									border-radius: 40px;
-																								"
-																							>
-																								<a
-																									href="{{{payment_url}}}"
-																									style="
-																										display: block;
-																										margin: 0;
-																										font-family:
-																											Sofia Sans,
-																											BlinkMacSystemFont,
-																											Segoe UI,
-																											Helvetica Neue,
-																											Arial,
-																											sans-serif;
-																										line-height: 34px;
-																										font-weight: 700;
-																										font-size: 16px;
-																										letter-spacing: -0.2px;
-																										color: #ffffff;
-																										text-align: center;
-																										text-decoration: none;
-																										mso-line-height-rule: exactly;
-																										mso-text-raise: 5px;
-																									"
-																									>Pay for appointment</a
-																								>
-																							</td>
-																						</tr>
-																					</table>
+																						<strong>Head coach:</strong>
+																						{{{coach_name}}}<br />
+																						<strong>Phone:</strong>
+																						<a
+																							href="{{{coach_phone_href}}}"
+																							style="
+																								color: #a81414;
+																								text-decoration: underline;
+																								font-weight: 600;
+																							"
+																							>{{{coach_phone}}}</a
+																						><br />
+																						<strong>Email:</strong>
+																						<a
+																							href="mailto:{{{coach_email}}}"
+																							style="
+																								color: #a81414;
+																								text-decoration: underline;
+																								font-weight: 600;
+																							"
+																							>{{{coach_email}}}</a
+																						>
+																					</p>
 																				</td>
 																			</tr>
 																		</table>
@@ -626,9 +622,9 @@
 																							mso-text-raise: 3px;
 																						"
 																					>
-																						If the button does not work, copy
-																						and paste this link into your
-																						browser:
+																						If you have any questions about
+																						what is owed, the head coach can
+																						help you settle payment.
 																					</p>
 																				</td>
 																			</tr>
@@ -683,14 +679,9 @@
 																							mso-text-raise: 3px;
 																						"
 																					>
-																						<a
-																							href="{{{payment_url}}}"
-																							style="
-																								color: #a81414;
-																								word-break: break-all;
-																							"
-																							>{{{payment_url}}}</a
-																						>
+																						Please call or email
+																						{{{coach_name}}} using the details
+																						above.
 																					</p>
 																				</td>
 																			</tr>

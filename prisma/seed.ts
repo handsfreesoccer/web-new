@@ -1,12 +1,13 @@
+import { PrismaLibSql } from "@prisma/adapter-libsql";
 import { PrismaClient } from "../src/generated/prisma/client.js";
-import { getDatabaseUrl } from "../src/database-url.js";
-import { PrismaBunSqlite } from "prisma-adapter-bun-sqlite";
+import { getTursoAuthToken, getTursoDatabaseUrl } from "../src/database-url.js";
 
-const adapter = new PrismaBunSqlite({
-	url: getDatabaseUrl(),
+const prisma = new PrismaClient({
+	adapter: new PrismaLibSql({
+		url: getTursoDatabaseUrl(),
+		authToken: getTursoAuthToken(),
+	}),
 });
-
-const prisma = new PrismaClient({ adapter });
 
 async function main() {
 	console.log("🌱 Seeding database...");

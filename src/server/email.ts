@@ -193,19 +193,21 @@ export async function sendWelcomeEmail(booking: BookingEmail) {
 	);
 }
 
-export async function sendPaymentEmail(
-	booking: BookingEmail,
-	paymentUrl: string,
-) {
+export async function sendPaymentEmail(booking: BookingEmail) {
+	const coachPhone = process.env.HEAD_COACH_PHONE?.trim() || "(469) 288-2265";
+	const coachEmail = process.env.HEAD_COACH_EMAIL?.trim() || ADMIN_EMAIL;
 	return sendTemplate(
 		"payment-link",
 		booking.email,
 		{
 			first_name: booking.firstName,
-			payment_url: paymentUrl,
+			coach_name: process.env.HEAD_COACH_NAME?.trim() || "the head coach",
+			coach_email: coachEmail,
+			coach_phone: coachPhone,
+			coach_phone_href: `tel:${coachPhone.replaceAll(/[^\d+]/g, "")}`,
 		},
 		{
-			subject: "Your Hands Free Soccer appointment payment link",
+			subject: "Hands Free Soccer — payment for your session",
 		},
 	);
 }
@@ -287,8 +289,8 @@ export function queueAdminMagicLink(email: string, link: string) {
 }
 
 /** Fire-and-forget — does not block the caller. */
-export function queuePaymentEmail(booking: BookingEmail, paymentUrl: string) {
-	void sendPaymentEmail(booking, paymentUrl).catch(logEmailFailure("payment-link"));
+export function queuePaymentEmail(booking: BookingEmail) {
+	void sendPaymentEmail(booking).catch(logEmailFailure("payment-link"));
 }
 
 /** Fire-and-forget — does not block the caller. */
