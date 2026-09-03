@@ -1,10 +1,12 @@
 import { PauseIcon, PlayIcon } from "lucide-react";
 import { useCallback, useState } from "react";
+import { GalleryMasonrySkeleton } from "#/components/gallery/gallery-masonry-skeleton";
 import { useGalleryPlayback } from "#/components/gallery/gallery-playback";
 import {
 	useMediaGallery,
 	ViewInFullscreenButton,
 } from "#/components/gallery/media-gallery-lightbox";
+import { useLazyInView } from "#/hooks/use-lazy-in-view";
 import { ASPECT_CLASS, type GalleryMedia } from "#/lib/gallery";
 import { cn } from "#/lib/utils";
 
@@ -15,13 +17,23 @@ const fullscreenButtonWrapClassName =
 	"absolute top-3 right-3 z-20 opacity-0 transition-opacity duration-200 ease-out pointer-events-none group-hover/media:pointer-events-auto group-hover/media:opacity-100 group-focus-within/media:pointer-events-auto group-focus-within/media:opacity-100";
 
 export function GalleryMasonryItem({ item }: { item: GalleryMedia }) {
-	const aspectClass = ASPECT_CLASS[item.aspect ?? "landscape"];
+	const aspect = item.aspect ?? "landscape";
+	const aspectClass = ASPECT_CLASS[aspect];
+	const { ref, isInView } = useLazyInView();
 
-	if (item.kind === "image") {
-		return <GalleryImageItem item={item} aspectClass={aspectClass} />;
-	}
-
-	return <GalleryVideoItem item={item} aspectClass={aspectClass} />;
+	return (
+		<div ref={ref} className="mb-6 break-inside-avoid">
+			{isInView ? (
+				item.kind === "image" ? (
+					<GalleryImageItem item={item} aspectClass={aspectClass} />
+				) : (
+					<GalleryVideoItem item={item} aspectClass={aspectClass} />
+				)
+			) : (
+				<GalleryMasonrySkeleton aspect={aspect} className="mb-0" />
+			)}
+		</div>
+	);
 }
 
 function GalleryImageItem({
@@ -34,7 +46,7 @@ function GalleryImageItem({
 	const { openAt } = useMediaGallery();
 
 	return (
-		<figure className="group/media relative mb-6 break-inside-avoid">
+		<figure className="group/media relative">
 			<button
 				type="button"
 				onClick={() => openAt(item.id)}
@@ -44,6 +56,8 @@ function GalleryImageItem({
 				<img
 					src={item.src}
 					alt={item.alt}
+					loading="lazy"
+					decoding="async"
 					className={cn(mediaClassName, aspectClass)}
 				/>
 				<span className="pointer-events-none absolute inset-0 rounded-2xl bg-black/20 opacity-0 transition-opacity duration-200 ease-out group-hover/media:opacity-100" />
@@ -76,7 +90,7 @@ function GalleryVideoItem({
 
 	return (
 		<figure
-			className="group/media relative mb-6 break-inside-avoid"
+			className="group/media relative"
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>

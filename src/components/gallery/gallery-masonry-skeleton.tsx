@@ -4,11 +4,13 @@ import { cn } from "#/lib/utils";
 
 export function GalleryMasonrySkeleton({
 	aspect = "landscape",
+	className,
 }: {
 	aspect?: GalleryAspect;
+	className?: string;
 }) {
 	return (
-		<figure className="mb-6 break-inside-avoid" aria-hidden>
+		<figure className={cn("mb-6 break-inside-avoid", className)} aria-hidden>
 			<Skeleton className={cn("w-full", ASPECT_CLASS[aspect])} />
 		</figure>
 	);
