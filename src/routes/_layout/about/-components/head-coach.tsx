@@ -21,9 +21,9 @@ export const HeadCoach: React.FC = () => {
 
 				<div className="grid w-full gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
 					<img
-						src="https://placehold.co/800x600/black/white?text=Coach"
+						src="/images/head-coach.webp"
 						alt="Head coach Omeiza Akerele"
-						className="min-h-80 w-full self-stretch rounded-2xl object-cover outline outline-black/10 dark:outline-white/10"
+						className="max-h-180 min-h-80 w-full self-stretch rounded-2xl object-cover object-top outline outline-black/10 dark:outline-white/10"
 					/>
 					<div className="flex flex-col gap-6">
 						<p className="text-pretty font-medium text-2xl text-foreground capitalize leading-snug sm:text-3xl">

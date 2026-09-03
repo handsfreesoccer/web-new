@@ -31,7 +31,7 @@ export const Classes: React.FC = () => {
 
 				<div className="grid w-full gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
 					<img
-						src="https://placehold.co/800x600/black/white?text=Class"
+						src="https://pub-411c2d71f88d4892b2b25b6093608bac.r2.dev/images/images-8.webp"
 						alt="Kids training in a small group soccer session"
 						className="h-full min-h-64 w-full rounded-2xl object-cover outline outline-black/10 dark:outline-white/10"
 					/>
