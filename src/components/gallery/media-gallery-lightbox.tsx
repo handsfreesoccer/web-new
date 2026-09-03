@@ -15,6 +15,8 @@ import {
 	useMemo,
 	useRef,
 	useState,
+	type KeyboardEvent,
+	type MouseEvent,
 	type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
@@ -24,6 +26,11 @@ import type { GalleryMedia } from "#/lib/gallery";
 import { cn } from "#/lib/utils";
 
 const easeOut = [0.2, 0, 0, 1] as const;
+const CHROME_HIDE_DELAY_MS = 2000;
+
+const chromeTransition = {
+	opacity: { duration: 0.22, ease: easeOut },
+} as const;
 
 type MediaGalleryContextValue = {
 	items: GalleryMedia[];
@@ -54,7 +61,10 @@ export function MediaGalleryProvider({
 }) {
 	const [activeIndex, setActiveIndex] = useState<number | null>(null);
 	const [isMounted, setIsMounted] = useState(false);
+	const [chromeVisible, setChromeVisible] = useState(true);
 	const filmstripItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
+	const chromeHideTimerRef = useRef<number | null>(null);
+	const isVideoPlayingRef = useRef(false);
 	const playback = useOptionalGalleryPlayback();
 	const lenis = useLenis();
 	const isOpen = activeIndex !== null;
@@ -65,41 +75,86 @@ export function MediaGalleryProvider({
 		setIsMounted(true);
 	}, []);
 
+	const clearChromeHideTimer = useCallback(() => {
+		if (chromeHideTimerRef.current !== null) {
+			window.clearTimeout(chromeHideTimerRef.current);
+			chromeHideTimerRef.current = null;
+		}
+	}, []);
+
+	const scheduleChromeHide = useCallback(() => {
+		clearChromeHideTimer();
+		chromeHideTimerRef.current = window.setTimeout(() => {
+			setChromeVisible(false);
+		}, CHROME_HIDE_DELAY_MS);
+	}, [clearChromeHideTimer]);
+
+	const showChrome = useCallback(
+		(rehideWhilePlaying = false) => {
+			setChromeVisible(true);
+			clearChromeHideTimer();
+			if (rehideWhilePlaying) scheduleChromeHide();
+		},
+		[clearChromeHideTimer, scheduleChromeHide],
+	);
+
+	const handleVideoPlaying = useCallback(() => {
+		isVideoPlayingRef.current = true;
+		scheduleChromeHide();
+	}, [scheduleChromeHide]);
+
+	const handleVideoPause = useCallback(() => {
+		isVideoPlayingRef.current = false;
+		clearChromeHideTimer();
+	}, [clearChromeHideTimer]);
+
 	const openAt = useCallback(
 		(id: string) => {
 			const index = items.findIndex((item) => item.id === id);
 			if (index < 0) {
 				return;
 			}
+			clearChromeHideTimer();
+			isVideoPlayingRef.current = false;
+			setChromeVisible(true);
 			playback?.suspend();
 			setActiveIndex(index);
 		},
-		[items, playback],
+		[clearChromeHideTimer, items, playback],
 	);
 
 	const closeGallery = useCallback(() => {
 		const current = activeIndex !== null ? items[activeIndex] : null;
+		clearChromeHideTimer();
+		isVideoPlayingRef.current = false;
+		setChromeVisible(true);
 		setActiveIndex(null);
 		playback?.resume(current?.kind === "video" ? current.id : undefined);
-	}, [activeIndex, items, playback]);
+	}, [activeIndex, clearChromeHideTimer, items, playback]);
 
 	const showPrevious = useCallback(() => {
+		clearChromeHideTimer();
+		isVideoPlayingRef.current = false;
+		setChromeVisible(true);
 		setActiveIndex((currentIndex) => {
 			if (currentIndex === null || items.length === 0) {
 				return currentIndex;
 			}
 			return (currentIndex - 1 + items.length) % items.length;
 		});
-	}, [items.length]);
+	}, [clearChromeHideTimer, items.length]);
 
 	const showNext = useCallback(() => {
+		clearChromeHideTimer();
+		isVideoPlayingRef.current = false;
+		setChromeVisible(true);
 		setActiveIndex((currentIndex) => {
 			if (currentIndex === null || items.length === 0) {
 				return currentIndex;
 			}
 			return (currentIndex + 1) % items.length;
 		});
-	}, [items.length]);
+	}, [clearChromeHideTimer, items.length]);
 
 	useEffect(() => {
 		if (!isOpen) {
@@ -138,6 +193,30 @@ export function MediaGalleryProvider({
 	}, [closeGallery, isOpen, showNext, showPrevious]);
 
 	useEffect(() => {
+		if (!isOpen) {
+			return;
+		}
+
+		const handleMouseMove = () => {
+			setChromeVisible(true);
+			if (isVideoPlayingRef.current) {
+				scheduleChromeHide();
+			} else {
+				clearChromeHideTimer();
+			}
+		};
+
+		window.addEventListener("mousemove", handleMouseMove);
+		return () => window.removeEventListener("mousemove", handleMouseMove);
+	}, [clearChromeHideTimer, isOpen, scheduleChromeHide]);
+
+	useEffect(() => {
+		return () => {
+			clearChromeHideTimer();
+		};
+	}, [clearChromeHideTimer]);
+
+	useEffect(() => {
 		if (activeIndex === null || items.length <= 1) {
 			return;
 		}
@@ -167,7 +246,7 @@ export function MediaGalleryProvider({
 						role="dialog"
 						aria-modal="true"
 						aria-label={dialogLabel}
-						className="fixed inset-0 z-100"
+						className="fixed inset-0 z-100 flex flex-col gap-4 bg-black/80 p-5 sm:gap-5"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
@@ -176,115 +255,159 @@ export function MediaGalleryProvider({
 						<button
 							type="button"
 							aria-label="Close gallery"
-							className="absolute inset-0 z-0 bg-black/80"
+							className="absolute inset-0 -z-10"
 							onClick={closeGallery}
 						/>
 
-						<div
-							className="pointer-events-none fixed z-10 flex min-h-0 items-center justify-center px-4 py-8 sm:px-16 sm:py-20"
-							style={{ inset: 0, bottom: items.length > 1 ? 96 : 32 }}
+						<motion.div
+							className={cn(
+								"relative z-10 flex shrink-0 items-center justify-between",
+								!chromeVisible && "pointer-events-none",
+							)}
+							initial={false}
+							animate={{ opacity: chromeVisible ? 1 : 0 }}
+							transition={chromeTransition}
+							aria-hidden={!chromeVisible}
 						>
-							<LightboxMedia item={activeItem} />
-						</div>
+							<p className="font-semibold text-white tabular-nums">
+								{activeIndex + 1}/{items.length}
+							</p>
+							<Button
+								type="button"
+								size="icon-lg"
+								className="size-11 rounded-full bg-primary text-white transition-transform duration-200 ease-out hover:bg-primary/90 active:scale-[0.96]"
+								aria-label="Close gallery"
+								onClick={closeGallery}
+								tabIndex={chromeVisible ? 0 : -1}
+							>
+								<XIcon className="size-5" />
+							</Button>
+						</motion.div>
 
-						<div className="pointer-events-none fixed inset-0 z-20 flex flex-col justify-between gap-4 px-5 pt-5">
-							<div className="flex items-center justify-between">
-								<p className="pointer-events-auto font-semibold text-white tabular-nums">
-									{activeIndex + 1}/{items.length}
-								</p>
-								<Button
-									type="button"
-									size="icon-lg"
-									className="pointer-events-auto size-11 rounded-full bg-primary text-white transition-transform duration-200 ease-out hover:bg-primary/90 active:scale-[0.96]"
-									aria-label="Close gallery"
-									onClick={closeGallery}
-								>
-									<XIcon className="size-5" />
-								</Button>
-							</div>
-
+						<div className="relative z-10 flex min-h-0 flex-1 items-center gap-3 sm:gap-4">
 							{items.length > 1 ? (
-								<div className="pointer-events-none flex flex-1 items-center justify-between">
+								<motion.div
+									className={cn(!chromeVisible && "pointer-events-none")}
+									initial={false}
+									animate={{ opacity: chromeVisible ? 1 : 0 }}
+									transition={chromeTransition}
+									aria-hidden={!chromeVisible}
+								>
 									<Button
 										type="button"
 										size="icon-lg"
-										className="pointer-events-auto size-11 rounded-full bg-primary text-white transition-transform duration-200 ease-out hover:bg-primary/90 active:scale-[0.96]"
+										className="size-11 shrink-0 rounded-full bg-primary text-white transition-transform duration-200 ease-out hover:bg-primary/90 active:scale-[0.96]"
 										aria-label="Show previous"
 										onClick={showPrevious}
+										tabIndex={chromeVisible ? 0 : -1}
 									>
 										<ChevronLeftIcon className="size-5" />
 									</Button>
+								</motion.div>
+							) : null}
+
+							<div className="flex min-h-0 flex-1 items-center justify-center">
+								<LightboxMedia
+									item={activeItem}
+									onMediaClick={showChrome}
+									onVideoPlaying={handleVideoPlaying}
+									onVideoPause={handleVideoPause}
+								/>
+							</div>
+
+							{items.length > 1 ? (
+								<motion.div
+									className={cn(!chromeVisible && "pointer-events-none")}
+									initial={false}
+									animate={{ opacity: chromeVisible ? 1 : 0 }}
+									transition={chromeTransition}
+									aria-hidden={!chromeVisible}
+								>
 									<Button
 										type="button"
 										size="icon-lg"
-										className="pointer-events-auto size-11 rounded-full bg-primary text-white transition-transform duration-200 ease-out hover:bg-primary/90 active:scale-[0.96]"
+										className="size-11 shrink-0 rounded-full bg-primary text-white transition-transform duration-200 ease-out hover:bg-primary/90 active:scale-[0.96]"
 										aria-label="Show next"
 										onClick={showNext}
+										tabIndex={chromeVisible ? 0 : -1}
 									>
 										<ChevronRightIcon className="size-5" />
 									</Button>
-								</div>
-							) : (
-								<div className="flex-1" />
-							)}
+								</motion.div>
+							) : null}
+						</div>
 
-							{items.length > 1 ? (
-								<div className="pointer-events-auto w-full border-white/10 border-t bg-black/25 pt-2 pb-2 backdrop-blur-sm">
-									<div className="scrollbar-none w-full overflow-x-auto">
-										<ul
-											aria-label="Gallery thumbnails"
-											className="mx-auto flex w-max min-w-full items-center justify-center gap-2 px-1"
-										>
-											{items.map((item, index) => (
-												<li key={item.id} className="shrink-0">
-													<button
-														type="button"
-														ref={(element) => {
-															filmstripItemRefs.current[index] = element;
-														}}
-														onClick={() => setActiveIndex(index)}
-														className={cn(
-															"relative block cursor-pointer overflow-hidden rounded-md outline outline-white/10 transition-opacity duration-200 ease-out focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black/60",
-															index === activeIndex
-																? "opacity-100"
-																: "opacity-55 hover:opacity-100",
-														)}
-														aria-label={`View ${item.alt}`}
-														aria-current={
-															index === activeIndex ? "true" : undefined
-														}
-													>
-														{item.kind === "video" ? (
-															<>
-																<video
-																	src={item.src}
-																	poster={item.poster}
-																	muted
-																	playsInline
-																	preload="metadata"
-																	aria-hidden
-																	className="h-12 w-16 object-cover sm:h-14 sm:w-18"
-																/>
-																<span className="absolute inset-0 grid place-content-center bg-black/25">
-																	<PlayIcon className="size-3 translate-x-px text-white" />
-																</span>
-															</>
-														) : (
-															<img
+						{items.length > 1 ? (
+							<motion.div
+								className={cn(
+									"relative z-10 shrink-0 border-white/10 border-t bg-black/25 pt-2 pb-2 backdrop-blur-sm",
+									!chromeVisible && "pointer-events-none",
+								)}
+								initial={false}
+								animate={{ opacity: chromeVisible ? 1 : 0 }}
+								transition={chromeTransition}
+								aria-hidden={!chromeVisible}
+							>
+								<div className="scrollbar-none w-full overflow-x-auto">
+									<ul
+										aria-label="Gallery thumbnails"
+										className="mx-auto flex w-max min-w-full items-center justify-center gap-2 px-1"
+									>
+										{items.map((item, index) => (
+											<li key={item.id} className="shrink-0">
+												<button
+													type="button"
+													ref={(element) => {
+														filmstripItemRefs.current[index] = element;
+													}}
+													onClick={() => {
+														clearChromeHideTimer();
+														isVideoPlayingRef.current = false;
+														setChromeVisible(true);
+														setActiveIndex(index);
+													}}
+													className={cn(
+														"relative block cursor-pointer overflow-hidden rounded-md outline outline-white/10 transition-opacity duration-200 ease-out focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black/60",
+														index === activeIndex
+															? "opacity-100"
+															: "opacity-55 hover:opacity-100",
+													)}
+													aria-label={`View ${item.alt}`}
+													aria-current={
+														index === activeIndex ? "true" : undefined
+													}
+													tabIndex={chromeVisible ? 0 : -1}
+												>
+													{item.kind === "video" ? (
+														<>
+															<video
 																src={item.src}
-																alt=""
+																poster={item.poster}
+																muted
+																playsInline
+																preload="metadata"
 																aria-hidden
 																className="h-12 w-16 object-cover sm:h-14 sm:w-18"
 															/>
-														)}
-													</button>
-												</li>
-											))}
-										</ul>
-									</div>
+															<span className="absolute inset-0 grid place-content-center bg-black/25">
+																<PlayIcon className="size-3 translate-x-px text-white" />
+															</span>
+														</>
+													) : (
+														<img
+															src={item.src}
+															alt=""
+															aria-hidden
+															className="h-12 w-16 object-cover sm:h-14 sm:w-18"
+														/>
+													)}
+												</button>
+											</li>
+										))}
+									</ul>
 								</div>
-							) : null}
-						</div>
+							</motion.div>
+						) : null}
 					</motion.div>
 				) : null}
 			</AnimatePresence>,
@@ -344,7 +467,38 @@ export function ViewInFullscreenButton({
 	);
 }
 
-function LightboxMedia({ item }: { item: GalleryMedia }) {
+function LightboxMedia({
+	item,
+	onMediaClick,
+	onVideoPlaying,
+	onVideoPause,
+}: {
+	item: GalleryMedia;
+	onMediaClick: (rehideWhilePlaying: boolean) => void;
+	onVideoPlaying: () => void;
+	onVideoPause: () => void;
+}) {
+	const videoRef = useRef<HTMLVideoElement>(null);
+
+	const handleMediaClick = (event: MouseEvent<HTMLElement>) => {
+		event.stopPropagation();
+		const isPlaying =
+			item.kind === "video" &&
+			videoRef.current !== null &&
+			!videoRef.current.paused;
+		onMediaClick(isPlaying);
+	};
+
+	const handleMediaKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+		if (event.key !== "Enter" && event.key !== " ") return;
+		event.preventDefault();
+		const isPlaying =
+			item.kind === "video" &&
+			videoRef.current !== null &&
+			!videoRef.current.paused;
+		onMediaClick(isPlaying);
+	};
+
 	return (
 		<motion.div
 			key={item.id}
@@ -352,11 +506,16 @@ function LightboxMedia({ item }: { item: GalleryMedia }) {
 			animate={{ opacity: 1, scale: 1 }}
 			exit={{ opacity: 0, y: 8 }}
 			transition={{ duration: 0.28, ease: easeOut }}
-			className="pointer-events-auto max-h-full max-w-full"
-			onClick={(event) => event.stopPropagation()}
+			className="flex h-full min-h-0 w-full cursor-pointer items-center justify-center"
+			role="button"
+			tabIndex={0}
+			aria-label={`Show gallery controls for ${item.alt}`}
+			onClick={handleMediaClick}
+			onKeyDown={handleMediaKeyDown}
 		>
 			{item.kind === "video" ? (
 				<video
+					ref={videoRef}
 					key={item.src}
 					src={item.src}
 					poster={item.poster}
@@ -366,13 +525,15 @@ function LightboxMedia({ item }: { item: GalleryMedia }) {
 					controls
 					preload="auto"
 					aria-label={item.alt}
-					className="max-h-full max-w-full rounded-3xl object-contain outline outline-white/10"
+					onPlaying={onVideoPlaying}
+					onPause={onVideoPause}
+					className="max-h-full max-w-full rounded-2xl object-contain ring-1 ring-white/10"
 				/>
 			) : (
 				<img
 					src={item.src}
 					alt={item.alt}
-					className="max-h-full max-w-full rounded-3xl object-contain outline outline-white/10"
+					className="max-h-full max-w-full rounded-2xl object-contain ring-1 ring-white/10"
 				/>
 			)}
 		</motion.div>

@@ -1,11 +1,10 @@
 import type { GalleryMedia } from "#/lib/gallery";
-import { GALLERY_ITEMS } from "#/lib/gallery";
 
 export const FEATURED_VIDEO_COUNT = 4;
 export const FEATURED_IMAGE_COUNT = 3;
 
 export const resolveGalleryItems = (items: GalleryMedia[] | undefined) =>
-	items?.length ? items : GALLERY_ITEMS;
+	items ?? [];
 
 const byMediaNumber = (a: GalleryMedia, b: GalleryMedia) => {
 	const aNumber = Number.parseInt(a.id.split("-")[1] ?? "0", 10);

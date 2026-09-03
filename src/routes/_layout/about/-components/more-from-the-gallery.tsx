@@ -1,15 +1,17 @@
 import type React from "react";
 import { GalleryPlaybackBoundary } from "#/components/gallery/gallery-playback";
 import { GalleryMasonryItem } from "#/components/gallery/gallery-masonry-item";
+import { GalleryMasonrySkeleton } from "#/components/gallery/gallery-masonry-skeleton";
 import { MediaGalleryBoundary } from "#/components/gallery/media-gallery-lightbox";
 import { useGalleryMedia } from "#/hooks/use-media";
 import { GALLERY_MORE_SECTION_ID } from "#/lib/constants";
+import { MORE_GALLERY_SKELETONS } from "#/lib/gallery";
 import { resolveGalleryItems, splitGalleryItems } from "#/lib/gallery-utils";
 import { useHashScroll } from "#/lib/use-hash-scroll";
 
 export const MoreFromTheGallery: React.FC = () => {
 	useHashScroll(GALLERY_MORE_SECTION_ID);
-	const { data: galleryItems } = useGalleryMedia();
+	const { data: galleryItems, isPending } = useGalleryMedia();
 	const { more } = splitGalleryItems(resolveGalleryItems(galleryItems));
 
 	return (
@@ -40,9 +42,16 @@ export const MoreFromTheGallery: React.FC = () => {
 								</div>
 							</div>
 						</header>
-						{more.map((item) => (
-							<GalleryMasonryItem key={item.id} item={item} />
-						))}
+						{isPending
+							? MORE_GALLERY_SKELETONS.map((skeleton) => (
+									<GalleryMasonrySkeleton
+										key={skeleton.id}
+										aspect={skeleton.aspect}
+									/>
+								))
+							: more.map((item) => (
+									<GalleryMasonryItem key={item.id} item={item} />
+								))}
 					</div>
 				</div>
 			</section>

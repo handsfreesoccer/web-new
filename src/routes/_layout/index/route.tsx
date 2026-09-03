@@ -3,7 +3,6 @@ import { pageTitle } from "#/lib/site-meta";
 import { LifeAtHFS } from "../about/-components/life-at-hfs";
 import { BookYourFirstSession } from "./-components/book-your-first-session";
 import { HeroSection } from "./-components/hero-section";
-import { IntroVideo } from "./-components/intro-video";
 import { OurStory } from "./-components/our-story";
 import { TakeFirstStep } from "./-components/take-first-step";
 import { WhyWithUs } from "./-components/why-with-us";
@@ -20,7 +19,7 @@ function Home() {
 		<div className="flex-1">
 			<HeroSection />
 			<WhyWithUs />
-			<IntroVideo />
+			{/* <IntroVideo /> */}
 			<OurStory />
 			<LifeAtHFS />
 			<BookYourFirstSession />

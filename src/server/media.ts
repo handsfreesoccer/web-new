@@ -1,6 +1,5 @@
 import {
 	ASPECT_CLASS,
-	GALLERY_ITEMS,
 	type GalleryAspect,
 	type GalleryMedia,
 } from "#/lib/gallery";
@@ -8,18 +7,25 @@ import { getR2Config, getR2PublicUrl, R2_IMAGES_PREFIX, R2_VIDEOS_PREFIX } from 
 import { listR2Objects, type R2ObjectSummary } from "#/server/r2";
 
 const ASPECTS = Object.keys(ASPECT_CLASS) as GalleryAspect[];
-const MEDIA_FILENAME = /^(image|video)-(\d+)\.[a-z0-9]+$/i;
+const IMAGE_FILENAME = /^(?:image|images)-(\d+)\.[a-z0-9]+$/i;
+const VIDEO_FILENAME = /^video-(\d+)\.[a-z0-9]+$/i;
 
 const normalizePrefix = (prefix: string) =>
 	prefix.endsWith("/") ? prefix : `${prefix}/`;
 
-const parseMediaFilename = (filename: string) => {
-	const match = filename.match(MEDIA_FILENAME);
-	if (!match?.[1] || !match[2]) return null;
+const parseMediaFilename = (
+	filename: string,
+	kind: GalleryMedia["kind"],
+) => {
+	const match =
+		kind === "image"
+			? filename.match(IMAGE_FILENAME)
+			: filename.match(VIDEO_FILENAME);
+	if (!match?.[1]) return null;
 
 	return {
-		id: `${match[1].toLowerCase()}-${match[2]}`,
-		number: Number.parseInt(match[2], 10),
+		id: `${kind}-${match[1]}`,
+		number: Number.parseInt(match[1], 10),
 	};
 };
 
@@ -37,7 +43,7 @@ const toGalleryMedia = (
 	const relative = object.Key.slice(prefix.length).replace(/^\/+/, "");
 	if (relative.includes("/")) return null;
 
-	const parsed = parseMediaFilename(relative);
+	const parsed = parseMediaFilename(relative, kind);
 	if (!parsed) return null;
 
 	const src = getR2PublicUrl(object.Key);
@@ -81,7 +87,7 @@ const sortGalleryMedia = (items: GalleryMedia[]) =>
 
 export async function listGalleryMedia(): Promise<GalleryMedia[]> {
 	const config = getR2Config();
-	if (!config) return GALLERY_ITEMS;
+	if (!config) return [];
 
 	const images = await listFolderMedia(R2_IMAGES_PREFIX, "image", 0);
 	const videos = await listFolderMedia(
@@ -90,8 +96,7 @@ export async function listGalleryMedia(): Promise<GalleryMedia[]> {
 		images.length,
 	);
 
-	const media = sortGalleryMedia([...images, ...videos]);
-	return media.length ? media : GALLERY_ITEMS;
+	return sortGalleryMedia([...images, ...videos]);
 }
 
 export type SiteAssetMap = Record<string, string>;

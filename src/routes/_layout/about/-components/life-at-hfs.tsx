@@ -2,15 +2,17 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRightIcon } from "lucide-react";
 import type React from "react";
 import { GalleryMasonryItem } from "#/components/gallery/gallery-masonry-item";
+import { GalleryMasonrySkeleton } from "#/components/gallery/gallery-masonry-skeleton";
 import { GalleryPlaybackBoundary } from "#/components/gallery/gallery-playback";
 import { MediaGalleryBoundary } from "#/components/gallery/media-gallery-lightbox";
 import { Button } from "#/components/ui/button";
 import { useGalleryMedia } from "#/hooks/use-media";
 import { GALLERY_MORE_SECTION_ID } from "#/lib/constants";
+import { FEATURED_GALLERY_SKELETONS } from "#/lib/gallery";
 import { resolveGalleryItems, splitGalleryItems } from "#/lib/gallery-utils";
 
 export const LifeAtHFS: React.FC = () => {
-	const { data: galleryItems } = useGalleryMedia();
+	const { data: galleryItems, isPending } = useGalleryMedia();
 	const { featured } = splitGalleryItems(resolveGalleryItems(galleryItems));
 
 	return (
@@ -39,9 +41,16 @@ export const LifeAtHFS: React.FC = () => {
 									</div>
 								</div>
 							</header>
-							{featured.map((item) => (
-								<GalleryMasonryItem key={item.id} item={item} />
-							))}
+							{isPending
+								? FEATURED_GALLERY_SKELETONS.map((skeleton) => (
+										<GalleryMasonrySkeleton
+											key={skeleton.id}
+											aspect={skeleton.aspect}
+										/>
+									))
+								: featured.map((item) => (
+										<GalleryMasonryItem key={item.id} item={item} />
+									))}
 						</div>
 						<Button
 							nativeButton={false}

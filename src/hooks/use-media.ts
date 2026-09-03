@@ -4,14 +4,12 @@ import {
 	fetchSiteAssets,
 	mediaQueryKeys,
 } from "#/lib/media-api";
-import { GALLERY_ITEMS } from "#/lib/gallery";
 
 export function useGalleryMedia() {
 	return useQuery({
 		queryKey: mediaQueryKeys.gallery,
 		queryFn: fetchGalleryMedia,
 		staleTime: 5 * 60 * 1000,
-		placeholderData: GALLERY_ITEMS,
 	});
 }
 

@@ -1,9 +1,8 @@
 /**
  * Gallery media conventions:
  *   images/image-1.webp
- *   images/image-2.webp
- *   videos/video-1.mp4
- *   videos/video-2.webm
+ *   images/images-5.webp  (legacy plural prefix)
+ *   videos/video-1.webm
  *
  * Page assets (optional, listed by prefix):
  *   home/hero.webp
