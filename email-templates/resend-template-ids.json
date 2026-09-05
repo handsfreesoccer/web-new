@@ -54,6 +54,19 @@
     ]
   },
   {
+    "name": "contact-inquiry-notification",
+    "id": "e0272658-d8f0-4179-8eeb-e33e56c356ce",
+    "alias": "contact-inquiry-notification",
+    "published": true,
+    "variables": [
+      "email",
+      "full_name",
+      "message",
+      "subject",
+      "year"
+    ]
+  },
+  {
     "name": "admin-sign-in",
     "id": "26ed7d68-0857-4401-b437-5a96314752ff",
     "alias": "admin-sign-in",

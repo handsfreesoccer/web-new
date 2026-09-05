@@ -5,6 +5,7 @@ export type ResendTemplateName =
 	| "payment-link"
 	| "appointment-reminder"
 	| "contact-inquiry-received"
+	| "contact-inquiry-notification"
 	| "admin-sign-in";
 
 type TemplateRecord = {

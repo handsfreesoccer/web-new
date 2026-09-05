@@ -19,6 +19,11 @@ const templates = [
 		"contact-inquiry-received.html",
 		"We received your Hands Free Soccer inquiry",
 	],
+	[
+		"contact-inquiry-notification",
+		"contact-inquiry-notification.html",
+		"New Hands Free Soccer inquiry from {{{full_name}}}",
+	],
 	["admin-sign-in", "admin-sign-in.html", "Your Hands Free Soccer admin sign-in link"],
 ] as const;
 

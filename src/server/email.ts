@@ -282,17 +282,41 @@ export async function sendAdminMagicLink(email: string, link: string) {
 	);
 }
 
+const INQUIRY_SUBJECT_LABELS: Record<ContactInput["subject"], string> = {
+	classes: "Classes",
+	schedules: "Schedules",
+	enrollment: "Enrollment",
+	private: "Private Coaching",
+	other: "Other",
+};
+
+const contactInquiryVariables = (inquiry: ContactInput) => ({
+	full_name: inquiry.fullName,
+	subject: INQUIRY_SUBJECT_LABELS[inquiry.subject] ?? inquiry.subject,
+	message: inquiry.message,
+});
+
 export async function sendContactConfirmation(inquiry: ContactInput) {
 	return sendTemplate(
 		"contact-inquiry-received",
 		inquiry.email,
-		{
-			full_name: inquiry.fullName,
-			subject: inquiry.subject,
-			message: inquiry.message,
-		},
+		contactInquiryVariables(inquiry),
 		{
 			subject: "We received your Hands Free Soccer inquiry",
+		},
+	);
+}
+
+export async function sendContactInquiryNotification(inquiry: ContactInput) {
+	return sendTemplate(
+		"contact-inquiry-notification",
+		ADMIN_EMAIL,
+		{
+			...contactInquiryVariables(inquiry),
+			email: inquiry.email,
+		},
+		{
+			subject: `New Hands Free Soccer inquiry from ${inquiry.fullName}`,
 		},
 	);
 }
@@ -306,6 +330,9 @@ export function queueWelcomeEmail(booking: BookingEmail) {
 export function queueContactConfirmation(inquiry: ContactInput) {
 	void sendContactConfirmation(inquiry).catch(
 		logEmailFailure("contact-inquiry-received"),
+	);
+	void sendContactInquiryNotification(inquiry).catch(
+		logEmailFailure("contact-inquiry-notification"),
 	);
 }
 
