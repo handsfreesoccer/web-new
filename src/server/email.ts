@@ -5,44 +5,46 @@ import { createCalendarInvite } from "#/server/calendar";
 import {
 	currentYear,
 	getResendTemplateId,
+	getResendTemplateVariables,
 	type ResendTemplateName,
 } from "#/server/resend-templates";
 
-const resend = process.env.RESEND_API_KEY
-	? new Resend(process.env.RESEND_API_KEY)
-	: null;
+const getResend = () => {
+	const apiKey = process.env.RESEND_API_KEY?.trim();
+	return apiKey ? new Resend(apiKey) : null;
+};
 
 const resolveEmailFrom = () =>
 	process.env.RESEND_FROM?.trim() ||
 	process.env.EMAIL_FROM?.trim() ||
 	"Hands Free Soccer <onboarding@resend.dev>";
 
-const from = resolveEmailFrom();
-const appUrl = (process.env.APP_URL ?? "http://localhost:5173").replace(
-	/\/$/,
-	"",
-);
-
-const isSandboxMode = () => from.includes("@resend.dev");
+const isSandboxMode = (from: string) => from.includes("@resend.dev");
 
 const sandboxRecipient = () =>
 	process.env.RESEND_SANDBOX_TO?.trim() || ADMIN_EMAIL;
 
-const resolveRecipients = (to: string | string[]) => {
-	if (!isSandboxMode()) return to;
+const resolveRecipients = (from: string, to: string | string[]) => {
+	if (!isSandboxMode(from)) return to;
 
 	const intended = Array.isArray(to) ? to.join(", ") : to;
 	const redirected = sandboxRecipient();
 
 	if (intended.toLowerCase() !== redirected.toLowerCase()) {
-		console.info(`[email] Resend sandbox redirect: ${intended} → ${redirected}`);
+		console.info(
+			`[email] Resend sandbox redirect: ${intended} → ${redirected}`,
+		);
 	}
 
 	return redirected;
 };
 
-const sandboxSubject = (to: string | string[], subject?: string) => {
-	if (!isSandboxMode() || !subject) return subject;
+const sandboxSubject = (
+	from: string,
+	to: string | string[],
+	subject?: string,
+) => {
+	if (!isSandboxMode(from) || !subject) return subject;
 	const intended = Array.isArray(to) ? to.join(", ") : to;
 	return `[Sandbox · intended: ${intended}] ${subject}`;
 };
@@ -103,9 +105,10 @@ const formatAppointmentVariables = (booking: {
 		"en-US",
 		timeFormat,
 	).format(booking.appointmentStartUtc);
-	const appointmentEndTime = new Intl.DateTimeFormat("en-US", timeFormat).format(
-		end,
-	);
+	const appointmentEndTime = new Intl.DateTimeFormat(
+		"en-US",
+		timeFormat,
+	).format(end);
 
 	return {
 		appointment_date: new Intl.DateTimeFormat("en-US", dateFormat).format(
@@ -152,41 +155,75 @@ const logEmailFailure = (label: string) => (error: unknown) => {
 	);
 };
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const isRetryableEmailError = (error: unknown) => {
+	const message = error instanceof Error ? error.message : String(error);
+	return /timeout|timed out|network|econnreset|enotfound|429|500|502|503|504|rate limit|unable to process/i.test(
+		message,
+	);
+};
+
+const allowedTemplateVariables = (
+	template: ResendTemplateName,
+	variables: TemplateVariables,
+) => {
+	const allowed = new Set(getResendTemplateVariables(template));
+	return Object.fromEntries(
+		Object.entries({ year: currentYear(), ...variables }).filter(([key]) =>
+			allowed.has(key),
+		),
+	);
+};
+
 async function sendTemplate(
 	template: ResendTemplateName,
 	to: string | string[],
 	variables: TemplateVariables,
 	options?: {
 		subject?: string;
+		replyTo?: string;
 		attachments?: NonNullable<
 			Parameters<Resend["emails"]["send"]>[0]["attachments"]
 		>;
 	},
 ) {
+	const resend = getResend();
 	if (!resend) {
 		console.info(`[email] Skipped (${template}) — RESEND_API_KEY is not set`);
 		return { id: "local-preview" };
 	}
 
+	const from = resolveEmailFrom();
 	const payload = {
 		from,
-		to: resolveRecipients(to),
-		subject: sandboxSubject(to, options?.subject),
+		to: resolveRecipients(from, to),
+		subject: sandboxSubject(from, to, options?.subject),
+		...(options?.replyTo ? { replyTo: options.replyTo } : {}),
 		template: {
 			id: getResendTemplateId(template),
-			variables: {
-				app_url: appUrl,
-				year: currentYear(),
-				...variables,
-			},
+			variables: allowedTemplateVariables(template, variables),
 		},
 		attachments: options?.attachments,
 	} satisfies Parameters<Resend["emails"]["send"]>[0];
 
-	const result = await resend.emails.send(payload);
-	if (result.error) throw new Error(result.error.message);
-	console.info(`[email] Sent ${template} → ${payload.to}`);
-	return result.data;
+	let lastError: unknown;
+	for (let attempt = 1; attempt <= 3; attempt++) {
+		try {
+			const result = await resend.emails.send(payload);
+			if (result.error) throw new Error(result.error.message);
+			console.info(`[email] Sent ${template} → ${payload.to}`);
+			return result.data;
+		} catch (error) {
+			lastError = error;
+			if (attempt === 3 || !isRetryableEmailError(error)) break;
+			await sleep(400 * 2 ** (attempt - 1));
+		}
+	}
+
+	throw lastError instanceof Error
+		? lastError
+		: new Error(String(lastError ?? `Failed to send ${template}`));
 }
 
 export async function sendWelcomeEmail(booking: BookingEmail) {
@@ -317,36 +354,62 @@ export async function sendContactInquiryNotification(inquiry: ContactInput) {
 		},
 		{
 			subject: `New Hands Free Soccer inquiry from ${inquiry.fullName}`,
+			replyTo: inquiry.email,
 		},
 	);
 }
 
-/** Fire-and-forget — does not block the caller. */
-export function queueWelcomeEmail(booking: BookingEmail) {
-	void sendWelcomeEmail(booking).catch(logEmailFailure("booking-welcome"));
+export async function queueWelcomeEmail(booking: BookingEmail) {
+	try {
+		await sendWelcomeEmail(booking);
+	} catch (error) {
+		logEmailFailure("booking-welcome")(error);
+		throw error;
+	}
 }
 
-/** Fire-and-forget — does not block the caller. */
-export function queueContactConfirmation(inquiry: ContactInput) {
-	void sendContactConfirmation(inquiry).catch(
-		logEmailFailure("contact-inquiry-received"),
-	);
-	void sendContactInquiryNotification(inquiry).catch(
-		logEmailFailure("contact-inquiry-notification"),
-	);
+export async function queueContactConfirmation(inquiry: ContactInput) {
+	const results = await Promise.allSettled([
+		sendContactConfirmation(inquiry),
+		sendContactInquiryNotification(inquiry),
+	]);
+	const failures = results.filter((result) => result.status === "rejected");
+	if (results[0]?.status === "rejected") {
+		logEmailFailure("contact-inquiry-received")(results[0].reason);
+	}
+	if (results[1]?.status === "rejected") {
+		logEmailFailure("contact-inquiry-notification")(results[1].reason);
+	}
+	if (failures.length === results.length) {
+		throw failures[0]?.status === "rejected"
+			? failures[0].reason
+			: new Error("Contact inquiry emails failed");
+	}
 }
 
-/** Fire-and-forget — does not block the caller. */
-export function queueAdminMagicLink(email: string, link: string) {
-	void sendAdminMagicLink(email, link).catch(logEmailFailure("admin-sign-in"));
+export async function queueAdminMagicLink(email: string, link: string) {
+	try {
+		await sendAdminMagicLink(email, link);
+	} catch (error) {
+		logEmailFailure("admin-sign-in")(error);
+		throw error;
+	}
 }
 
-/** Fire-and-forget — does not block the caller. */
-export function queuePaymentEmail(booking: BookingEmail) {
-	void sendPaymentEmail(booking).catch(logEmailFailure("payment-link"));
+export async function queuePaymentEmail(booking: BookingEmail) {
+	try {
+		await sendPaymentEmail(booking);
+	} catch (error) {
+		logEmailFailure("payment-link")(error);
+		throw error;
+	}
 }
 
-/** Fire-and-forget — does not block the caller. */
-export function queueReminderEmail(booking: BookingReminderEmail) {
-	void sendReminderEmail(booking).catch(logEmailFailure("appointment-reminder"));
+export async function queueReminderEmail(booking: BookingReminderEmail) {
+	try {
+		await sendReminderEmail(booking);
+	} catch (error) {
+		logEmailFailure("appointment-reminder")(error);
+		throw error;
+	}
 }

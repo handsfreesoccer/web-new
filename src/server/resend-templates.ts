@@ -32,4 +32,8 @@ export function getResendTemplateId(name: ResendTemplateName) {
 	return id;
 }
 
+export function getResendTemplateVariables(name: ResendTemplateName) {
+	return templates.find((template) => template.name === name)?.variables ?? [];
+}
+
 export const currentYear = () => new Date().getFullYear();

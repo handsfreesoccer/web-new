@@ -1,6 +1,6 @@
 import { getPrisma } from "#/db";
-import { bookingSchema } from "#/lib/booking-schema";
 import { isAppointmentWithinAvailability } from "#/lib/booking-availability-schema";
+import { bookingSchema } from "#/lib/booking-schema";
 import { getBookingAvailability } from "#/server/booking-availability";
 import { scheduleBookingCronJobs } from "#/server/cron";
 import { sendWelcomeEmail } from "#/server/email";
@@ -31,25 +31,28 @@ export async function createBooking(input: unknown) {
 
 	await scheduleBookingCronJobs(booking);
 
-	void sendWelcomeEmail(booking)
-		.then(async () => {
-			const db = await getPrisma();
-			await db.booking.update({
-				where: { id: booking.id },
-				data: { welcomeSentAt: new Date() },
-			});
-		})
-		.catch(async (error) => {
-			const db = await getPrisma();
-			await db.emailLog.create({
-				data: {
-					bookingId: booking.id,
-					type: "welcome",
-					status: "failed",
-					error: error instanceof Error ? error.message : String(error),
-				},
-			});
+	try {
+		await sendWelcomeEmail(booking);
+		const db = await getPrisma();
+		await db.booking.update({
+			where: { id: booking.id },
+			data: { welcomeSentAt: new Date() },
 		});
+	} catch (error) {
+		const db = await getPrisma();
+		await db.emailLog.create({
+			data: {
+				bookingId: booking.id,
+				type: "welcome",
+				status: "failed",
+				error: error instanceof Error ? error.message : String(error),
+			},
+		});
+		console.error(
+			"[booking] welcome email failed",
+			error instanceof Error ? error.message : error,
+		);
+	}
 
 	return { id: booking.id };
 }

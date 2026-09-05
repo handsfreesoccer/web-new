@@ -18,7 +18,14 @@ export const Route = createFileRoute("/api/admin/auth/request-link")({
 						StatusCodes.FORBIDDEN,
 					);
 				const magicLink = await issueAdminMagicLink();
-				queueAdminMagicLink(ADMIN_EMAIL, magicLink.link);
+				try {
+					await queueAdminMagicLink(ADMIN_EMAIL, magicLink.link);
+				} catch {
+					return failure(
+						"We could not send the sign-in email right now.",
+						StatusCodes.BAD_GATEWAY,
+					);
+				}
 				return success(
 					{
 						...(process.env.NODE_ENV === "development"

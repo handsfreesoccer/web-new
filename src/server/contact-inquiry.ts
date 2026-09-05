@@ -1,5 +1,5 @@
-import type { ContactInput } from "#/lib/contact-schema";
 import { getPrisma } from "#/db";
+import type { ContactInput } from "#/lib/contact-schema";
 import { queueContactConfirmation } from "#/server/email";
 
 export async function createContactInquiry(inquiry: ContactInput) {
@@ -12,6 +12,13 @@ export async function createContactInquiry(inquiry: ContactInput) {
 			message: inquiry.message,
 		},
 	});
-	queueContactConfirmation(inquiry);
+	try {
+		await queueContactConfirmation(inquiry);
+	} catch (error) {
+		console.error(
+			"[contact-inquiry] email failed",
+			error instanceof Error ? error.message : error,
+		);
+	}
 	return {};
 }
