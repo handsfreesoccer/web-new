@@ -10,11 +10,11 @@ import {
 	InputOTPSlot,
 } from "#/components/ui/input-otp";
 import { Label } from "#/components/ui/label";
-import { pageTitle } from "#/lib/site-meta";
+import { pageMeta, pageTitle } from "#/lib/site-meta";
 
 export const Route = createFileRoute("/admin/login")({
 	head: () => ({
-		meta: [{ title: pageTitle("Admin Login") }],
+		meta: pageMeta({ title: pageTitle("Admin Login") }),
 	}),
 	component: LoginPage,
 });

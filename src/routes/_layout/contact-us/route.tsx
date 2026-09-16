@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { pageTitle } from "#/lib/site-meta";
+import { pageMeta, pageTitle } from "#/lib/site-meta";
 import { LifeAtHFS } from "../about/-components/life-at-hfs";
 import { Faq } from "./-components/faq";
 import { FindOurCourts } from "./-components/find-our-courts";
@@ -8,7 +8,11 @@ import { MessageForm } from "./-components/message-form";
 
 export const Route = createFileRoute("/_layout/contact-us")({
 	head: () => ({
-		meta: [{ title: pageTitle("Contact Us") }],
+		meta: pageMeta({
+			title: pageTitle("Contact Us"),
+			description:
+				"Reach HandsFree Soccer Academy for classes, schedules, enrollment, and private coaching in Allen, McKinney, Melissa, and Princeton.",
+		}),
 	}),
 	component: RouteComponent,
 });

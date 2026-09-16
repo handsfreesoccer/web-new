@@ -1,13 +1,13 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Button } from "#/components/ui/button";
+import { pageMeta, pageTitle } from "#/lib/site-meta";
 import { AdminAuthGuard } from "#/routes/admin/-components/admin-auth-guard";
 import { AttendanceDashboard } from "#/routes/admin/-components/attendance-dashboard";
 import { BookingAvailabilitySettings } from "#/routes/admin/-components/booking-availability-settings";
-import { pageTitle } from "#/lib/site-meta";
 
 export const Route = createFileRoute("/admin/")({
 	head: () => ({
-		meta: [{ title: pageTitle("Admin Dashboard") }],
+		meta: pageMeta({ title: pageTitle("Admin Dashboard") }),
 	}),
 	component: AdminPage,
 });
