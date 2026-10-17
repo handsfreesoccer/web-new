@@ -77,7 +77,7 @@ export const MessageForm: React.FC = () => {
 				}}
 				className="flex w-full flex-col gap-8 sm:gap-12"
 			>
-				<div className="flex flex-col items-start gap-6">
+				<div data-reveal className="flex flex-col items-start gap-6">
 					<div className="flex items-center gap-2">
 						<span className="relative flex size-2">
 							<span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-75" />
@@ -94,7 +94,7 @@ export const MessageForm: React.FC = () => {
 						</p>
 					</div>
 				</div>
-				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+				<div data-reveal className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 					<form.Field name="fullName">
 						{(field) => (
 							<div className="flex flex-col gap-2">

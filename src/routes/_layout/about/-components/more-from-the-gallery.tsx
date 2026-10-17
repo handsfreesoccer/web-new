@@ -23,7 +23,7 @@ export const MoreFromTheGallery: React.FC = () => {
 			>
 				<div className="w-full max-w-360">
 					<div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
-						<header className="mb-6 break-inside-avoid">
+						<header data-reveal className="mb-6 break-inside-avoid">
 							<div className="flex flex-col items-start gap-6">
 								<div className="flex items-center gap-2">
 									<span className="relative flex size-2">

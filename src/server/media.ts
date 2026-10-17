@@ -1,12 +1,12 @@
-import {
-	ASPECT_CLASS,
-	type GalleryAspect,
-	type GalleryMedia,
-} from "#/lib/gallery";
+import type { GalleryAspect, GalleryMedia } from "#/lib/gallery";
 import { getR2Config, getR2PublicUrl, R2_IMAGES_PREFIX, R2_VIDEOS_PREFIX } from "#/server/r2-config";
 import { listR2Objects, type R2ObjectSummary } from "#/server/r2";
 
-const ASPECTS = Object.keys(ASPECT_CLASS) as GalleryAspect[];
+/** Placeholder shape until the browser reads the real media dimensions. */
+const PLACEHOLDER_ASPECT: Record<GalleryMedia["kind"], GalleryAspect> = {
+	image: "portrait",
+	video: "tall",
+};
 const IMAGE_FILENAME = /^(?:image|images)-(\d+)\.[a-z0-9]+$/i;
 const VIDEO_FILENAME = /^video-(\d+)\.[a-z0-9]+$/i;
 
@@ -29,14 +29,10 @@ const parseMediaFilename = (
 	};
 };
 
-const aspectForIndex = (index: number): GalleryAspect =>
-	ASPECTS[index % ASPECTS.length] ?? "landscape";
-
 const toGalleryMedia = (
 	object: R2ObjectSummary,
 	kind: GalleryMedia["kind"],
 	prefix: string,
-	index: number,
 ): GalleryMedia | null => {
 	if (!object.Key) return null;
 
@@ -56,18 +52,14 @@ const toGalleryMedia = (
 		kind,
 		src,
 		alt: `${label} ${parsed.number}`,
-		aspect: aspectForIndex(index),
+		aspect: PLACEHOLDER_ASPECT[kind],
 	};
 };
 
-const listFolderMedia = async (
-	prefix: string,
-	kind: GalleryMedia["kind"],
-	startIndex: number,
-) => {
+const listFolderMedia = async (prefix: string, kind: GalleryMedia["kind"]) => {
 	const objects = await listR2Objects(normalizePrefix(prefix));
 	return objects
-		.map((object, index) => toGalleryMedia(object, kind, normalizePrefix(prefix), startIndex + index))
+		.map((object) => toGalleryMedia(object, kind, normalizePrefix(prefix)))
 		.filter((item): item is GalleryMedia => item !== null)
 		.sort((a, b) => {
 			const aNumber = Number.parseInt(a.id.split("-")[1] ?? "0", 10);
@@ -89,12 +81,10 @@ export async function listGalleryMedia(): Promise<GalleryMedia[]> {
 	const config = getR2Config();
 	if (!config) return [];
 
-	const images = await listFolderMedia(R2_IMAGES_PREFIX, "image", 0);
-	const videos = await listFolderMedia(
-		R2_VIDEOS_PREFIX,
-		"video",
-		images.length,
-	);
+	const [images, videos] = await Promise.all([
+		listFolderMedia(R2_IMAGES_PREFIX, "image"),
+		listFolderMedia(R2_VIDEOS_PREFIX, "video"),
+	]);
 
 	return sortGalleryMedia([...images, ...videos]);
 }

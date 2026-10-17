@@ -11,7 +11,7 @@ export const Faq: React.FC = () => {
 	return (
 		<section className="mx-auto flex max-w-360 flex-col gap-12 px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 			<div className="grid w-full gap-10 lg:grid-cols-2 lg:gap-16">
-				<div className="flex flex-col items-start gap-6">
+				<div data-reveal className="flex flex-col items-start gap-6">
 					<div className="flex items-center gap-2">
 						<span className="relative flex size-2">
 							<span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-75" />
@@ -37,6 +37,7 @@ export const Faq: React.FC = () => {
 						<AccordionItem
 							key={faq.id}
 							value={faq.id}
+							data-reveal
 							className="rounded-2xl border-0 not-last:border-0 bg-muted data-open:bg-primary data-open:text-primary-foreground"
 						>
 							<AccordionTrigger className="p-6 font-medium text-base hover:no-underline **:data-[slot=accordion-trigger-icon]:text-current">

@@ -1,5 +1,5 @@
 import { PauseIcon, PlayIcon } from "lucide-react";
-import { useCallback, useState } from "react";
+import { type CSSProperties, useCallback, useState } from "react";
 import { GalleryMasonrySkeleton } from "#/components/gallery/gallery-masonry-skeleton";
 import { useGalleryPlayback } from "#/components/gallery/gallery-playback";
 import {
@@ -16,13 +16,23 @@ const mediaClassName =
 const fullscreenButtonWrapClassName =
 	"absolute top-3 right-3 z-20 opacity-0 transition-opacity duration-200 ease-out pointer-events-none group-hover/media:pointer-events-auto group-hover/media:opacity-100 group-focus-within/media:pointer-events-auto group-focus-within/media:opacity-100";
 
+function useIntrinsicAspect() {
+	const [style, setStyle] = useState<CSSProperties>();
+	const measure = useCallback((width: number, height: number) => {
+		if (width > 0 && height > 0) {
+			setStyle({ aspectRatio: `${width} / ${height}` });
+		}
+	}, []);
+	return { style, measure };
+}
+
 export function GalleryMasonryItem({ item }: { item: GalleryMedia }) {
 	const aspect = item.aspect ?? "landscape";
 	const aspectClass = ASPECT_CLASS[aspect];
 	const { ref, isInView } = useLazyInView();
 
 	return (
-		<div ref={ref} className="mb-6 break-inside-avoid">
+		<div ref={ref} data-reveal className="mb-6 break-inside-avoid">
 			{isInView ? (
 				item.kind === "image" ? (
 					<GalleryImageItem item={item} aspectClass={aspectClass} />
@@ -44,6 +54,7 @@ function GalleryImageItem({
 	aspectClass: string;
 }) {
 	const { openAt } = useMediaGallery();
+	const { style, measure } = useIntrinsicAspect();
 
 	return (
 		<figure className="group/media relative">
@@ -58,6 +69,13 @@ function GalleryImageItem({
 					alt={item.alt}
 					loading="lazy"
 					decoding="async"
+					onLoad={(event) =>
+						measure(
+							event.currentTarget.naturalWidth,
+							event.currentTarget.naturalHeight,
+						)
+					}
+					style={style}
 					className={cn(mediaClassName, aspectClass)}
 				/>
 				<span className="pointer-events-none absolute inset-0 rounded-2xl bg-black/20 opacity-0 transition-opacity duration-200 ease-out group-hover/media:opacity-100" />
@@ -79,6 +97,7 @@ function GalleryVideoItem({
 	const { playingId, registerVideo, play, pause, onEnded } =
 		useGalleryPlayback();
 	const [isHovered, setIsHovered] = useState(false);
+	const { style, measure } = useIntrinsicAspect();
 	const isPlaying = playingId === item.id;
 
 	const setVideoRef = useCallback(
@@ -103,7 +122,14 @@ function GalleryVideoItem({
 				preload="metadata"
 				disablePictureInPicture
 				aria-label={item.alt}
+				style={style}
 				className={cn(mediaClassName, aspectClass)}
+				onLoadedMetadata={(event) =>
+					measure(
+						event.currentTarget.videoWidth,
+						event.currentTarget.videoHeight,
+					)
+				}
 				onEnded={() => onEnded(item.id)}
 			/>
 			<div

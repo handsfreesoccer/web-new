@@ -8,13 +8,19 @@ export const Story: React.FC = () => {
 	return (
 		<section className="mx-auto flex max-w-360 flex-col items-center gap-16 overflow-hidden px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 			<div className="flex w-full flex-col gap-8 lg:flex-row">
-				<div className="flex flex-1 flex-col justify-between gap-12 self-stretch rounded-2xl bg-primary p-6">
+				<div
+					data-reveal="scale"
+					className="flex flex-1 flex-col justify-between gap-12 self-stretch rounded-2xl bg-primary p-6"
+				>
 					<div className="text-white">
 						<p className="font-medium text-4xl">50+</p>
 						<p className="font-light text-sm">Young Athletes Training</p>
 					</div>
 				</div>
-				<div className="flex flex-col items-start gap-6 lg:max-w-[67%] xl:max-w-[75%]">
+				<div
+					data-reveal
+					className="flex flex-col items-start gap-6 lg:max-w-[67%] xl:max-w-[75%]"
+				>
 					<div className="flex items-center gap-2">
 						<span className="relative flex size-2">
 							<span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-75" />

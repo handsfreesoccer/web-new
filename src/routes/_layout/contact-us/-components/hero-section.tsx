@@ -4,7 +4,7 @@ export const HeroSection: React.FC = () => {
 	return (
 		<section className="mx-auto flex max-w-360 flex-col items-center gap-16 overflow-hidden px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 			<div className="flex w-full flex-col justify-between gap-11">
-				<div className="flex flex-1 flex-col items-start gap-3">
+				<div data-reveal className="flex flex-1 flex-col items-start gap-3">
 					<h1 className="@container w-full font-bold text-5xl leading-tight sm:text-[min(4.5rem,calc(90cqi/11))]">
 						LET'S TALK
 					</h1>
@@ -18,7 +18,10 @@ export const HeroSection: React.FC = () => {
 						</p>
 					</div>
 				</div>
-				<div className="relative flex h-90 flex-col justify-evenly gap-8 overflow-hidden rounded-3xl">
+				<div
+					data-reveal="scale"
+					className="relative flex h-90 flex-col justify-evenly gap-8 overflow-hidden rounded-3xl"
+				>
 					<img
 						src="/images/stock/stock-3.webp"
 						alt="Soccer ball on the pitch"

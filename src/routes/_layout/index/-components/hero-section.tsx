@@ -14,11 +14,16 @@ export const HeroSection: React.FC = () => {
 
 	return (
 		<section className="mx-auto flex max-w-360 flex-col gap-16 px-4 py-8 sm:px-8 sm:py-16 md:px-16">
-			<h1 className="@container w-full text-center font-bold text-[min(4.5rem,calc(90cqi/11))] leading-tight">
+			<h1
+				data-reveal
+				className="@container w-full text-center font-bold text-[min(4.5rem,calc(90cqi/11))] leading-tight">
 				<span className="block">OWN YOUR GAME WITH</span>
 				<span className="block whitespace-nowrap">HANDSFREESOCCER</span>
 			</h1>
-			<div className="relative flex w-full flex-1 flex-col overflow-clip rounded-3xl py-0 sm:min-h-120 sm:py-0">
+			<div
+				data-reveal="scale"
+				className="relative flex w-full flex-1 flex-col overflow-clip rounded-3xl py-0 sm:min-h-120 sm:py-0"
+			>
 				<img
 					src={heroImage}
 					alt="Soccer training session"

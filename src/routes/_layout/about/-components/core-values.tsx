@@ -4,7 +4,7 @@ export const CoreValues: React.FC = () => {
 	return (
 		<section className="mx-auto flex flex-col items-center gap-16 overflow-hidden px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 			<div className="flex w-full max-w-360 flex-col justify-between gap-12">
-				<div className="flex flex-1 flex-col items-start gap-6">
+				<div data-reveal className="flex flex-1 flex-col items-start gap-6">
 					<div className="flex items-center gap-2">
 						<span className="relative flex size-2">
 							<span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-75" />
@@ -37,6 +37,7 @@ const CoreValueCarousel: React.FC = () => {
 				<ul className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 xl:flex xl:flex-nowrap">
 					{VALUES.map((value) => (
 						<li
+							data-reveal
 							className="group relative flex h-90 min-w-0 flex-col gap-4 overflow-hidden rounded-xl bg-muted p-6 xl:grow-[0.6] xl:basis-0 xl:transition-[flex-grow] xl:duration-300 xl:ease-out xl:hover:grow"
 							key={value.number}
 						>

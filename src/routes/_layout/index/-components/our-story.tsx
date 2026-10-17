@@ -18,7 +18,7 @@ export const OurStory: React.FC = () => {
 
 	return (
 		<section className="mx-auto flex max-w-360 flex-col gap-12 px-4 py-8 sm:gap-16 sm:px-8 sm:py-16 md:px-16">
-			<div className="flex flex-1 flex-col items-start gap-6">
+			<div data-reveal className="flex flex-1 flex-col items-start gap-6">
 				<div className="flex items-center gap-2">
 					<span className="relative flex size-2">
 						<span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-75" />
@@ -40,14 +40,20 @@ export const OurStory: React.FC = () => {
 			</div>
 			<div className="flex w-full flex-col justify-between gap-8 lg:flex-row lg:gap-10">
 				<div className="grid h-40 w-full grid-cols-2 gap-8 md:grid-cols-7 lg:max-w-[35%]">
-					<div className="relative col-span-1 h-full overflow-hidden rounded-2xl md:col-span-4">
+					<div
+						data-reveal="scale"
+						className="relative col-span-1 h-full overflow-hidden rounded-2xl md:col-span-4"
+					>
 						<img
 							src="/images/stock/stock-5.webp"
 							alt="Player walking on the pitch"
 							className="absolute inset-0 size-full object-cover outline-1 outline-black/10"
 						/>
 					</div>
-					<div className="relative col-span-1 h-full overflow-hidden rounded-2xl md:col-span-3">
+					<div
+						data-reveal="scale"
+						className="relative col-span-1 h-full overflow-hidden rounded-2xl md:col-span-3"
+					>
 						<img
 							src="/images/stock/stock-6.webp"
 							alt="Player walking on the pitch"
@@ -55,7 +61,10 @@ export const OurStory: React.FC = () => {
 						/>
 					</div>
 				</div>
-				<div className="flex flex-col items-end justify-between gap-10 sm:flex-row lg:max-w-6/10">
+				<div
+					data-reveal
+					className="flex flex-col items-end justify-between gap-10 sm:flex-row lg:max-w-6/10"
+				>
 					<p className="font-light text-base text-muted-foreground leading-tight md:max-w-5/10">
 						Every lesson is designed to balance skill, fitness, and fun. Our
 						mission is simple: to grow the love of soccer, one player at a time.

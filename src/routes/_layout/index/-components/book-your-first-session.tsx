@@ -135,7 +135,10 @@ export const BookYourFirstSession: React.FC = () => {
 			id={BOOKING_SECTION_ID}
 			className="relative mx-auto flex max-w-360 scroll-mt-28 flex-col gap-12 px-4 py-8 sm:gap-16 sm:px-8 sm:py-16 md:px-16"
 		>
-			<div className="relative grid w-full place-content-center overflow-hidden rounded-3xl p-4 sm:p-16">
+			<div
+				data-reveal
+				className="relative grid w-full place-content-center overflow-hidden rounded-3xl p-4 sm:p-16"
+			>
 				<img
 					src="/images/stock/stock-3.webp"
 					alt="Book Your First Session"

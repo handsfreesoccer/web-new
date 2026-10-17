@@ -6,7 +6,7 @@ import { cn } from "#/lib/utils";
 export const FindOurCourts: React.FC = () => {
 	return (
 		<section className="mx-auto flex max-w-360 flex-col gap-12 px-4 py-8 sm:px-8 sm:py-16 md:px-16">
-			<div className="flex flex-col items-start gap-6">
+			<div data-reveal className="flex flex-col items-start gap-6">
 				<div className="flex items-center gap-2">
 					<span className="relative flex size-2">
 						<span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-75" />
@@ -26,7 +26,7 @@ export const FindOurCourts: React.FC = () => {
 
 			<ul className="flex flex-col gap-6">
 				{COURTS.map((court, index) => (
-					<li key={court.id}>
+					<li key={court.id} data-reveal>
 						<CourtRow court={court} reverse={index % 2 === 1} />
 					</li>
 				))}

@@ -28,7 +28,7 @@ export const WhyWithUs: React.FC = () => {
 	return (
 		<section className="mx-auto flex max-w-360 flex-col gap-16 px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 			<div className="flex w-full flex-col justify-between gap-10">
-				<div className="flex flex-1 flex-col items-start gap-6">
+				<div data-reveal className="flex flex-1 flex-col items-start gap-6">
 					<div className="flex items-center gap-2">
 						<span className="relative flex size-2">
 							<span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-75" />
@@ -52,14 +52,20 @@ export const WhyWithUs: React.FC = () => {
 				<div className="flex w-full flex-col justify-between gap-10 lg:flex-row">
 					<div className="flex flex-1 flex-col gap-8 self-stretch">
 						<div className="grid h-full grid-cols-1 gap-4 sm:grid-cols-2 sm:grid-rows-5 md:gap-6">
-							<div className="relative overflow-hidden rounded-3xl sm:row-span-5 sm:min-h-0">
+							<div
+								data-reveal="scale"
+								className="relative overflow-hidden rounded-3xl sm:row-span-5 sm:min-h-0"
+							>
 								<img
 									src="/images/stock/stock-1.webp"
 									alt="Player walking on the pitch"
 									className="absolute inset-0 size-full object-cover outline-1 outline-black/10"
 								/>
 							</div>
-							<div className="row-span-2 flex flex-col items-start justify-center rounded-3xl bg-primary px-8 py-10">
+							<div
+								data-reveal="scale"
+								className="row-span-2 flex flex-col items-start justify-center rounded-3xl bg-primary px-8 py-10"
+							>
 								<p className="font-semibold text-5xl text-white md:text-6xl">
 									<NumberFlow value={95} suffix="%" />
 								</p>
@@ -67,7 +73,10 @@ export const WhyWithUs: React.FC = () => {
 									Students Satisfaction
 								</p>
 							</div>
-							<div className="relative row-span-3 min-h-40 overflow-hidden rounded-3xl sm:min-h-0">
+							<div
+								data-reveal="scale"
+								className="relative row-span-3 min-h-40 overflow-hidden rounded-3xl sm:min-h-0"
+							>
 								<img
 									src="/images/stock/stock-6.webp"
 									alt="Soccer ball on the pitch line"
@@ -79,7 +88,11 @@ export const WhyWithUs: React.FC = () => {
 					<div className="flex-1">
 						<ul className="flex flex-col justify-between gap-8">
 							{WHY_WITH_US_VALUES.map((value, index) => (
-								<li key={value.title} className="flex items-start gap-8">
+								<li
+									key={value.title}
+									data-reveal
+									className="flex items-start gap-8"
+								>
 									<p className="pt-1.5 font-semibold text-3xl text-primary tabular-nums">
 										{String(index + 1).padStart(2, "0")}
 									</p>

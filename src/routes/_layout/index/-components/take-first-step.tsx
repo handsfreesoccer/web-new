@@ -7,7 +7,10 @@ import { BOOKING_SECTION_ID } from "#/lib/constants";
 export const TakeFirstStep: React.FC = () => {
 	return (
 		<section className="mx-auto flex max-w-360 flex-col gap-12 px-4 py-8 sm:gap-16 sm:px-8 sm:py-16 md:px-16">
-			<div className="relative flex w-full flex-1 items-center overflow-clip rounded-3xl bg-black py-0 sm:min-h-120 sm:py-0">
+			<div
+				data-reveal
+				className="relative flex w-full flex-1 items-center overflow-clip rounded-3xl bg-black py-0 sm:min-h-120 sm:py-0"
+			>
 				<img
 					src="/images/stock/stock-8.webp"
 					alt="Take the First Step Today"

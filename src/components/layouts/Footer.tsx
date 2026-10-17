@@ -11,7 +11,10 @@ import { Input } from "../ui/input";
 export const Footer: React.FC = () => {
 	return (
 		<footer className="p-4 sm:p-8 md:p-16">
-			<div className="flex flex-col gap-8 rounded-3xl bg-primary p-8 pb-6 sm:p-12 sm:pb-8">
+			<div
+				data-reveal
+				className="flex flex-col gap-8 rounded-3xl bg-primary p-8 pb-6 sm:p-12 sm:pb-8"
+			>
 				<div className="flex flex-col justify-between gap-8 md:flex-row md:gap-16">
 					<div className="flex flex-col items-center gap-4 sm:items-start">
 						<h2 className="text-center font-semibold text-2xl text-white sm:text-left">

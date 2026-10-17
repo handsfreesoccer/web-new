@@ -16,7 +16,7 @@ export const Classes: React.FC = () => {
 	return (
 		<section className="mx-auto flex flex-col items-center gap-16 overflow-hidden px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 			<div className="flex w-full max-w-360 flex-col gap-12">
-				<div className="flex flex-col items-start gap-6">
+				<div data-reveal className="flex flex-col items-start gap-6">
 					<div className="flex items-center gap-2">
 						<span className="relative flex size-2">
 							<span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-75" />
@@ -31,11 +31,12 @@ export const Classes: React.FC = () => {
 
 				<div className="grid w-full gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
 					<img
+						data-reveal="scale"
 						src="https://pub-411c2d71f88d4892b2b25b6093608bac.r2.dev/images/images-8.webp"
 						alt="Kids training in a small group soccer session"
 						className="h-full min-h-64 w-full rounded-2xl object-cover outline outline-black/10 dark:outline-white/10"
 					/>
-					<div className="flex flex-col gap-6">
+					<div data-reveal className="flex flex-col gap-6">
 						<p className="text-pretty font-medium text-2xl text-foreground leading-snug sm:text-3xl">
 							Personalized 1:1 and small group soccer training for kids ages
 							6–12.
@@ -48,7 +49,7 @@ export const Classes: React.FC = () => {
 					</div>
 				</div>
 
-				<div className="rounded-2xl bg-muted p-6 sm:p-8 lg:p-10">
+				<div data-reveal className="rounded-2xl bg-muted p-6 sm:p-8 lg:p-10">
 					<ul className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:items-center">
 						{CLASS_DETAILS.map((detail) => (
 							<li key={detail.label} className="flex items-start gap-3">

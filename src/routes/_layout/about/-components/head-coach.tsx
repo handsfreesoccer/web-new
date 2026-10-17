@@ -4,7 +4,7 @@ export const HeadCoach: React.FC = () => {
 	return (
 		<section className="mx-auto flex flex-col items-center gap-16 overflow-hidden px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 			<div className="flex w-full max-w-360 flex-col gap-12">
-				<div className="flex flex-col items-start gap-6">
+				<div data-reveal className="flex flex-col items-start gap-6">
 					<div className="flex items-center gap-2">
 						<span className="relative flex size-2">
 							<span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-75" />
@@ -21,11 +21,12 @@ export const HeadCoach: React.FC = () => {
 
 				<div className="grid w-full gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
 					<img
+						data-reveal="scale"
 						src="/images/head-coach.webp"
 						alt="Head coach Omeiza Akerele"
 						className="max-h-180 min-h-80 w-full self-stretch rounded-2xl object-cover object-top outline outline-black/10 dark:outline-white/10"
 					/>
-					<div className="flex flex-col gap-6">
+					<div data-reveal className="flex flex-col gap-6">
 						<p className="text-pretty font-medium text-2xl text-foreground capitalize leading-snug sm:text-3xl">
 							A Welcome Message From The Head Coach
 						</p>

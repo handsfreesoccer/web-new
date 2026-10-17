@@ -21,7 +21,7 @@ export const LifeAtHFS: React.FC = () => {
 				<section className="mx-auto flex flex-col items-center gap-16 overflow-hidden px-4 py-8 sm:px-8 sm:py-16 md:px-16">
 					<div className="flex w-full max-w-360 flex-col gap-8">
 						<div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
-							<header className="mb-6 break-inside-avoid">
+							<header data-reveal className="mb-6 break-inside-avoid">
 								<div className="flex flex-col items-start gap-6">
 									<div className="flex items-center gap-2">
 										<span className="relative flex size-2">
